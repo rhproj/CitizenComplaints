@@ -1,0 +1,310 @@
+﻿<UserControl x:Class="Complaints_WPF.Views.ComplaintsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Complaints_WPF.Views"
+             mc:Ignorable="d" 
+              d:DesignHeight="800" d:DesignWidth="1320"
+             x:Name="MainUC"
+             >
+    <UserControl.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#9acdff" Offset="0.172"/>
+            <GradientStop Color="LightYellow" Offset="1"/>
+        </LinearGradientBrush>
+    </UserControl.Background>
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource tBlockStyle}"/>
+        <Style TargetType="TextBox" BasedOn="{StaticResource tBoxStyle}"/>
+        <Style TargetType="DataGrid" BasedOn="{StaticResource dataGridStyle}" />
+        <Style TargetType="Label" BasedOn="{StaticResource LblStyle}" />
+        <Style TargetType="Button" BasedOn="{StaticResource BtnStyle}" />
+        <Style TargetType="ComboBox" BasedOn="{StaticResource ComBoxStyle}" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="White">
+            <TextBlock Text="Журнал регистрации жалоб:" FontSize="25" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label FontSize="25" FontWeight="DemiBold" FontStyle="Italic" Foreground="DarkBlue" HorizontalAlignment="Left" Content=""/>
+            <!--<Label FontSize="25" FontWeight="DemiBold" FontStyle="Italic"  Foreground="DarkBlue" HorizontalAlignment="Right" Content="dd.mm.yyyy hh:mm" />-->
+        </Grid>
+        <!--<Border Grid.Row="1" BorderThickness="2" BorderBrush="Black">
+        </Border>-->
+        <Grid Grid.Row="1" Background="Navy">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="450"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Новое" Command="{Binding Path=NewEntryCommand}"/>
+                <Button Grid.Column="1" Content="Изменить" Command="{Binding Path=EditCommand}"/>
+                <Button Grid.Column="2" Content="Удалить" Command="{Binding Path=DeleteComplaintCommand}"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="112"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="1"  Height="30" Text="{Binding Path=DateToFilter, Mode=TwoWay}"/>
+                <TextBox Grid.Column="2"  Height="30"  Text="{Binding Path=NameToFilter, Mode=TwoWay}"/>
+                <TextBox Grid.Column="3"  Height="30"  Text="{Binding Path=ContentToFilter, Mode=TwoWay}"/>
+                <Button Grid.Column="4"  Content="Фильтр" Command="{Binding Path=FilterCommand}" />
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="450"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--<Border BorderThickness="1" BorderBrush="Black">
+                </Border>-->
+                <StackPanel Orientation="Vertical">
+                    <Grid Background="Navy">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="26" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="ИН Заявления:"/>
+                        <Label Grid.Column="1" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.ComplaintID}"/>
+                        <!--, Converter={StaticResource zeroLabelConverter}-->
+                        <Label Grid.Column="2" Content="ИН Заявителя:"/>
+                        <Label x:Name="lblCitizenId" Grid.Column="3" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.Citizen.CitizenID}"/>
+                        <!--, Converter={StaticResource zeroLabelConverter}-->
+                    </Grid>
+                    <Grid Margin="5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Заявитель:"  />
+                        <!-- see if you can find how Enter button works here-->
+                        <TextBox x:Name="tbCitizenName" Grid.Column="1" Text="{Binding CurrentComplaint.Citizen.CitizenName, Mode=TwoWay}"/>
+                        <Button Grid.Column="2" Margin="1" Width="40" Height="40" BorderThickness="0" Background="Transparent" Command="{Binding Path=FindCitizenCommand}">
+                            <Image Source="\Images\searchCitBtn.png"></Image>
+                        </Button>
+                    </Grid>
+                    <Grid Margin="5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="120" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Содержание
+                                   Обращения:" TextWrapping="Wrap" />
+                        <TextBox x:Name="tbComplaint" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.ComplaintText, Mode=TwoWay}" AcceptsReturn="True"   />
+                    </Grid>
+                    <Grid Margin="5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="166"/>
+                            <ColumnDefinition Width="61*" />
+                            <ColumnDefinition Width="141"/>
+                            <ColumnDefinition Width="72*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Листов:" HorizontalAlignment="Right" Height="22" Margin="0,4" Width="55"/>
+                        <TextBox x:Name="tbPages" Grid.Column="1" Width="50" HorizontalAlignment="Right" Text="{Binding CurrentComplaint.PageNum, Mode=TwoWay}"  />
+                        <TextBlock Grid.Column="2" Text="Приложений:" HorizontalAlignment="Right" Margin="0,4,10,4" Height="22" Width="100" />
+                        <TextBox x:Name="tbApend" Grid.Column="3" Width="50" HorizontalAlignment="Left"  Text="{Binding CurrentComplaint.AppendNum, Mode=TwoWay}"    />
+                    </Grid>
+                    <Grid Margin="5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto" />
+
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Результат:"/>
+                        <ComboBox x:Name="comBoxResult" Grid.Column="1" 
+                                      ItemsSource="{Binding Path=ResultsList, Mode=TwoWay}"
+                                      Text="{Binding CurrentComplaint.Result.Rezolution, Mode=TwoWay}"
+                                      />
+                        <Button x:Name="btnEditResult" Grid.Column="2" Width="35"  Margin="5,0,5,0" HorizontalAlignment="Right" Content="+/-" IsEnabled="False" />
+
+                        <!-- ONE WAY ??-->
+                        <!--<TextBox x:Name="tbResult" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.ComplaintText, Mode=TwoWay}"  />-->
+                    </Grid>
+                    <Grid Margin="5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="101"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Примечание:"/>
+                        <TextBox x:Name="tbComment" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Comments, Mode=TwoWay}"    />
+                    </Grid>
+
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Orientation="Vertical">
+                    <Grid Margin="0,5" Background="Navy">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="33" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Информация о заявителе:" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="20" FontWeight="Regular" Foreground="Yellow"/>
+                    </Grid>
+                    <Grid Margin="5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="125"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="98"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Дата рождения:"/>
+                        <TextBox x:Name="tbBirthDate" Grid.Column="1" Width="106" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.Citizen.BirthDate, Mode=TwoWay}"/>
+                        <TextBlock Text="Паспорт №" Grid.Column="2" Margin="6,0,0,0"/>
+                        <TextBox Grid.Column="3" Width="106" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.BirthDate, Mode=TwoWay}" IsEnabled="False"/>
+
+                    </Grid>
+                    <Grid Margin="5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Адрес:" TextWrapping="Wrap" />
+                        <TextBox x:Name="tbAdress" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Citizen.CitizenAdress, Mode=TwoWay}"    />
+                    </Grid>
+                    <Grid Margin="5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Род занятий:" TextWrapping="Wrap" />
+                        <TextBox x:Name="tbOccupation" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Citizen.Occupation, Mode=TwoWay}" />
+                    </Grid>
+
+                    <Grid Margin="5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Телефон:" />
+                        <TextBox x:Name="tbPhoneNumber" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Citizen.PhoneNumber, Mode=TwoWay}" />
+                    </Grid>
+                    <Grid Margin="5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Email/почта:" TextWrapping="Wrap" />
+                        <TextBox x:Name="tb" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Citizen.Email, Mode=TwoWay}" />
+                    </Grid>
+                    <Grid Margin="5,5">
+                        <Button Height="40" Width="150" Margin="10" FontSize="16" Content="Зарегистрировать" Command="{Binding Path=RegisterCommand}"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Column ="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="18*"/>
+                    <ColumnDefinition Width="407*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.Background>
+                    <ImageBrush ImageSource="\Images\CoA2.jpg" Stretch="UniformToFill"/>
+                </Grid.Background>
+                <DataGrid AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
+                          ItemsSource="{Binding Path=ComplaintsList, Mode=TwoWay}" 
+                          SelectedItem="{Binding Path=SelectedComplaint}"
+                          Background="Transparent" RowBackground="Transparent" AlternatingRowBackground="LightCyan"                          
+                          BorderBrush="Navy"
+                          HeadersVisibility="Column" Grid.ColumnSpan="2"
+                          >
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="Navy" />
+                            <Setter Property="BorderBrush" Value="Azure"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                            <Setter Property="Foreground" Value="Yellow" />
+                            <Setter Property="FontWeight" Value="SemiBold" />
+                            <Setter Property="Height" Value="25"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <!--AlternationCount="{Binding Path=ComplaintsListEnumerator}"-->
+                    <!-- EnableRowVirtualization="False"   -this add above to prevent errors in the row sequencing -->
+                    <!-- EmpList is the prop that contains it all-->
+                    <DataGrid.Columns>
+                        <!--"{Binding Path=AlternationIndex, RelativeSource={RelativeSource AncestorType=DataGridRow}}"-->
+                        <DataGridTextColumn Header="#" Width="30" 
+                                                Binding="{Binding Path=Enumerator}" />
+                       
+                        <DataGridTextColumn Header="Дата" Width="112"
+                                                Binding="{Binding Path=ReceiptDate, StringFormat='{}{0:dd.MM.yy, HH:mm}'}" />
+                        <DataGridTextColumn Header="Имя" Width="200" 
+                                                Binding="{Binding Path=Citizen.CitizenName}"/>
+                        <DataGridTextColumn Header="Жалоба" Width="400" 
+                                                Binding="{Binding Path=ComplaintText}"/>
+                        <DataGridTextColumn Header="Результат" Width="150" 
+                                                Binding="{Binding Path=Result.Rezolution}"/>
+                        
+                        <!--<DataGridTextColumn Header="Принял(а)" Width="150" 
+                                                Binding="{Binding Path=Prosecutor}"/>-->
+                    </DataGrid.Columns>
+                </DataGrid>
+                <!--<Border Grid.Column="1" Grid.Row="9" BorderBrush="Black" BorderThickness="1">
+
+                </Border>-->
+
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

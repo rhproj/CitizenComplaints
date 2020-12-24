@@ -1,0 +1,17 @@
+﻿<Application x:Class="Complaints_WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Complaints_WPF"
+             xmlns:vm="clr-namespace:Complaints_WPF.ViewModels"
+             xmlns:converter="clr-namespace:Complaints_WPF.Converter"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--<converter:ZeroConverter x:Key="zeroLabelConverter"/>-->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style\StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <!--<vm:ComplaintsViewModel x:Key="MainViewModel" />-->
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
