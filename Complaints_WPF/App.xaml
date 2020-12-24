@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:Complaints_WPF"
              xmlns:vm="clr-namespace:Complaints_WPF.ViewModels"
              xmlns:converter="clr-namespace:Complaints_WPF.Converter"
-             StartupUri="MainWindow.xaml">
+             StartupUri="Views\LoginWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <!--<converter:ZeroConverter x:Key="zeroLabelConverter"/>-->

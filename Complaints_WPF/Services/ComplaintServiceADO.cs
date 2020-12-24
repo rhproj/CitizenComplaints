@@ -113,6 +113,43 @@ namespace Complaints_WPF.Models
             return listOfComplaints;
         }
 
+
+        public List<string> LoadProsecutors()
+        {
+            List<string> ProsecutorsList = new List<string>();
+
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandText = "sp_LoadProsecutors";
+
+                SqlConnect.Open();
+
+                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            Prosecutor prosecutor = new Prosecutor();
+                            prosecutor.ProsecutorName = dataReader.GetString(2);
+                            ProsecutorsList.Add(prosecutor.ProsecutorName);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+
+            return ProsecutorsList;
+        }
+
         public List<string> LoadResults()
         {
             List<string> resultsList = new List<string>();
@@ -148,6 +185,8 @@ namespace Complaints_WPF.Models
 
             return resultsList;
         }
+
+
 
         #region New Complaint:
         public bool AddToComplaintList(Complaint newComplaint)

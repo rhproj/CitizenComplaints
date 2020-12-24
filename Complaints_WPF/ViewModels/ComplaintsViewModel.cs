@@ -46,6 +46,13 @@ namespace Complaints_WPF.ViewModels
             set { _resultsList = value; OnPropertyChanged("ResultsList"); }
         }
 
+        private ObservableCollection<string> _prosecutorsList; //25.11.20
+        public ObservableCollection<string> ProsecutorsList
+        {
+            get { return _prosecutorsList; }
+            set { _prosecutorsList = value; OnPropertyChanged("ProsecutorsList"); }
+        }
+
         private string _message; //Don't forget to implement it later
         public string Message  //will be bind to tBlock in UI
         {
@@ -140,8 +147,7 @@ namespace Complaints_WPF.ViewModels
             _editCommand = new RelayCommand(EditComplaint, null);
             _deleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
 
-            FilterCommand = new RelayCommand(FilterComplaints, null);
-            //_filterCommand = new RelayCommand(FilterComplaints, null);
+            FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);
         }
 
         #endregion
@@ -152,6 +158,8 @@ namespace Complaints_WPF.ViewModels
         {
             ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaints()); //GetAllComplaints());
             ResultsList = new ObservableCollection<string>(complaintService.LoadResults());
+
+            ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors());
         }
 
         private void ClearEntryFields(bool withName)
