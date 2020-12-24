@@ -117,14 +117,12 @@ namespace Complaints_WPF.ViewModels
             get { return _deleteComplaintCommand; }
         }
 
-        private RelayCommand _filterCommand;
-        public RelayCommand FilterCommand
-        {
-            get { return _filterCommand; }
-        }
-
+        //private RelayCommand _filterCommand;
+        public RelayCommand FilterCommand { get; }
+        //{
+        //    get { return _filterCommand; }
+        //}
         #endregion
-
         #endregion
 
         #region CTOR
@@ -142,6 +140,7 @@ namespace Complaints_WPF.ViewModels
             _editCommand = new RelayCommand(EditComplaint, null);
             _deleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
 
+            FilterCommand = new RelayCommand(FilterComplaints, null);
             //_filterCommand = new RelayCommand(FilterComplaints, null);
         }
 
@@ -205,9 +204,9 @@ namespace Complaints_WPF.ViewModels
                 LoadData(); //refreshes
 
                 if (isSaved)
-                    Message = "Employee saved";
+                    Message = "Заявление сохранено";
                 else
-                    Message = "RegisterCommand failed";
+                    Message = "Не удалось сохранить заявление";
                 //try later: //Message = isSaved? "Employee saved": "RegisterCommand failed";
 
                 ClearEntryFields(true);
@@ -241,6 +240,10 @@ namespace Complaints_WPF.ViewModels
                     CurrentComplaint.Citizen.Email = citizen.Citizen.Email;
                     CurrentComplaint.Citizen.BirthDate = citizen.Citizen.BirthDate;
                 }
+                else
+                {
+                    Message = "Заявитель не найден";
+                }
             }
             catch (Exception ex)
             {
@@ -269,11 +272,11 @@ namespace Complaints_WPF.ViewModels
                 if (isDeleted)
                 {
                     LoadData();
-                    Message = "Complaint been deleted";
+                    Message = "Жалоба удалена";
                 }
                 else
                 {
-                    Message = "Deletion failed";
+                    Message = "Не удалось удалить жалобу";
                 }
             }
             catch (Exception ex)
@@ -295,32 +298,32 @@ namespace Complaints_WPF.ViewModels
         //    return true;
         //}
 
-        //private void FilterComplaints()
-        //{
-        //    try
-        //    {
-        //        if (!string.IsNullOrWhiteSpace(DateToFilter))
-        //        {
-        //            ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByDate00", "@receiptDate", DateToFilter));
-        //        }
-        //        else if (!string.IsNullOrWhiteSpace(NameToFilter))
-        //        {
-        //            ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByName00", "@fullName", NameToFilter));
-        //        }
-        //        else if (!string.IsNullOrWhiteSpace(ContentToFilter))
-        //        {
-        //            ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByСontent00", "@content", ContentToFilter));
-        //        }
-        //        else
-        //        {
-        //            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsWithN()); //GetAllComplaints());
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Message = ex.Message;
-        //    }
-        //}
+        private void FilterComplaints()
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(DateToFilter))
+                {
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByDate00", "@receiptDate", DateToFilter));
+                }
+                else if (!string.IsNullOrWhiteSpace(NameToFilter))
+                {
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByName00", "@fullName", NameToFilter));
+                }
+                else if (!string.IsNullOrWhiteSpace(ContentToFilter))
+                {
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByСontent00", "@content", ContentToFilter));
+                }
+                else
+                {
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaints()); //GetAllComplaints());
+                }
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+            }
+        }
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;

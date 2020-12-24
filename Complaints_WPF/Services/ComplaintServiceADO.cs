@@ -69,49 +69,49 @@ namespace Complaints_WPF.Models
             return listOfComplaints;
         }
 
-        //public List<Complaint> FilterComplaints(string storedProc, string sp_param, string param) // string receiptDate, string name, string content
-        //{
-        //    List<Complaint> listOfComplaints = new List<Complaint>();
-        //    try
-        //    {
-        //        SqlCommand.Parameters.Clear();
-        //        SqlCommand.CommandText = storedProc;
-        //        SqlCommand.Parameters.AddWithValue(sp_param, param);
+        public List<Complaint> FilterComplaints(string storedProc, string sp_param, string param) // string receiptDate, string name, string content
+        {
+            List<Complaint> listOfComplaints = new List<Complaint>();
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandText = storedProc;
+                SqlCommand.Parameters.AddWithValue(sp_param, param);
 
-        //        SqlConnect.Open();
-        //        using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
-        //        {
-        //            if (dataReader.HasRows)
-        //            {
-        //                int count = 0;
-        //                while (dataReader.Read())
-        //                {
-        //                    count++;
-        //                    //Complaint Complaint = new Complaint(dataReader.GetInt32(0), dataReader.GetDateTime(1), dataReader.GetString(2), dataReader.GetString(3));
-        //                    Complaint Complaint = new Complaint();
+                SqlConnect.Open();
+                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        int count = 0;
+                        while (dataReader.Read())
+                        {
+                            count++;
+                            //Complaint Complaint = new Complaint(dataReader.GetInt32(0), dataReader.GetDateTime(1), dataReader.GetString(2), dataReader.GetString(3));
+                            Complaint Complaint = new Complaint();
 
-        //                    Complaint.Enumerator = count;
-        //                    Complaint.ComplaintID = dataReader.GetInt32(0);
-        //                    Complaint.ComplaintDateTime = dataReader.GetDateTime(1);
-        //                    Complaint.CitizenName = dataReader.GetString(2);
-        //                    Complaint.ComplaintText = dataReader.GetString(3);
-        //                    if (!dataReader.IsDBNull(4)) { Complaint.Result = dataReader.GetString(4); }
+                            Complaint.Enumerator = count;
+                            Complaint.ComplaintID = dataReader.GetInt32(0);
+                            Complaint.ReceiptDate = dataReader.GetDateTime(1);
+                            Complaint.Citizen.CitizenName = dataReader.GetString(2);
+                            Complaint.ComplaintText = dataReader.GetString(3);
+                            if (!dataReader.IsDBNull(4)) { Complaint.Result.Rezolution = dataReader.GetString(4); }
 
-        //                    listOfComplaints.Add(Complaint);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    finally
-        //    {
-        //        SqlConnect.Close();
-        //    }
-        //    return listOfComplaints;
-        //}
+                            listOfComplaints.Add(Complaint);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+            return listOfComplaints;
+        }
 
         public List<string> LoadResults()
         {
@@ -153,8 +153,8 @@ namespace Complaints_WPF.Models
         public bool AddToComplaintList(Complaint newComplaint)
         {
             bool isAdded = false;
-            //if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
-            //    throw new ArgumentException("Поля имя и текст жалобы болжны быть заполнены");
+            if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
+                throw new ArgumentException("Поля имя и текст жалобы болжны быть заполнены");
 
             #region works well with sp_2
             //try
@@ -209,8 +209,8 @@ namespace Complaints_WPF.Models
         public bool AddToComplaintListUpd(Complaint newComplaint)
         {
             bool isAdded = false;
-            //if (string.IsNullOrWhiteSpace(newComplaint.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
-            //    throw new ArgumentException("Поля имя и текст жалобы болжны быть заполнены");
+            if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
+                throw new ArgumentException("Поля имя и текст жалобы болжны быть заполнены");
 
             try
             {
@@ -283,46 +283,7 @@ namespace Complaints_WPF.Models
         }
         #endregion
 
-        //public Complaint SearchCompalint(string citizenName)
-        //{
-        //    Complaint searchedComplaint = null;
-        //    try
-        //    {
-        //        SqlCommand.Parameters.Clear();
-        //        SqlCommand.CommandText = "sp_SelectComplaintByCitizenName";
-        //        SqlCommand.Parameters.AddWithValue("@name", citizenName);
 
-        //        SqlConnect.Open();
-
-        //        using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
-        //        {
-        //            if (dataReader.HasRows)
-        //            {
-        //                dataReader.Read();
-        //                searchedComplaint = new Complaint(); //dataReader.GetInt32(0), dataReader.GetDateTime(1), dataReader.GetInt32(2), dataReader.GetString(3), dataReader.GetString(4),dataReader.GetString(5),dataReader.GetString(6));
-        //                //but here we can actually add more
-        //                searchedComplaint.ComplaintID = dataReader.GetInt32(0);
-        //                searchedComplaint.ComplaintDateTime = dataReader.GetDateTime(1);
-        //                searchedComplaint.CitizenID = dataReader.GetInt32(2);
-        //                searchedComplaint.CitizenName = dataReader.GetString(3);
-        //                searchedComplaint.CitizenAdress = dataReader.GetString(4);
-        //                searchedComplaint.PhoneNumber = dataReader.GetString(5);
-        //                searchedComplaint.ComplaintText = dataReader.GetString(6);
-        //                searchedComplaint.PageNum = dataReader.GetString(7);
-        //            }
-        //        }
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    finally
-        //    {
-        //        SqlConnect.Close();
-        //    }
-
-        //    return searchedComplaint;
-        //}
 
         public Complaint SelectComplaint(string citizenName, DateTime dateTime)
         {

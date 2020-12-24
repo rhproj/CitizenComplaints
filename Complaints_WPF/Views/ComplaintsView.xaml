@@ -250,6 +250,7 @@
                     <Grid Margin="5,5">
                         <Button Height="40" Width="150" Margin="10" FontSize="16" Content="Зарегистрировать" Command="{Binding Path=RegisterCommand}"/>
                     </Grid>
+                    <Label FontSize="10" FontStyle="Italic" Content="{Binding Message}" Foreground="Black"/>
                 </StackPanel>
             </Grid>
 
