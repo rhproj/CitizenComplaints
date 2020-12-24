@@ -118,11 +118,7 @@
     <Resource Include="Images\searchCitBtn.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\CoA.jpg" />
     <Resource Include="Images\CoA2.jpg" />
-    <Resource Include="Images\CoA_small.jpg" />
-    <Resource Include="Images\CoA_small.png" />
-    <Resource Include="Images\OL02.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -304,15 +304,15 @@ namespace Complaints_WPF.ViewModels
             {
                 if (!string.IsNullOrWhiteSpace(DateToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByDate00", "@receiptDate", DateToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByDate", "@receiptDate", DateToFilter));
                 }
                 else if (!string.IsNullOrWhiteSpace(NameToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByName00", "@fullName", NameToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));
                 }
                 else if (!string.IsNullOrWhiteSpace(ContentToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByСontent00", "@content", ContentToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByСontent", "@content", ContentToFilter));
                 }
                 else
                 {
