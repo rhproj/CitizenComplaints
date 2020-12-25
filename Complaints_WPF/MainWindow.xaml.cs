@@ -20,6 +20,8 @@ namespace Complaints_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        //ComboBox cb = new ComboBox();
+
         public MainWindow()
         {
             InitializeComponent();

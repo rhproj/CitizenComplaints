@@ -28,7 +28,9 @@ namespace Complaints_WPF.Views
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
+             
             MainWindow mw = new MainWindow();
+            mw.lblPros.Content = comBoxProsecutor.SelectedItem;
             mw.Show();
             this.Close();
         }

@@ -79,7 +79,7 @@
                 <Separator Margin="18,10,18,20"/>
                 <Label  Content="{Binding ProsecutorU.ProsecutorName, Mode=TwoWay}"/>
                 <!--Content="Имя"-->
-                <ComboBox x:Name="comBoxResult" Width="275" Height="33"
+                <ComboBox x:Name="comBoxProsecutor" Width="275" Height="33"
                 ItemsSource="{Binding Path=ProsecutorsList}"
                 Text="{Binding CurrentComplaint.Prosecutor.ProsecutorName}"
                 />

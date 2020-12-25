@@ -216,7 +216,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
-                SqlCommand.CommandText = "sp_InsertComplaint01"; //think of the way to create if/switch with another SP_ where Citizen already exists
+                SqlCommand.CommandText = "sp_InsertComplaint02"; //think of the way to create if/switch with another SP_ where Citizen already exists
 
                 SqlCommand.Parameters.AddWithValue("@fullName", newComplaint.Citizen.CitizenName);
                 SqlCommand.Parameters.AddWithValue("@birthDate", newComplaint.Citizen.BirthDate);
@@ -229,6 +229,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@appendNum", newComplaint.AppendNum);
                 SqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
                 SqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
+                SqlCommand.Parameters.AddWithValue("@prosecutorName", newComplaint.Prosecutor.ProsecutorName);
 
                 SqlConnect.Open();
                 isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false

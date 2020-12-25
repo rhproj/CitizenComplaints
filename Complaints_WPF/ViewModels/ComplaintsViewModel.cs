@@ -149,7 +149,6 @@ namespace Complaints_WPF.ViewModels
 
             FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);
         }
-
         #endregion
 
         #region METHODS (Mirrors whats in Services, but there we can use differend data base techniques)

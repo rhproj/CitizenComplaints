@@ -32,7 +32,7 @@
 
         <Grid Background="White">
             <TextBlock Text="Журнал регистрации жалоб:" FontSize="25" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Label FontSize="25" FontWeight="DemiBold" FontStyle="Italic" Foreground="DarkBlue" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.Prosecutor.ProsecutorName}"/>
+            <Label x:Name="lblProsecutor" FontSize="25" FontWeight="DemiBold" FontStyle="Italic" Foreground="DarkBlue" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.Prosecutor.ProsecutorName}"/>
             <!--<Label FontSize="25" FontWeight="DemiBold" FontStyle="Italic"  Foreground="DarkBlue" HorizontalAlignment="Right" Content="dd.mm.yyyy hh:mm" />-->
         </Grid>
         <!--<Border Grid.Row="1" BorderThickness="2" BorderBrush="Black">
@@ -297,8 +297,8 @@
                         <DataGridTextColumn Header="Результат" Width="150" 
                                                 Binding="{Binding Path=Result.Rezolution}"/>
                         
-                        <!--<DataGridTextColumn Header="Принял(а)" Width="150" 
-                                                Binding="{Binding Path=Prosecutor}"/>-->
+                        <DataGridTextColumn Header="Принял(а)" Width="150" 
+                                                Binding="{Binding Path=Prosecutor.ProsecutorName}"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <!--<Border Grid.Column="1" Grid.Row="9" BorderBrush="Black" BorderThickness="1">

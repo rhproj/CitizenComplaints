@@ -14,6 +14,13 @@
         <vm:ComplaintsViewModel />
     </Window.DataContext>
     <Grid>
-        <uc:ComplaintsView />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Label x:Name="lblPros" Grid.Row="0" Content="{Binding CurrentComplaint.Prosecutor.ProsecutorName}"/>
+        <Grid Grid.Row="1">
+            <uc:ComplaintsView />
+        </Grid>
     </Grid>
 </Window>
