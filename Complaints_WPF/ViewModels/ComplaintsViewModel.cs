@@ -88,6 +88,13 @@ namespace Complaints_WPF.ViewModels
 
         #region AUTHORIZATION
         public static string ProsecutorLogin { get; set; } //workaround for ProsName to be passed
+              
+        //private string _loginName;
+        //public string LoginName
+        //{
+        //    get { return _loginName; }
+        //    set { _loginName = ProsecutorLogin; OnPropertyChanged("LoginName"); }
+        //}
         #endregion
 
         //07-10.Commands:
@@ -129,11 +136,7 @@ namespace Complaints_WPF.ViewModels
             get { return _deleteComplaintCommand; }
         }
 
-        //private RelayCommand _filterCommand;
         public RelayCommand FilterCommand { get; }
-        //{
-        //    get { return _filterCommand; }
-        //}
         #endregion
         #endregion
 

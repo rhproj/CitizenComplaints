@@ -15,12 +15,16 @@
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
+            <RowDefinition Height="40"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Label x:Name="lblPros" Grid.Row="0"/>
+        <Grid>
+            <TextBlock Text="Журнал регистрации жалоб:" FontSize="25" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label x:Name="lblProsecutor" Margin="10,0,0,0" FontSize="18" FontWeight="DemiBold" FontStyle="Italic" Foreground="DarkBlue" HorizontalAlignment="Left" />
+        </Grid>
         <Grid Grid.Row="1">
             <uc:ComplaintsView />
         </Grid>
     </Grid>
+
 </Window>

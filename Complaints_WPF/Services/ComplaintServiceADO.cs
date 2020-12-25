@@ -89,16 +89,18 @@ namespace Complaints_WPF.Models
                         {
                             count++;
                             //Complaint Complaint = new Complaint(dataReader.GetInt32(0), dataReader.GetDateTime(1), dataReader.GetString(2), dataReader.GetString(3));
-                            Complaint Complaint = new Complaint();
+                            Complaint complaint = new Complaint();
 
-                            Complaint.Enumerator = count;
-                            Complaint.ComplaintID = dataReader.GetInt32(0);
-                            Complaint.ReceiptDate = dataReader.GetDateTime(1);
-                            Complaint.Citizen.CitizenName = dataReader.GetString(2);
-                            Complaint.ComplaintText = dataReader.GetString(3);
-                            if (!dataReader.IsDBNull(4)) { Complaint.Result.Rezolution = dataReader.GetString(4); }
+                            complaint.Enumerator = count;
+                            complaint.ComplaintID = dataReader.GetInt32(0);
+                            complaint.ReceiptDate = dataReader.GetDateTime(1);
+                            complaint.Citizen.CitizenName = dataReader.GetString(2);
+                            complaint.ComplaintText = dataReader.GetString(3);
+                            if (!dataReader.IsDBNull(4)) { complaint.Result.Rezolution = dataReader.GetString(4); }
 
-                            listOfComplaints.Add(Complaint);
+                            if (!dataReader.IsDBNull(5)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(5); }
+
+                            listOfComplaints.Add(complaint);
                         }
                     }
                 }

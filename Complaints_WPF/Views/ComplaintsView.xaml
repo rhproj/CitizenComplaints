@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Complaints_WPF.Views"
+             xmlns:app="clr-namespace:Complaints_WPF.ViewModels"
              mc:Ignorable="d" 
               d:DesignHeight="800" d:DesignWidth="1320"
              x:Name="MainUC"
@@ -30,11 +31,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Background="White">
+        <!--<Grid Background="White">
             <TextBlock Text="Журнал регистрации жалоб:" FontSize="25" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Label x:Name="lblProsecutor" FontSize="25" FontWeight="DemiBold" FontStyle="Italic" Foreground="DarkBlue" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.Prosecutor.ProsecutorName}"/>
-            <!--<Label FontSize="25" FontWeight="DemiBold" FontStyle="Italic"  Foreground="DarkBlue" HorizontalAlignment="Right" Content="dd.mm.yyyy hh:mm" />-->
-        </Grid>
+            <Label x:Name="lblProsecutor" FontSize="18" FontWeight="DemiBold" FontStyle="Italic" Foreground="DarkBlue" HorizontalAlignment="Left" />
+            --><!--<Label FontSize="25" FontWeight="DemiBold" FontStyle="Italic"  Foreground="DarkBlue" HorizontalAlignment="Right" Content="dd.mm.yyyy hh:mm" />--><!--
+        </Grid>-->
         <!--<Border Grid.Row="1" BorderThickness="2" BorderBrush="Black">
         </Border>-->
         <Grid Grid.Row="1" Background="Navy">
