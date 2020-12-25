@@ -31,7 +31,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
-                SqlCommand.CommandText = "sp_SelectAllComplaints01";
+                SqlCommand.CommandText = "sp_SelectAllComplaints"; //used to be sp_SelectAllComplaints01, without prosecs
 
                 SqlConnect.Open();
                 using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
@@ -53,6 +53,7 @@ namespace Complaints_WPF.Models
                             if (!dataReader.IsDBNull(4)) { complaint.Result.Rezolution = dataReader.GetString(4); }
                             //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
 
+                            if (!dataReader.IsDBNull(5)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(5); }
                             listOfComplaints.Add(complaint);
                         }
                     }
@@ -189,7 +190,7 @@ namespace Complaints_WPF.Models
 
 
         #region New Complaint:
-        public bool AddToComplaintList(Complaint newComplaint)
+        public bool AddToComplaintList(Complaint newComplaint, string prosName)
         {
             bool isAdded = false;
             if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
@@ -229,7 +230,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@appendNum", newComplaint.AppendNum);
                 SqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
                 SqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
-                SqlCommand.Parameters.AddWithValue("@prosecutorName", newComplaint.Prosecutor.ProsecutorName);
+                SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName); // newComplaint.Prosecutor.ProsecutorName);
 
                 SqlConnect.Open();
                 isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false
@@ -244,6 +245,11 @@ namespace Complaints_WPF.Models
             }
 
             return isAdded;
+        }
+
+        internal bool AddToComplaintList(Complaint currentComplaint, object prosecutorsLogin)
+        {
+            throw new NotImplementedException();
         }
 
         public bool AddToComplaintListUpd(Complaint newComplaint)
@@ -322,8 +328,6 @@ namespace Complaints_WPF.Models
             return isUpdated; //if ... above > 0 - true
         }
         #endregion
-
-
 
         public Complaint SelectComplaint(string citizenName, DateTime dateTime)
         {

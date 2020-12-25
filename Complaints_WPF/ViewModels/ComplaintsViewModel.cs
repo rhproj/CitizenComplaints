@@ -1,8 +1,10 @@
-﻿using Complaints_WPF.Commands;
+﻿using Complaints_WPF.Authorization;
+using Complaints_WPF.Commands;
 using Complaints_WPF.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 
 namespace Complaints_WPF.ViewModels
 {
@@ -85,6 +87,13 @@ namespace Complaints_WPF.ViewModels
             set { _contentToFilter = value; OnPropertyChanged("ContentToFilter"); }
         }
 
+        #region AUTHORIZATION
+
+        public static string ProsecName { get; set; }
+
+        #endregion
+
+
         //07-10.Commands:
         #region COMMAND props
 
@@ -148,6 +157,8 @@ namespace Complaints_WPF.ViewModels
             _deleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
 
             FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);
+
+            
         }
         #endregion
 
@@ -158,7 +169,7 @@ namespace Complaints_WPF.ViewModels
             ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaints()); //GetAllComplaints());
             ResultsList = new ObservableCollection<string>(complaintService.LoadResults());
 
-            ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors());
+            ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors()); //for login window only
         }
 
         private void ClearEntryFields(bool withName)
@@ -197,7 +208,7 @@ namespace Complaints_WPF.ViewModels
                 //isSaved = complaintService.AddToComplaintList(CurrentComplaint);
                 if (CurrentComplaint.Citizen.CitizenID == 0)
                 {
-                    isSaved = complaintService.AddToComplaintList(CurrentComplaint);
+                    isSaved = complaintService.AddToComplaintList(CurrentComplaint, ProsecName);
                 }
                 else if (CurrentComplaint.ComplaintID == 0) //Гражданин сущ-ет в базе
                 {

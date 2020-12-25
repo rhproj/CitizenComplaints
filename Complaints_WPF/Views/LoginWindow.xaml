@@ -8,7 +8,7 @@
         x:Name="authorizationWindow"
         mc:Ignorable="d"
         Title="LoginWindow" Height="550" Width="450"
-        WindowStyle="None" AllowsTransparency="True">
+        WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:ComplaintsViewModel />
     </Window.DataContext>
@@ -81,8 +81,9 @@
                 <!--Content="Имя"-->
                 <ComboBox x:Name="comBoxProsecutor" Width="275" Height="33"
                 ItemsSource="{Binding Path=ProsecutorsList}"
-                Text="{Binding CurrentComplaint.Prosecutor.ProsecutorName}"
+
                 />
+                <!--Text="{Binding CurrentComplaint.Prosecutor.ProsecutorName}"-->
                 <!--<TextBox Name="tbUserName" Text="{Binding ProsecutorU.Login, Mode=TwoWay}" />-->
                 <Label Content="Пароль" />
                 <PasswordBox Name="tbPassword"  />

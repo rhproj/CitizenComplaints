@@ -85,6 +85,7 @@ namespace Complaints_WPF.Models
         {
             Citizen = new Citizen();
             Result = new Result();
+            Prosecutor = new Prosecutor(); //same problem forgot to init Prosec class here to get his property
         }
         //public Complaint(Citizen citizen)
         //{

@@ -21,6 +21,7 @@ namespace Complaints_WPF
     public partial class MainWindow : Window
     {
         //ComboBox cb = new ComboBox();
+        //public static string prosName;
 
         public MainWindow()
         {

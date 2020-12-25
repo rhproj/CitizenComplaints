@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Complaints_WPF.Authorization;
+using Complaints_WPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +21,8 @@ namespace Complaints_WPF.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
+        public string ProsNamo { get; set; }
+
         public LoginWindow()
         {
             InitializeComponent();
@@ -28,11 +32,20 @@ namespace Complaints_WPF.Views
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-             
-            MainWindow mw = new MainWindow();
-            mw.lblPros.Content = comBoxProsecutor.SelectedItem;
-            mw.Show();
-            this.Close();
+            if (comBoxProsecutor.SelectedItem != null)
+            {
+                //ProsecutorsAccess.ProsecutorsLogin = comBoxProsecutor.SelectedItem.ToString();
+                MainWindow mw = new MainWindow();
+                //mw. //lblPros.Content = comBoxProsecutor.SelectedItem;
+                mw.Show();
+                ComplaintsViewModel.ProsecName = comBoxProsecutor.SelectedItem.ToString();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Не выбран пользователь");
+            }
+
         }
     }
 }
