@@ -1,5 +1,4 @@
-﻿using Complaints_WPF.Authorization;
-using Complaints_WPF.ViewModels;
+﻿using Complaints_WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,11 +33,9 @@ namespace Complaints_WPF.Views
         {
             if (comBoxProsecutor.SelectedItem != null)
             {
-                //ProsecutorsAccess.ProsecutorsLogin = comBoxProsecutor.SelectedItem.ToString();
                 MainWindow mw = new MainWindow();
-                //mw. //lblPros.Content = comBoxProsecutor.SelectedItem;
                 mw.Show();
-                ComplaintsViewModel.ProsecName = comBoxProsecutor.SelectedItem.ToString();
+                ComplaintsViewModel.ProsecutorLogin = comBoxProsecutor.SelectedItem.ToString();
                 this.Close();
             }
             else

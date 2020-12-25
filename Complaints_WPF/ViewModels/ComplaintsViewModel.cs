@@ -1,5 +1,4 @@
-﻿using Complaints_WPF.Authorization;
-using Complaints_WPF.Commands;
+﻿using Complaints_WPF.Commands;
 using Complaints_WPF.Models;
 using System;
 using System.Collections.ObjectModel;
@@ -88,11 +87,8 @@ namespace Complaints_WPF.ViewModels
         }
 
         #region AUTHORIZATION
-
-        public static string ProsecName { get; set; }
-
+        public static string ProsecutorLogin { get; set; } //workaround for ProsName to be passed
         #endregion
-
 
         //07-10.Commands:
         #region COMMAND props
@@ -145,7 +141,6 @@ namespace Complaints_WPF.ViewModels
         public ComplaintsViewModel()
         {
             complaintService = new ComplaintServiceADO(); //using ADO.Net
-            LoadData();
             CurrentComplaint = new Complaint(); //? why do we need this? see if it can be omitted //NO cuz its thru this all fields are filled and passed to methods           
 
             _newEntryCommand = new RelayCommand(NewEntry, null);
@@ -156,9 +151,12 @@ namespace Complaints_WPF.ViewModels
             _editCommand = new RelayCommand(EditComplaint, null);
             _deleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
 
-            FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);
+            FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);           
 
-            
+            ResultsList = new ObservableCollection<string>(complaintService.LoadResults());     //moved this 2 from Load() so they don't have to reload every entry         
+            ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors()); //for login window only
+
+            LoadData();
         }
         #endregion
 
@@ -167,9 +165,6 @@ namespace Complaints_WPF.ViewModels
         private void LoadData() //we repeating our GetAll method, why not have it somewhere once and use it? NO, cuz it's easier to feed it to ObsColl this way
         {
             ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaints()); //GetAllComplaints());
-            ResultsList = new ObservableCollection<string>(complaintService.LoadResults());
-
-            ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors()); //for login window only
         }
 
         private void ClearEntryFields(bool withName)
@@ -208,7 +203,7 @@ namespace Complaints_WPF.ViewModels
                 //isSaved = complaintService.AddToComplaintList(CurrentComplaint);
                 if (CurrentComplaint.Citizen.CitizenID == 0)
                 {
-                    isSaved = complaintService.AddToComplaintList(CurrentComplaint, ProsecName);
+                    isSaved = complaintService.AddToComplaintList(CurrentComplaint, ProsecutorLogin);
                 }
                 else if (CurrentComplaint.ComplaintID == 0) //Гражданин сущ-ет в базе
                 {
