@@ -86,6 +86,13 @@ namespace Complaints_WPF.ViewModels
             set { _contentToFilter = value; OnPropertyChanged("ContentToFilter"); }
         }
 
+        private string _prosecutorToFilter;
+        public string ProsecutorToFilter
+        {
+            get { return _prosecutorToFilter; }
+            set { _prosecutorToFilter = value; OnPropertyChanged("ProsecutorToFilter"); }
+        }
+
         #region AUTHORIZATION
         public static string ProsecutorLogin { get; set; } //workaround for ProsName to be passed
               
@@ -329,6 +336,10 @@ namespace Complaints_WPF.ViewModels
                 else if (!string.IsNullOrWhiteSpace(ContentToFilter))
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByСontent", "@content", ContentToFilter));
+                }
+                else if (!string.IsNullOrWhiteSpace(ProsecutorToFilter))
+                {
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByProsecutor", "@prosecutor", ProsecutorToFilter));
                 }
                 else
                 {

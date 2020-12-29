@@ -26,6 +26,10 @@ namespace Complaints_WPF
         public MainWindow()
         {
             InitializeComponent();
+
+            btnMin.Click += (s, e) => WindowState = WindowState.Minimized;
+            btnMax.Click += (s, e) => WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+            btnClose.Click += (s, e) => Close();
         }
     }
 }

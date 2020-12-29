@@ -79,14 +79,14 @@
                 <Separator Margin="18,10,18,20"/>
                 <Label  Content="{Binding ProsecutorU.ProsecutorName, Mode=TwoWay}"/>
                 <!--Content="Имя"-->
-                <ComboBox x:Name="comBoxProsecutor" Width="275" Height="33"
+                <ComboBox x:Name="comBoxProsecutor" Width="275" Height="40"
                 ItemsSource="{Binding Path=ProsecutorsList}"
-
+                FontSize="20" FontWeight="Bold" Foreground="Navy" VerticalContentAlignment="Center"
                 />
                 <!--Text="{Binding CurrentComplaint.Prosecutor.ProsecutorName}"-->
                 <!--<TextBox Name="tbUserName" Text="{Binding ProsecutorU.Login, Mode=TwoWay}" />-->
-                <Label Content="Пароль" />
-                <PasswordBox Name="tbPassword"  />
+                <Label Content="Пароль" Margin="15,10,0,0"/>
+                <PasswordBox Name="tbPassword" IsEnabled="False" />
                 <Button Name="btnSubmit" Content="Войти" Margin="80,20" Height="50" Command="{Binding Path=AuthorizationCommand}" CommandParameter="{Binding ElementName=authorizationWindow}" Click="BtnSubmit_Click">
                     <!--  CloseWindowCommand-->
                     <Button.Resources>
