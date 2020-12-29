@@ -309,6 +309,8 @@
                                                 Binding="{Binding Path=Result.Rezolution}"/>
                         <DataGridTextColumn Header="Принял(а)" Width="150" 
                                                 Binding="{Binding Path=Prosecutor.ProsecutorName}"/>
+                        <DataGridTextColumn Header="Руководитель" Width="150" 
+                                                Binding="{Binding Path=Prosecutor.ProsecutorName}"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <!--<Border Grid.Column="1" Grid.Row="9" BorderBrush="Black" BorderThickness="1">

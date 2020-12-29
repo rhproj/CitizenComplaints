@@ -30,7 +30,7 @@ namespace Complaints_WPF.Models
             set { _prosecutorName = value; OnPropertyChanged("ProsecutorName"); }
         }
 
-        public string Password { get; set; } //
+        public string Password { get; set; } //not used yet
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propName)

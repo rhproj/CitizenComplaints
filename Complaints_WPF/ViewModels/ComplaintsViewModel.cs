@@ -54,6 +54,13 @@ namespace Complaints_WPF.ViewModels
             set { _prosecutorsList = value; OnPropertyChanged("ProsecutorsList"); }
         }
 
+        private ObservableCollection<string> _chiefsList; //29.11.20
+        public ObservableCollection<string> СhiefsList
+        {
+            get { return _chiefsList; }
+            set { _chiefsList = value; OnPropertyChanged("ChiefList"); }
+        }
+
         private string _message; //Don't forget to implement it later
         public string Message  //will be bind to tBlock in UI
         {
@@ -95,7 +102,7 @@ namespace Complaints_WPF.ViewModels
 
         #region AUTHORIZATION
         public static string ProsecutorLogin { get; set; } //workaround for ProsName to be passed
-              
+        public static string Сhief { get; set; }
         //private string _loginName;
         //public string LoginName
         //{
