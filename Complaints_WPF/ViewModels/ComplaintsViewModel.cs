@@ -55,10 +55,10 @@ namespace Complaints_WPF.ViewModels
         }
 
         private ObservableCollection<string> _chiefsList; //29.11.20
-        public ObservableCollection<string> СhiefsList
+        public ObservableCollection<string> ChiefsList
         {
             get { return _chiefsList; }
-            set { _chiefsList = value; OnPropertyChanged("ChiefList"); }
+            set { _chiefsList = value; OnPropertyChanged("ChiefsList"); }
         }
 
         private string _message; //Don't forget to implement it later
@@ -102,7 +102,7 @@ namespace Complaints_WPF.ViewModels
 
         #region AUTHORIZATION
         public static string ProsecutorLogin { get; set; } //workaround for ProsName to be passed
-        public static string Сhief { get; set; }
+        public static string СhiefProsecutor { get; set; }
         //private string _loginName;
         //public string LoginName
         //{
@@ -172,6 +172,7 @@ namespace Complaints_WPF.ViewModels
 
             ResultsList = new ObservableCollection<string>(complaintService.LoadResults());     //moved this 2 from Load() so they don't have to reload every entry         
             ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors()); //for login window only
+            ChiefsList = new ObservableCollection<string>(complaintService.LoadChiefs()); 
 
             LoadData();
         }
@@ -220,7 +221,7 @@ namespace Complaints_WPF.ViewModels
                 //isSaved = complaintService.AddToComplaintList(CurrentComplaint);
                 if (CurrentComplaint.Citizen.CitizenID == 0)
                 {
-                    isSaved = complaintService.AddToComplaintList(CurrentComplaint, ProsecutorLogin);
+                    isSaved = complaintService.AddToComplaintList(CurrentComplaint, ProsecutorLogin, СhiefProsecutor);
                 }
                 else if (CurrentComplaint.ComplaintID == 0) //Гражданин сущ-ет в базе
                 {

@@ -10,10 +10,10 @@ namespace Complaints_WPF.Models
     public class Chief : INotifyPropertyChanged
     {
         private int _chiefId;
-        public int ChiefId
+        public int ChiefID
         {
             get { return _chiefId; }
-            set { _chiefId = value; OnPropertyChanged("ChiefId"); }
+            set { _chiefId = value; OnPropertyChanged("ChiefID"); }
         }
 
         private string _chiefName;
@@ -22,6 +22,13 @@ namespace Complaints_WPF.Models
             get { return _chiefName; }
             set { _chiefName = value; OnPropertyChanged("ChiefName"); }
         }
+
+        //private string _chiefInfo;
+        //public string ChiefInfo
+        //{
+        //    get { return _chiefInfo; }
+        //    set { _chiefInfo = value; OnPropertyChanged("ChiefInfo"); }
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propName)

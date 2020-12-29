@@ -36,10 +36,19 @@ namespace Complaints_WPF.Views
                 MainWindow mw = new MainWindow();
                 mw.lblProsecutor.Content = comBoxProsecutor.SelectedItem;
                 mw.lblChief.Content = comBoxСhief.SelectedItem;
-                mw.Show();
 
                 ComplaintsViewModel.ProsecutorLogin = comBoxProsecutor.SelectedItem.ToString(); //passing selected pros to VM, so it could be written to dataGridTable in Insert method
 
+                if (comBoxСhief.SelectedItem != null)
+                {
+                    ComplaintsViewModel.СhiefProsecutor = comBoxСhief.SelectedItem.ToString(); //29.12
+                }
+                else
+                {
+                    mw.lblByChief.Content = string.Empty;
+                }
+
+                mw.Show();
                 this.Close();
             }
             else

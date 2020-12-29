@@ -299,7 +299,7 @@
                         <!--"{Binding Path=AlternationIndex, RelativeSource={RelativeSource AncestorType=DataGridRow}}"-->
                         <DataGridTextColumn Header="#" Width="30" 
                                                 Binding="{Binding Path=Enumerator}" />
-                        <DataGridTextColumn Header="Дата" Width="112"
+                        <DataGridTextColumn Header="Дата" Width="115"
                                                 Binding="{Binding Path=ReceiptDate, StringFormat='{}{0:dd.MM.yy, HH:mm}'}" />
                         <DataGridTextColumn Header="Имя" Width="200" 
                                                 Binding="{Binding Path=Citizen.CitizenName}"/>
@@ -307,10 +307,10 @@
                                                 Binding="{Binding Path=ComplaintText}" />
                         <DataGridTextColumn Header="Результат" Width="155" 
                                                 Binding="{Binding Path=Result.Rezolution}"/>
-                        <DataGridTextColumn Header="Принял(а)" Width="150" 
+                        <DataGridTextColumn Header="Принял(а)" Width="110" 
                                                 Binding="{Binding Path=Prosecutor.ProsecutorName}"/>
-                        <DataGridTextColumn Header="Руководитель" Width="150" 
-                                                Binding="{Binding Path=Prosecutor.ProsecutorName}"/>
+                        <DataGridTextColumn Header="Руководитель" Width="115" 
+                                                Binding="{Binding Path=Chief.ChiefName}"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <!--<Border Grid.Column="1" Grid.Row="9" BorderBrush="Black" BorderThickness="1">

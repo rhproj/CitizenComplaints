@@ -54,6 +54,8 @@ namespace Complaints_WPF.Models
                             //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
 
                             if (!dataReader.IsDBNull(5)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(5); }
+
+                            if (!dataReader.IsDBNull(6)) { complaint.Chief.ChiefName = dataReader.GetString(6); }
                             listOfComplaints.Add(complaint);
                         }
                     }
@@ -153,6 +155,42 @@ namespace Complaints_WPF.Models
             return ProsecutorsList;
         }
 
+        public List<string> LoadChiefs() //29.12
+        {
+            List<string> ChiefsList = new List<string>();
+
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandText = "sp_LoadChief";
+
+                SqlConnect.Open();
+
+                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            Chief chief = new Chief();
+                            chief.ChiefName = dataReader.GetString(1);
+                            ChiefsList.Add(chief.ChiefName);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+
+            return ChiefsList;
+        }
+
         public List<string> LoadResults()
         {
             List<string> resultsList = new List<string>();
@@ -192,7 +230,7 @@ namespace Complaints_WPF.Models
 
 
         #region New Complaint:
-        public bool AddToComplaintList(Complaint newComplaint, string prosName)
+        public bool AddToComplaintList(Complaint newComplaint, string prosName, string chiefName)
         {
             bool isAdded = false;
             if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
@@ -233,6 +271,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
                 SqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
                 SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName); // newComplaint.Prosecutor.ProsecutorName);
+                SqlCommand.Parameters.AddWithValue("@chiefName", chiefName); //29.12
 
                 SqlConnect.Open();
                 isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false

@@ -73,6 +73,14 @@ namespace Complaints_WPF.Models
             set { _prosecutor = value; OnPropertyChanged("Prosecutor"); }
         }
 
+        private Chief _chief;
+        public Chief Chief
+        {
+            get { return _chief; }
+            set { _chief = value; OnPropertyChanged("Chief"); }
+        }
+
+
         private Result _result;
         public Result Result
         {
@@ -86,12 +94,8 @@ namespace Complaints_WPF.Models
             Citizen = new Citizen();
             Result = new Result();
             Prosecutor = new Prosecutor(); //same problem forgot to init Prosec class here to get his property
+            Chief = new Chief();
         }
-        //public Complaint(Citizen citizen)
-        //{
-        //    this.Citizen = citizen;
-        //}
-
 
         //public ComplaintDT(int id, DateTime dateTime, int citizenId, string name, string adress, string phoneN, string complaintText)
         //{
