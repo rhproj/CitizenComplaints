@@ -35,6 +35,7 @@ namespace Complaints_WPF.Views
             {
                 MainWindow mw = new MainWindow();
                 mw.lblProsecutor.Content = comBoxProsecutor.SelectedItem;
+                //mw.lblChief.Content = comBoxСhief.SelectedItem;
                 mw.Show();
                 ComplaintsViewModel.ProsecutorLogin = comBoxProsecutor.SelectedItem.ToString();
                 this.Close();
