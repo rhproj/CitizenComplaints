@@ -102,6 +102,8 @@ namespace Complaints_WPF.Models
 
                             if (!dataReader.IsDBNull(5)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(5); }
 
+                            if (!dataReader.IsDBNull(6)) { complaint.Chief.ChiefName = dataReader.GetString(6); }
+
                             listOfComplaints.Add(complaint);
                         }
                     }
@@ -293,7 +295,7 @@ namespace Complaints_WPF.Models
         //    throw new NotImplementedException();
         //}
 
-        public bool AddToComplaintListUpd(Complaint newComplaint)
+        public bool AddToComplaintListUpd(Complaint newComplaint, string prosName, string chiefName)
         {
             bool isAdded = false;
             if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
@@ -315,6 +317,8 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@appendNum", newComplaint.AppendNum);
                 SqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
                 SqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
+                SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName); // newComplaint.Prosecutor.ProsecutorName);
+                SqlCommand.Parameters.AddWithValue("@chiefName", chiefName);
 
                 SqlConnect.Open(); //is this where the actuall StoredP called?
                 isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false

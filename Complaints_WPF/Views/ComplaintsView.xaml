@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Complaints_WPF.Views"
              xmlns:app="clr-namespace:Complaints_WPF.ViewModels"
              mc:Ignorable="d" 
-              d:DesignHeight="800" d:DesignWidth="1505"
+              d:DesignHeight="910" d:DesignWidth="1505"
              x:Name="MainUC"
              >
     <UserControl.Background>
@@ -60,18 +60,23 @@
             </Grid>
             <Grid Grid.Column="1" Margin="0,0,0,5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="105"/>
-                    <ColumnDefinition Width="250"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="80"/>
                     <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Column="1"  Height="30" Text="{Binding Path=DateToFilter, Mode=TwoWay}"/>
                 <TextBox Grid.Column="2"  Height="30"  Text="{Binding Path=NameToFilter, Mode=TwoWay}"/>
                 <TextBox Grid.Column="3"  Height="30"  Text="{Binding Path=ContentToFilter, Mode=TwoWay}"/>
-                <TextBox Grid.Column="4"  Height="30"  Text="{Binding Path=ProsecutorToFilter, Mode=TwoWay}"/>
-                <Button Grid.Column="5"  Content="Фильтр" Command="{Binding Path=FilterCommand}" />
+                <!--<TextBox Grid.Column="4"  Height="30"  Text="{Binding Path=ProsecutorToFilter, Mode=TwoWay}"/>-->
+                <ComboBox Grid.Column="4" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=ProsecutorsList}" SelectedItem="{Binding Path=ProsecutorToFilter}"/>
+                <ComboBox Grid.Column="5" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=ChiefsList}" SelectedItem="{Binding Path=ChiefToFilter}"/>
+                <Button Grid.Column="6" Content="Ф" HorizontalAlignment="Center" Width="40" Command="{Binding Path=FilterCommand}" />
+                <Button Grid.Column="7" Content="H" HorizontalAlignment="Center" Width="40" Command="{Binding Path=UnFilterCommand}" />
             </Grid>
         </Grid>
 
@@ -124,7 +129,7 @@
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="120" />
+                            <RowDefinition Height="140" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="107"/>
@@ -132,50 +137,51 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Содержание
                                    Обращения:" TextWrapping="Wrap" />
-                        <TextBox x:Name="tbComplaint" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.ComplaintText, Mode=TwoWay}" AcceptsReturn="True"   />
+                        <TextBox x:Name="tbComplaint" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding CurrentComplaint.ComplaintText, Mode=TwoWay}" />
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="166"/>
-                            <ColumnDefinition Width="61*" />
-                            <ColumnDefinition Width="141"/>
-                            <ColumnDefinition Width="72*"/>
+                            <ColumnDefinition Width="106"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Листов:" HorizontalAlignment="Right" Height="22" Margin="0,4" Width="59"/>
-                        <TextBox x:Name="tbPages" Grid.Column="1" Width="50" HorizontalAlignment="Right" Text="{Binding CurrentComplaint.PageNum, Mode=TwoWay}"  />
-                        <TextBlock Grid.Column="2" Text="Приложений:" HorizontalAlignment="Right" Margin="0,4,10,4" Height="22" Width="110" />
-                        <TextBox x:Name="tbApend" Grid.Column="3" Width="50" HorizontalAlignment="Left"  Text="{Binding CurrentComplaint.AppendNum, Mode=TwoWay}"    />
+                        <TextBlock Text="Листов:" Grid.Column="1" HorizontalAlignment="Left" Height="22" Margin="0,0,5,0"/>
+                        <TextBox x:Name="tbPages" Grid.Column="2" Width="67" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.PageNum, Mode=TwoWay}"  />
+                        <TextBlock Grid.Column="3" Text="Приложений:" HorizontalAlignment="Left" Margin="5,0,2,0" Height="22" />
+                        <TextBox x:Name="tbApend" Grid.Column="4" Width="67" HorizontalAlignment="Left"  Text="{Binding CurrentComplaint.AppendNum, Mode=TwoWay}"    />
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="112"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="322"/>
+                            <!--<ColumnDefinition Width="auto" />-->
 
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Результат:"/>
-                        <ComboBox x:Name="comBoxResult" Grid.Column="1" Height="38"
+                        <ComboBox x:Name="comBoxResult" Grid.Column="1" Height="40"
                                       ItemsSource="{Binding Path=ResultsList, Mode=TwoWay}"
                                       Text="{Binding CurrentComplaint.Result.Rezolution, Mode=TwoWay}"
                                       />
-                        <Button x:Name="btnEditResult" Grid.Column="2" Width="35"  Margin="5,0,5,0" HorizontalAlignment="Right" Content="+/-" IsEnabled="False" />
+                        <!--<Button x:Name="btnEditResult" Grid.Column="2" Width="35"  Margin="5,0,5,0" HorizontalAlignment="Right" Content="+/-" IsEnabled="False" />-->
 
                         <!-- ONE WAY ??-->
                         <!--<TextBox x:Name="tbResult" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.ComplaintText, Mode=TwoWay}"  />-->
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="50" />
+                            <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="113"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Примечание:"/>
-                        <TextBox x:Name="tbComment" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Comments, Mode=TwoWay}"    />
+                        <TextBox x:Name="tbComment" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding CurrentComplaint.Comments, Mode=TwoWay}"    />
                     </Grid>
 
                 </StackPanel>
@@ -193,46 +199,46 @@
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
+                            <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="140"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="98"/>
-                            <ColumnDefinition Width="*"/>
+                            <!--<ColumnDefinition Width="98"/>
+                            <ColumnDefinition Width="*"/>-->
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Дата рождения:"/>
-                        <TextBox x:Name="tbBirthDate" Grid.Column="1" Width="120" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.Citizen.BirthDate, Mode=TwoWay}"/>
-                        <TextBlock Text="Паспорт:" Grid.Column="2" Margin="19,0,0,0"/>
-                        <TextBox Grid.Column="3" Width="100" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.BirthDate, Mode=TwoWay}" IsEnabled="False"/>
+                        <TextBox x:Name="tbBirthDate" Grid.Column="1" Width="130"  Margin="5,0" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.Citizen.BirthDate, Mode=TwoWay}"/>
+                        <!--<TextBlock Text="Паспорт:" Grid.Column="2" Margin="19,0,0,0"/>
+                        <TextBox Grid.Column="3" Width="100" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.BirthDate, Mode=TwoWay}" IsEnabled="False"/>-->
 
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="50" />
+                            <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Адрес:" TextWrapping="Wrap" />
-                        <TextBox x:Name="tbAdress" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Citizen.CitizenAdress, Mode=TwoWay}"    />
+                        <TextBox x:Name="tbAdress" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding CurrentComplaint.Citizen.CitizenAdress, Mode=TwoWay}"    />
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="50" />
+                            <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Род занятий:" TextWrapping="Wrap" />
-                        <TextBox x:Name="tbOccupation" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Citizen.Occupation, Mode=TwoWay}" />
+                        <TextBox x:Name="tbOccupation" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding CurrentComplaint.Citizen.Occupation, Mode=TwoWay}" />
                     </Grid>
 
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
+                            <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100"/>
@@ -243,7 +249,7 @@
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
+                            <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100"/>
@@ -253,11 +259,12 @@
                         <TextBox x:Name="tb" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Citizen.Email, Mode=TwoWay}" />
                     </Grid>
                     <Grid Margin="5,5,5,10">
-                        <Button Height="55" Width="180" Margin="10" FontSize="20" Background="DarkGreen" Foreground="Yellow" Content="Зарегистрировать" Command="{Binding Path=RegisterCommand}">
+                        <Button Height="55" Width="180" Margin="10" FontSize="20" Background="DarkBlue" Foreground="Yellow" Content="Зарегистрировать" Command="{Binding Path=RegisterCommand}">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="15"/>
-                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="BorderThickness" Value="5"/>
+                                    <Setter Property="BorderBrush" Value="Yellow"/>
                                 </Style>
                             </Button.Resources>
                         </Button>

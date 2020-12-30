@@ -100,6 +100,12 @@ namespace Complaints_WPF.ViewModels
             set { _prosecutorToFilter = value; OnPropertyChanged("ProsecutorToFilter"); }
         }
 
+        private string _chiefToFilter;
+        public string ChiefToFilter
+        {
+            get { return _chiefToFilter; }
+            set { _chiefToFilter = value; OnPropertyChanged("ChiefToFilter"); }
+        }
         #region AUTHORIZATION
         public static string ProsecutorLogin { get; set; } //workaround for ProsName to be passed
         public static string СhiefProsecutor { get; set; }
@@ -138,6 +144,8 @@ namespace Complaints_WPF.ViewModels
             get { return _findCitizenCommand; }
         }
 
+        public RelayCommand UnFilterCommand { get; set; }
+
         private RelayCommand _editCommand;
         public RelayCommand EditCommand
         {
@@ -165,10 +173,12 @@ namespace Complaints_WPF.ViewModels
 
             //                                                                                      //its  prop will {get} its value from it and we'll bind it with UI Command={Binding RegisterCommand}
             _findCitizenCommand = new RelayCommand(FindCitizen, null);
+
             _editCommand = new RelayCommand(EditComplaint, null);
             _deleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
 
             FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);           
+            UnFilterCommand = new RelayCommand(UnFilteromplaints, null);
 
             ResultsList = new ObservableCollection<string>(complaintService.LoadResults());     //moved this 2 from Load() so they don't have to reload every entry         
             ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors()); //for login window only
@@ -225,7 +235,7 @@ namespace Complaints_WPF.ViewModels
                 }
                 else if (CurrentComplaint.ComplaintID == 0) //Гражданин сущ-ет в базе
                 {
-                    isSaved = complaintService.AddToComplaintListUpd(CurrentComplaint); //
+                    isSaved = complaintService.AddToComplaintListUpd(CurrentComplaint, ProsecutorLogin, СhiefProsecutor); //
                 }
                 else
                 {
@@ -349,6 +359,10 @@ namespace Complaints_WPF.ViewModels
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByProsecutor", "@prosecutor", ProsecutorToFilter));
                 }
+                else if (!string.IsNullOrWhiteSpace(ChiefToFilter))
+                {
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByChief", "@chiefName", ChiefToFilter));
+                }
                 else
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaints()); //GetAllComplaints());
@@ -358,6 +372,13 @@ namespace Complaints_WPF.ViewModels
             {
                 Message = ex.Message;
             }
+        }
+
+        private void UnFilteromplaints()
+        {
+            LoadData();
+
+            DateToFilter = NameToFilter = ContentToFilter = ProsecutorToFilter = ChiefToFilter = null;
         }
         #endregion
 
