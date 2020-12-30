@@ -11,8 +11,10 @@
              >
     <UserControl.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#9acdff" Offset="0.172"/>
-            <GradientStop Color="LightYellow" Offset="1"/>
+            <GradientStop Color="#FFC6CBFF" Offset="0.172"/>
+            <!--"#9acdff"-->
+            <!--FF9A9FFF-->
+            <GradientStop Color="#FFF7F7E2" Offset="1"/>
         </LinearGradientBrush>
     </UserControl.Background>
 
@@ -61,7 +63,7 @@
             <Grid Grid.Column="1" Margin="0,0,0,5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="90"/>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="130"/>
@@ -69,14 +71,14 @@
                     <ColumnDefinition Width="40"/>
                     <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="1"  Height="30" Text="{Binding Path=DateToFilter, Mode=TwoWay}"/>
-                <TextBox Grid.Column="2"  Height="30"  Text="{Binding Path=NameToFilter, Mode=TwoWay}"/>
-                <TextBox Grid.Column="3"  Height="30"  Text="{Binding Path=ContentToFilter, Mode=TwoWay}"/>
+                <TextBox Grid.Column="1"  Height="28" Text="{Binding Path=DateToFilter, Mode=TwoWay}"/>
+                <TextBox Grid.Column="2"  Height="28"  Text="{Binding Path=NameToFilter, Mode=TwoWay}"/>
+                <TextBox Grid.Column="3"  Height="28"  Text="{Binding Path=ContentToFilter, Mode=TwoWay}"/>
                 <!--<TextBox Grid.Column="4"  Height="30"  Text="{Binding Path=ProsecutorToFilter, Mode=TwoWay}"/>-->
                 <ComboBox Grid.Column="4" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=ProsecutorsList}" SelectedItem="{Binding Path=ProsecutorToFilter}"/>
                 <ComboBox Grid.Column="5" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=ChiefsList}" SelectedItem="{Binding Path=ChiefToFilter}"/>
-                <Button Grid.Column="6" Content="Ф" HorizontalAlignment="Center" Width="40" Command="{Binding Path=FilterCommand}" />
-                <Button Grid.Column="7" Content="H" HorizontalAlignment="Center" Width="40" Command="{Binding Path=UnFilterCommand}" />
+                <Button Grid.Column="6" Content="Ф" HorizontalAlignment="Right" Width="35" Command="{Binding Path=FilterCommand}" />
+                <Button Grid.Column="7" Content="Н" HorizontalAlignment="Left" Width="35" Command="{Binding Path=UnFilterCommand}" />
             </Grid>
         </Grid>
 
@@ -189,13 +191,13 @@
                 <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0">
                     <Grid Margin="0,5" Background="Navy">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="33" />
+                            <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Информация о заявителе:" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="20" FontWeight="Regular" Foreground="Yellow"/>
+                        <TextBlock Text="Информация о заявителе:" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" Foreground="Yellow"/>
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
@@ -258,18 +260,21 @@
                         <TextBlock Text="Mail/почта:" TextWrapping="Wrap" />
                         <TextBox x:Name="tb" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Citizen.Email, Mode=TwoWay}" />
                     </Grid>
-                    <Grid Margin="5,5,5,10">
-                        <Button Height="55" Width="180" Margin="10" FontSize="20" Background="DarkBlue" Foreground="Yellow" Content="Зарегистрировать" Command="{Binding Path=RegisterCommand}">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Button Height="55" Width="180" Margin="10" FontSize="20" VerticalAlignment="Center" Background="DarkGreen" Foreground="Yellow" Content="Зарегистрировать" Command="{Binding Path=RegisterCommand}">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="15"/>
-                                    <Setter Property="BorderThickness" Value="5"/>
-                                    <Setter Property="BorderBrush" Value="Yellow"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
+                        <Label Grid.Row="1" Content="{Binding Message}" Foreground="Black"/>
                     </Grid>
-                    <Label Content="{Binding Message}" Foreground="Black"/>
+
                 </StackPanel>
             </Grid>
 
