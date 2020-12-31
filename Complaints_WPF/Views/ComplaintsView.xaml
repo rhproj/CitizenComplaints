@@ -11,10 +11,11 @@
              >
     <UserControl.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FFC6CBFF" Offset="0.172"/>
+            <GradientStop Color="#FF36528D" Offset="0.172"/>
             <!--"#9acdff"-->
             <!--FF9A9FFF-->
-            <GradientStop Color="#FFF7F7E2" Offset="1"/>
+            <!--FFC6CBFF   FFF7F7E2-->
+            <GradientStop Color="#FF6A8CD4" Offset="1"/>
         </LinearGradientBrush>
     </UserControl.Background>
 
@@ -197,7 +198,8 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Информация о заявителе:" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" Foreground="Yellow"/>
+                        <!--<TextBlock Text="Информация о заявителе:" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" />-->
+                        <Label Content="Информация о заявителе:" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" />
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
@@ -265,7 +267,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
-                        <Button Height="55" Width="180" Margin="10" FontSize="20" VerticalAlignment="Center" Background="DarkGreen" Foreground="Yellow" Content="Зарегистрировать" Command="{Binding Path=RegisterCommand}">
+                        <Button Height="55" Width="180" Margin="10" FontSize="20" VerticalAlignment="Center" Background="Navy" Foreground="LightYellow" Content="Зарегистрировать" Command="{Binding Path=RegisterCommand}">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="15"/>
@@ -284,12 +286,12 @@
                     <ColumnDefinition Width="407*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.Background>
-                    <ImageBrush ImageSource="\Images\CoA2.jpg" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="\Images\CoA2 WhiteSmoke.jpg" Stretch="UniformToFill"/>
                 </Grid.Background>
                 <DataGrid AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
                           ItemsSource="{Binding Path=ComplaintsList, Mode=TwoWay}" 
                           SelectedItem="{Binding Path=SelectedComplaint}"
-                          Background="Transparent" RowBackground="Transparent" AlternatingRowBackground="LightCyan"                          
+                          Background="Transparent" RowBackground="Transparent" AlternatingRowBackground="White"                          
                           BorderBrush="Navy"
                           HeadersVisibility="Column" Grid.ColumnSpan="2"
                           >
@@ -298,7 +300,7 @@
                             <Setter Property="Background" Value="Navy" />
                             <Setter Property="BorderBrush" Value="Azure"/>
                             <Setter Property="BorderThickness" Value="0,0,0,0"/>
-                            <Setter Property="Foreground" Value="Yellow" />
+                            <Setter Property="Foreground" Value="LightYellow" />
                             <Setter Property="FontWeight" Value="SemiBold" />
                             <Setter Property="Height" Value="25"/>
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
