@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:Complaints_WPF.ViewModels"
         x:Name="authorizationWindow"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="630" Width="450"
+        Title="LoginWindow" Height="550" Width="450"
         WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:ComplaintsViewModel />
@@ -86,14 +86,14 @@
                 <!--Text="{Binding CurrentComplaint.Prosecutor.ProsecutorName}"-->
                 <!--<TextBox Name="tbUserName" Text="{Binding ProsecutorU.Login, Mode=TwoWay}" />-->
                 
-                <Label  Content="Принимающий руководитель:" Margin="15,10,0,0"/>
+                <!--<Label  Content="Принимающий руководитель:" Margin="15,10,0,0"/>
                 <ComboBox x:Name="comBoxСhief" Width="275" Height="40"
                 ItemsSource="{Binding Path=ChiefsList}"
                 FontSize="20" FontWeight="Bold" Foreground="DarkViolet" VerticalContentAlignment="Center"
-                />
+                />-->
 
                 <Label Content="Пароль:" Margin="15,10,0,0"/>
-                <PasswordBox Name="tbPassword" IsEnabled="False" />
+                <PasswordBox Name="tbPassword" Height="40" IsEnabled="False" />
                 <Button Name="btnSubmit" Content="Войти" Margin="80,20" Height="50" Command="{Binding Path=AuthorizationCommand}" CommandParameter="{Binding ElementName=authorizationWindow}" Click="BtnSubmit_Click">
                     <!--  CloseWindowCommand-->
                     <Button.Resources>
