@@ -30,11 +30,18 @@ namespace Complaints_WPF.Models
             set { _receiptDate = value; OnPropertyChanged("ReceiptDate"); }
         }
 
-        private string _complaintText;
-        public string ComplaintText
+        //private string _complaintText; //uncomment in case of absence of OzhClassification
+        //public string ComplaintText
+        //{
+        //    get { return _complaintText; }
+        //    set { _complaintText = value; OnPropertyChanged("ComplaintText"); }
+        //}
+
+        private OZhClassification _oZhComplaintText;
+        public OZhClassification OZhComplaintText
         {
-            get { return _complaintText; }
-            set { _complaintText = value; OnPropertyChanged("ComplaintText"); }
+            get { return _oZhComplaintText; }
+            set { _oZhComplaintText = value; OnPropertyChanged("OZhComplaintText"); }
         }
 
         //added later
@@ -80,7 +87,6 @@ namespace Complaints_WPF.Models
             set { _chief = value; OnPropertyChanged("Chief"); }
         }
 
-
         private Result _result;
         public Result Result
         {
@@ -92,21 +98,11 @@ namespace Complaints_WPF.Models
         public Complaint()
         {
             Citizen = new Citizen();
+            OZhComplaintText = new OZhClassification();
             Result = new Result();
             Prosecutor = new Prosecutor(); //same problem forgot to init Prosec class here to get his property
             Chief = new Chief();
         }
-
-        //public ComplaintDT(int id, DateTime dateTime, int citizenId, string name, string adress, string phoneN, string complaintText)
-        //{
-        //    ComplaintID = id;
-        //    ComplaintDateTime = dateTime;
-        //    CitizenID = citizenId;
-        //    CitizenName = name;
-        //    CitizenAdress = adress;
-        //    PhoneNumber = phoneN;
-        //    ComplaintText = complaintText;
-        //}
 
         //public ComplaintDT(int id, DateTime dateTime, string name, string complaintText)
         //{

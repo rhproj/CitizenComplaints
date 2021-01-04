@@ -130,7 +130,7 @@
                             <Image Source="\Images\searchCitBtn.png"></Image>
                         </Button>
                     </Grid>
-                    <Grid Margin="5,5">
+                    <Grid Margin="5,10,10,15">
                         <!--<Grid.RowDefinitions>
                             <RowDefinition Height="60" />
                         </Grid.RowDefinitions>
@@ -143,16 +143,16 @@
                         <TextBox x:Name="tbComplaint" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding CurrentComplaint.ComplaintText, Mode=TwoWay}" />-->
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40" />
-                            <RowDefinition Height="40" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <!--<ColumnDefinition Width="107"/>-->
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Содержание Обращения:"/>
-                        <ComboBox Grid.Row="1" Height="40" Width="430"
-                                      ItemsSource="{Binding Path=ResultsList, Mode=TwoWay}"
-                                      Text="{Binding CurrentComplaint.Result.Rezolution, Mode=TwoWay}"
+                        <ComboBox Grid.Row="1" Height="45"
+                                      ItemsSource="{Binding Path=OZhClassificationList, Mode=TwoWay}"
+                                      Text="{Binding CurrentComplaint.OZhComplaintText.OZhComplaint, Mode=TwoWay}"
                                       />
                     </Grid>
                     <Grid Margin="5,5">
@@ -351,7 +351,7 @@
                         <DataGridTextColumn Header="Имя" Width="200" 
                                                 Binding="{Binding Path=Citizen.CitizenName}"/>
                         <DataGridTextColumn Header="Жалоба" Width="*" 
-                                                Binding="{Binding Path=ComplaintText}" />
+                                                Binding="{Binding Path=OZhComplaintText.OZhComplaint}" />
                         <DataGridTextColumn Header="Результат" Width="155" 
                                                 Binding="{Binding Path=Result.Rezolution}"/>
                         <DataGridTextColumn Header="Принял(а)" Width="110" 

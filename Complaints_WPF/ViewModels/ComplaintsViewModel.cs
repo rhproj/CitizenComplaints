@@ -40,6 +40,13 @@ namespace Complaints_WPF.ViewModels
             set { _complaintsList = value; OnPropertyChanged("ComplaintsList"); }
         }
 
+        private ObservableCollection<string> _oZhClassificationList;
+        public ObservableCollection<string> OZhClassificationList
+        {
+            get { return _oZhClassificationList; }
+            set { _oZhClassificationList = value; OnPropertyChanged("OZhClassificationList"); }
+        }
+
         private ObservableCollection<string> _resultsList; //25.11.20
         public ObservableCollection<string> ResultsList
         {
@@ -180,6 +187,7 @@ namespace Complaints_WPF.ViewModels
             FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);           
             UnFilterCommand = new RelayCommand(UnFilteromplaints, null);
 
+            OZhClassificationList = new ObservableCollection<string>(complaintService.LoadOZhClassification());
             ResultsList = new ObservableCollection<string>(complaintService.LoadResults());     //moved this 2 from Load() so they don't have to reload every entry         
             ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors()); //for login window only
             ChiefsList = new ObservableCollection<string>(complaintService.LoadChiefs()); 
@@ -209,8 +217,8 @@ namespace Complaints_WPF.ViewModels
             {
                 Message = null;
             }
-
-            CurrentComplaint.ComplaintText = null;//string.Empty;
+            
+            CurrentComplaint.OZhComplaintText.OZhComplaint = null; //used to be this: //CurrentComplaint.ComplaintText = null;//string.Empty;
             CurrentComplaint.Citizen.BirthDate = null;//string.Empty;
             CurrentComplaint.Citizen.CitizenAdress = null;//string.Empty;
             CurrentComplaint.Comments = null;//string.Empty;
@@ -268,7 +276,7 @@ namespace Complaints_WPF.ViewModels
         }
         private bool RegisterComplaint_CanExecute()
         {
-            if (string.IsNullOrWhiteSpace(CurrentComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(CurrentComplaint.ComplaintText))
+            if (string.IsNullOrWhiteSpace(CurrentComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(CurrentComplaint.OZhComplaintText.OZhComplaint)) //b4: //string.IsNullOrWhiteSpace(CurrentComplaint.ComplaintText))
                 return false;
             else
                 return true;

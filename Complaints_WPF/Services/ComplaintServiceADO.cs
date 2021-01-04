@@ -49,7 +49,7 @@ namespace Complaints_WPF.Models
                             complaint.ComplaintID = dataReader.GetInt32(0);
                             complaint.ReceiptDate = dataReader.GetDateTime(1);
                             complaint.Citizen.CitizenName = dataReader.GetString(2);
-                            complaint.ComplaintText = dataReader.GetString(3);
+                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(3);    //b4://complaint.ComplaintText = dataReader.GetString(3);
                             if (!dataReader.IsDBNull(4)) { complaint.Result.Rezolution = dataReader.GetString(4); }
                             //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
 
@@ -97,7 +97,7 @@ namespace Complaints_WPF.Models
                             complaint.ComplaintID = dataReader.GetInt32(0);
                             complaint.ReceiptDate = dataReader.GetDateTime(1);
                             complaint.Citizen.CitizenName = dataReader.GetString(2);
-                            complaint.ComplaintText = dataReader.GetString(3);
+                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(3);    //b4://complaint.ComplaintText = dataReader.GetString(3);
                             if (!dataReader.IsDBNull(4)) { complaint.Result.Rezolution = dataReader.GetString(4); }
 
                             if (!dataReader.IsDBNull(5)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(5); }
@@ -132,21 +132,16 @@ namespace Complaints_WPF.Models
 
                 using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
                 {
-                    //if (dataReader.HasRows)
-                    //{
-                    //    while (dataReader.Read())
-                    //    {
-
-                    //    }
-                    //}
-
-                    OZhClassification oZh = new OZhClassification();
-                    oZh.OZhComplaint = dataReader.GetString(1);
-
-                    OZhClassificationList.Add(oZh.OZhComplaint);
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            OZhClassification oZh = new OZhClassification();
+                            oZh.OZhComplaint = dataReader.GetString(1);
+                            OZhClassificationList.Add(oZh.OZhComplaint);
+                        }
+                    }
                 }
-
-                return OZhClassificationList;
             }
             catch (SqlException ex)
             {
@@ -156,6 +151,8 @@ namespace Complaints_WPF.Models
             {
                 SqlConnect.Close();
             }
+
+            return OZhClassificationList;
         }
 
         public List<string> LoadProsecutors()
@@ -272,7 +269,7 @@ namespace Complaints_WPF.Models
         public bool AddToComplaintList(Complaint newComplaint, string prosName)
         {
             bool isAdded = false;
-            if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
+            if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.OZhComplaintText.OZhComplaint))       //b4: //string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
                 throw new ArgumentException("Поля имя и текст жалобы болжны быть заполнены");
 
             #region works well with sp_2
@@ -304,7 +301,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@occupation", newComplaint.Citizen.Occupation);
                 SqlCommand.Parameters.AddWithValue("@phoneNumber", newComplaint.Citizen.PhoneNumber);
                 SqlCommand.Parameters.AddWithValue("@email", newComplaint.Citizen.Email);
-                SqlCommand.Parameters.AddWithValue("@content", newComplaint.ComplaintText);
+                SqlCommand.Parameters.AddWithValue("@content", newComplaint.OZhComplaintText.OZhComplaint);  //b4: //newComplaint.ComplaintText);
                 SqlCommand.Parameters.AddWithValue("@pageNum", newComplaint.PageNum);
                 SqlCommand.Parameters.AddWithValue("@appendNum", newComplaint.AppendNum);
                 SqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
@@ -335,7 +332,7 @@ namespace Complaints_WPF.Models
         public bool AddToComplaintListUpd(Complaint newComplaint, string prosName)
         {
             bool isAdded = false;
-            if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
+            if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.OZhComplaintText.OZhComplaint))  //b4: //string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
                 throw new ArgumentException("Поля имя и текст жалобы болжны быть заполнены");
 
             try
@@ -349,7 +346,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@occupation", newComplaint.Citizen.Occupation);
                 SqlCommand.Parameters.AddWithValue("@phoneNumber", newComplaint.Citizen.PhoneNumber);
                 SqlCommand.Parameters.AddWithValue("@email", newComplaint.Citizen.Email);
-                SqlCommand.Parameters.AddWithValue("@content", newComplaint.ComplaintText);
+                SqlCommand.Parameters.AddWithValue("@content", newComplaint.OZhComplaintText.OZhComplaint);   //b4: // newComplaint.ComplaintText);
                 SqlCommand.Parameters.AddWithValue("@pageNum", newComplaint.PageNum);
                 SqlCommand.Parameters.AddWithValue("@appendNum", newComplaint.AppendNum);
                 SqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
@@ -390,7 +387,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@email", complToUpdate.Citizen.Email);
 
                 SqlCommand.Parameters.AddWithValue("@dateTime", complToUpdate.ReceiptDate);
-                SqlCommand.Parameters.AddWithValue("@content", complToUpdate.ComplaintText);
+                SqlCommand.Parameters.AddWithValue("@content", complToUpdate.OZhComplaintText.OZhComplaint);   //b4: // complToUpdate.ComplaintText);
                 SqlCommand.Parameters.AddWithValue("@pageNum", complToUpdate.PageNum);
                 SqlCommand.Parameters.AddWithValue("@appendNum", complToUpdate.AppendNum);
                 SqlCommand.Parameters.AddWithValue("@comments", complToUpdate.Comments);
@@ -440,7 +437,7 @@ namespace Complaints_WPF.Models
 
                         selectedComplaint.ComplaintID = dataReader.GetInt32(7);
                         selectedComplaint.ReceiptDate = dataReader.GetDateTime(8);
-                        selectedComplaint.ComplaintText = dataReader.GetString(9);
+                        selectedComplaint.OZhComplaintText.OZhComplaint = dataReader.GetString(9);        //b4: //selectedComplaint.ComplaintText = dataReader.GetString(9);
                         selectedComplaint.PageNum = dataReader.IsDBNull(10) ? null : dataReader.GetString(10);
                         selectedComplaint.AppendNum = dataReader.IsDBNull(11) ? null : dataReader.GetString(11);
                         selectedComplaint.Comments = dataReader.IsDBNull(12) ? null : dataReader.GetString(12);
