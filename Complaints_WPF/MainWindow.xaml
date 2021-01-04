@@ -8,7 +8,7 @@
         xmlns:uc="clr-namespace:Complaints_WPF.Views"
         xmlns:vm="clr-namespace:Complaints_WPF.ViewModels"
         WindowStartupLocation="CenterScreen"
-        Height="955" Width="1320"
+        Height="995" Width="1320"
         AllowsTransparency="True" WindowStyle="None"
         >
     <Window.DataContext>
@@ -29,16 +29,16 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
-                    <Image Source="Images\Logo.png" Height="25" Margin="3,0,0,0"/>
-                    <Label x:Name="lblProsecutor" Margin="10,0,10,0" FontSize="20" FontWeight="DemiBold" FontStyle="Italic" Foreground="Navy" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Image Source="Images\LogoLbl.png" Height="25" Margin="3,0,0,0"/>
+                    <Label x:Name="lblProsecutor" Margin="10,0,10,0" FontSize="22" FontFamily="Times New Roman" FontWeight="DemiBold" FontStyle="Italic" Foreground="Navy" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <!--<Label x:Name="lblByChief" Content="Прием руководителем:" FontSize="18" FontWeight="DemiBold" Foreground="DarkGray" VerticalAlignment="Center"/>-->
                     <!--<Label x:Name="lblChief" FontSize="20" FontWeight="DemiBold" FontStyle="Italic" Foreground="DarkGray" VerticalAlignment="Center"/>-->
                 </StackPanel>
-                <TextBlock  Grid.Column="1" Text="Журнал регистрации жалоб" FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock  Grid.Column="1" Text="Журнал регистрации жалоб" FontSize="32"  FontFamily="Times New Roman" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Height="20" Margin="0,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" WindowChrome.IsHitTestVisibleInChrome="True">
-                    <Button x:Name="btnMin"  Width="20" Margin="5,0" Background="Navy" Foreground="Yellow" FontWeight="Bold" Content="-" />
-                    <Button x:Name="btnMax"  Width="20" Margin="5,0" Background="Navy" Foreground="Yellow" FontWeight="Bold" Content="[ ]"/>
-                    <Button x:Name="btnClose"  Width="20" Margin="5,0,6,0" Background="Navy" Foreground="Yellow" FontWeight="Bold" Content="X"/>
+                    <Button x:Name="btnMin"  Width="20" Margin="5,0" Background="Navy" HorizontalContentAlignment="Center" Foreground="LightYellow" FontWeight="Bold" Content="-" />
+                    <Button x:Name="btnMax"  Width="20" Margin="5,0" Background="Navy" HorizontalContentAlignment="Center" Foreground="LightYellow" FontWeight="Bold" Content="[ ]"/>
+                    <Button x:Name="btnClose"  Width="20" Margin="5,0,6,0" Background="Navy" HorizontalContentAlignment="Center" Foreground="LightYellow" FontWeight="Bold" Content="X"/>
                 </StackPanel>
             </Grid>
         </Grid>

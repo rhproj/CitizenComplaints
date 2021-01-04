@@ -79,6 +79,8 @@ namespace Complaints_WPF.ViewModels
             }
         }
 
+
+        #region Filtering
         private string _dateToFilter;
         public string DateToFilter
         {
@@ -93,11 +95,17 @@ namespace Complaints_WPF.ViewModels
             set { _nameToFilter = value; OnPropertyChanged("NameToFilter"); }
         }
 
-        private string _contentToFilter;
-        public string ContentToFilter
+        //private string _contentToFilter;
+        //public string ContentToFilter
+        //{
+        //    get { return _contentToFilter; }
+        //    set { _contentToFilter = value; OnPropertyChanged("ContentToFilter"); }
+        //}
+        private string _oZhComplaintToFilter;
+        public string OZhComplaintToFilter
         {
-            get { return _contentToFilter; }
-            set { _contentToFilter = value; OnPropertyChanged("ContentToFilter"); }
+            get { return _oZhComplaintToFilter; }
+            set { _oZhComplaintToFilter = value; OnPropertyChanged("OZhComplaintToFilter"); }
         }
 
         private string _prosecutorToFilter;
@@ -112,7 +120,8 @@ namespace Complaints_WPF.ViewModels
         {
             get { return _chiefToFilter; }
             set { _chiefToFilter = value; OnPropertyChanged("ChiefToFilter"); }
-        }
+        } 
+        #endregion
         #region AUTHORIZATION
         public static string ProsecutorLogin { get; set; } //workaround for ProsName to be passed
         //public static string СhiefProsecutor { get; set; } //when Chiefs were upfront
@@ -218,12 +227,12 @@ namespace Complaints_WPF.ViewModels
                 Message = null;
             }
             
-            CurrentComplaint.OZhComplaintText.OZhComplaint = null; //used to be this: //CurrentComplaint.ComplaintText = null;//string.Empty;
             CurrentComplaint.Citizen.BirthDate = null;//string.Empty;
             CurrentComplaint.Citizen.CitizenAdress = null;//string.Empty;
             CurrentComplaint.Comments = null;//string.Empty;
             CurrentComplaint.PageNum = null;//string.Empty;
             CurrentComplaint.AppendNum = null;//string.Empty;
+            CurrentComplaint.OZhComplaintText.OZhComplaint = null; //used to be this: //CurrentComplaint.ComplaintText = null;//string.Empty;
             CurrentComplaint.Result.Rezolution = null;//string.Empty;
             CurrentComplaint.Citizen.Occupation = null;//string.Empty;
             CurrentComplaint.Citizen.PhoneNumber = null;//string.Empty;
@@ -368,9 +377,9 @@ namespace Complaints_WPF.ViewModels
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));
                 }
-                else if (!string.IsNullOrWhiteSpace(ContentToFilter))
+                else if (!string.IsNullOrWhiteSpace(OZhComplaintToFilter))    //b4: //ContentToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByСontent", "@content", ContentToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByСontent", "@content", OZhComplaintToFilter));
                 }
                 else if (!string.IsNullOrWhiteSpace(ProsecutorToFilter))
                 {
@@ -395,7 +404,7 @@ namespace Complaints_WPF.ViewModels
         {
             LoadData();
 
-            DateToFilter = NameToFilter = ContentToFilter = ProsecutorToFilter = ChiefToFilter = null;
+            DateToFilter = NameToFilter = OZhComplaintToFilter = ProsecutorToFilter = ChiefToFilter = null;     //ive replased ContentTo.. with oZh
         }
         #endregion
 

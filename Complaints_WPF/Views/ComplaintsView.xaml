@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Complaints_WPF.Views"
              xmlns:app="clr-namespace:Complaints_WPF.ViewModels"
              mc:Ignorable="d" 
-              d:DesignHeight="910" d:DesignWidth="1505"
+              d:DesignHeight="950" d:DesignWidth="1505"
              x:Name="MainUC"
              >
     <UserControl.Background>
@@ -74,7 +74,8 @@
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Column="1"  Height="28" Text="{Binding Path=DateToFilter, Mode=TwoWay}"/>
                 <TextBox Grid.Column="2"  Height="28"  Text="{Binding Path=NameToFilter, Mode=TwoWay}"/>
-                <TextBox Grid.Column="3"  Height="28"  Text="{Binding Path=ContentToFilter, Mode=TwoWay}"/>
+                <!--<TextBox Grid.Column="3"  Height="28"  Text="{Binding Path=ContentToFilter, Mode=TwoWay}"/>-->
+                <ComboBox Grid.Column="3" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=OZhClassificationList}" SelectedItem="{Binding Path=OZhComplaintToFilter}"/>
                 <!--<TextBox Grid.Column="4"  Height="30"  Text="{Binding Path=ProsecutorToFilter, Mode=TwoWay}"/>-->
                 <ComboBox Grid.Column="4" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=ProsecutorsList}" SelectedItem="{Binding Path=ProsecutorToFilter}"/>
                 <ComboBox Grid.Column="5" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=ChiefsList}" SelectedItem="{Binding Path=ChiefToFilter}"/>
@@ -167,9 +168,9 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Листов:" Grid.Column="1" HorizontalAlignment="Left" Height="22" Margin="0,0,5,0"/>
-                        <TextBox x:Name="tbPages" Grid.Column="2" Width="67" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.PageNum, Mode=TwoWay}"  />
+                        <TextBox x:Name="tbPages" Grid.Column="2" Width="65" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.PageNum, Mode=TwoWay}"  />
                         <TextBlock Grid.Column="3" Text="Приложений:" HorizontalAlignment="Left" Margin="5,0,2,0" Height="22" />
-                        <TextBox x:Name="tbApend" Grid.Column="4" Width="67" HorizontalAlignment="Left"  Text="{Binding CurrentComplaint.AppendNum, Mode=TwoWay}"    />
+                        <TextBox x:Name="tbApend" Grid.Column="4" Width="65" HorizontalAlignment="Left"  Text="{Binding CurrentComplaint.AppendNum, Mode=TwoWay}"    />
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.ColumnDefinitions>
@@ -232,7 +233,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <!--<TextBlock Text="Информация о заявителе:" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" />-->
-                        <Label Content="Информация о заявителе:" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" />
+                        <Label Content="Информация о заявителе:" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="20"  FontWeight="DemiBold" />
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
@@ -298,7 +299,7 @@
                     <Grid >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
                         <Button Height="55" Width="180" Margin="10" FontSize="20" VerticalAlignment="Center" Background="Navy" Foreground="LightYellow" Content="Зарегистрировать" Command="{Binding Path=RegisterCommand}">
                             <Button.Resources>
@@ -319,15 +320,16 @@
                     <ColumnDefinition Width="407*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.Background>
-                    <ImageBrush ImageSource="\Images\CoA2 WhiteSmoke.jpg" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="\Images\CoA2W.jpg" Stretch="UniformToFill"/>
                 </Grid.Background>
                 <DataGrid AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
                           ItemsSource="{Binding Path=ComplaintsList, Mode=TwoWay}" 
                           SelectedItem="{Binding Path=SelectedComplaint}"
-                          Background="Transparent" RowBackground="Transparent" AlternatingRowBackground="White"                          
+                          Background="Transparent" RowBackground="Transparent" AlternatingRowBackground="#f2f6ff"                          
                           BorderBrush="Navy"
                           HeadersVisibility="Column" Grid.ColumnSpan="2"
                           >
+                    <!--#e0eaff-->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="Background" Value="Navy" />
