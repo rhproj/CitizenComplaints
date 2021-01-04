@@ -131,7 +131,7 @@
                         </Button>
                     </Grid>
                     <Grid Margin="5,5">
-                        <Grid.RowDefinitions>
+                        <!--<Grid.RowDefinitions>
                             <RowDefinition Height="60" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
@@ -140,7 +140,20 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Содержание
                                    Обращения:" TextWrapping="Wrap" />
-                        <TextBox x:Name="tbComplaint" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding CurrentComplaint.ComplaintText, Mode=TwoWay}" />
+                        <TextBox x:Name="tbComplaint" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding CurrentComplaint.ComplaintText, Mode=TwoWay}" />-->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <!--<ColumnDefinition Width="107"/>-->
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Содержание Обращения:"/>
+                        <ComboBox Grid.Row="1" Height="40" Width="430"
+                                      ItemsSource="{Binding Path=ResultsList, Mode=TwoWay}"
+                                      Text="{Binding CurrentComplaint.Result.Rezolution, Mode=TwoWay}"
+                                      />
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>

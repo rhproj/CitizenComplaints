@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:Complaints_WPF.ViewModels"
         x:Name="authorizationWindow"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="550" Width="450"
+        Title="LoginWindow" Height="580" Width="450"
         WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:ComplaintsViewModel />
@@ -49,7 +49,7 @@
         <Style TargetType="TextBox" BasedOn="{StaticResource InputBoxesStyle}" />
         <Style TargetType="PasswordBox" BasedOn="{StaticResource InputBoxesStyle}" />
         <Style TargetType="Button">
-            <Setter Property="Background" Value="Yellow"/>
+            <Setter Property="Background" Value="LightYellow"/>
             <Setter Property="FontSize" Value="25"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
@@ -92,13 +92,13 @@
                 FontSize="20" FontWeight="Bold" Foreground="DarkViolet" VerticalContentAlignment="Center"
                 />-->
 
-                <Label Content="Пароль:" Margin="15,10,0,0"/>
+                <Label Content="Пароль:" Margin="15,20,0,0"/>
                 <PasswordBox Name="tbPassword" Height="40" IsEnabled="False" />
-                <Button Name="btnSubmit" Content="Войти" Margin="80,20" Height="50" Command="{Binding Path=AuthorizationCommand}" CommandParameter="{Binding ElementName=authorizationWindow}" Click="BtnSubmit_Click">
+                <Button Name="btnSubmit" Content="Войти" Margin="80,30" Height="50" Command="{Binding Path=AuthorizationCommand}" CommandParameter="{Binding ElementName=authorizationWindow}" Click="BtnSubmit_Click">
                     <!--  CloseWindowCommand-->
                     <Button.Resources>
                         <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="20" />
+                            <Setter Property="CornerRadius" Value="15" />
                         </Style>
                     </Button.Resources>
                 </Button>

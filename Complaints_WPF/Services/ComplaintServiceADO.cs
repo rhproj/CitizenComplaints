@@ -120,6 +120,43 @@ namespace Complaints_WPF.Models
             return listOfComplaints;
         }
 
+        public List<string> LoadOZhClassification()
+        {
+            List<string> OZhClassificationList = new List<string>();
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandText = "sp_LoadOZhClassification";
+
+                SqlConnect.Open();
+
+                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                {
+                    //if (dataReader.HasRows)
+                    //{
+                    //    while (dataReader.Read())
+                    //    {
+
+                    //    }
+                    //}
+
+                    OZhClassification oZh = new OZhClassification();
+                    oZh.OZhComplaint = dataReader.GetString(1);
+
+                    OZhClassificationList.Add(oZh.OZhComplaint);
+                }
+
+                return OZhClassificationList;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+        }
 
         public List<string> LoadProsecutors()
         {
@@ -232,7 +269,7 @@ namespace Complaints_WPF.Models
 
 
         #region New Complaint:
-        public bool AddToComplaintList(Complaint newComplaint, string prosName, string chiefName)
+        public bool AddToComplaintList(Complaint newComplaint, string prosName)
         {
             bool isAdded = false;
             if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
@@ -273,7 +310,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
                 SqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
                 SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName); // newComplaint.Prosecutor.ProsecutorName);
-                SqlCommand.Parameters.AddWithValue("@chiefName", chiefName); //29.12
+                SqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName); //29.12
 
                 SqlConnect.Open();
                 isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false
@@ -295,7 +332,7 @@ namespace Complaints_WPF.Models
         //    throw new NotImplementedException();
         //}
 
-        public bool AddToComplaintListUpd(Complaint newComplaint, string prosName, string chiefName)
+        public bool AddToComplaintListUpd(Complaint newComplaint, string prosName)
         {
             bool isAdded = false;
             if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
@@ -318,7 +355,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
                 SqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
                 SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName); // newComplaint.Prosecutor.ProsecutorName);
-                SqlCommand.Parameters.AddWithValue("@chiefName", chiefName);
+                SqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName);
 
                 SqlConnect.Open(); //is this where the actuall StoredP called?
                 isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false
@@ -358,6 +395,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@appendNum", complToUpdate.AppendNum);
                 SqlCommand.Parameters.AddWithValue("@comments", complToUpdate.Comments);
                 SqlCommand.Parameters.AddWithValue("@result", complToUpdate.Result.Rezolution);
+                SqlCommand.Parameters.AddWithValue("@chiefName", complToUpdate.Chief.ChiefName);
 
                 SqlConnect.Open();
                 isUpdated = SqlCommand.ExecuteNonQuery() > 0;
@@ -407,6 +445,7 @@ namespace Complaints_WPF.Models
                         selectedComplaint.AppendNum = dataReader.IsDBNull(11) ? null : dataReader.GetString(11);
                         selectedComplaint.Comments = dataReader.IsDBNull(12) ? null : dataReader.GetString(12);
                         selectedComplaint.Result.Rezolution = dataReader.IsDBNull(13) ? null : dataReader.GetString(13);
+                        selectedComplaint.Chief.ChiefName = dataReader.IsDBNull(14) ? null : dataReader.GetString(14);
                     }
                 }
             }

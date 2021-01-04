@@ -108,7 +108,7 @@ namespace Complaints_WPF.ViewModels
         }
         #region AUTHORIZATION
         public static string ProsecutorLogin { get; set; } //workaround for ProsName to be passed
-        public static string СhiefProsecutor { get; set; }
+        //public static string СhiefProsecutor { get; set; } //when Chiefs were upfront
         //private string _loginName;
         //public string LoginName
         //{
@@ -195,12 +195,21 @@ namespace Complaints_WPF.ViewModels
             ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaints()); //GetAllComplaints());
         }
 
-        private void ClearEntryFields(bool withName)
+        private void ClearEntryFields(bool withName, bool withChief, bool withMessage)
         {
             if (withName)
             {
                 CurrentComplaint.Citizen.CitizenName = null;//string.Empty;
             }
+            if (withChief)
+            {
+                CurrentComplaint.Chief.ChiefName = null;
+            }
+            if (withMessage)
+            {
+                Message = null;
+            }
+
             CurrentComplaint.ComplaintText = null;//string.Empty;
             CurrentComplaint.Citizen.BirthDate = null;//string.Empty;
             CurrentComplaint.Citizen.CitizenAdress = null;//string.Empty;
@@ -218,7 +227,7 @@ namespace Complaints_WPF.ViewModels
 
         public void NewEntry()
         {
-            ClearEntryFields(true);
+            ClearEntryFields(true, true, true);
         }
 
         //07.Commands: now we create method = Action signature, and inside meth we call our EmpServise to actually save data
@@ -231,15 +240,15 @@ namespace Complaints_WPF.ViewModels
                 //isSaved = complaintService.AddToComplaintList(CurrentComplaint);
                 if (CurrentComplaint.Citizen.CitizenID == 0)
                 {
-                    isSaved = complaintService.AddToComplaintList(CurrentComplaint, ProsecutorLogin, СhiefProsecutor);
+                    isSaved = complaintService.AddToComplaintList(CurrentComplaint, ProsecutorLogin);
                 }
                 else if (CurrentComplaint.ComplaintID == 0) //Гражданин сущ-ет в базе
                 {
-                    isSaved = complaintService.AddToComplaintListUpd(CurrentComplaint, ProsecutorLogin, СhiefProsecutor); //
+                    isSaved = complaintService.AddToComplaintListUpd(CurrentComplaint, ProsecutorLogin); //
                 }
                 else
                 {
-                    isSaved = complaintService.UpdateComplaint(CurrentComplaint);
+                    isSaved = complaintService.UpdateComplaint(CurrentComplaint); //корректировка всего Заявления с инфой по гр-ну
                 }
 
                 LoadData(); //refreshes
@@ -250,7 +259,7 @@ namespace Complaints_WPF.ViewModels
                     Message = "Не удалось сохранить заявление";
                 //try later: //Message = isSaved? "Employee saved": "RegisterCommand failed";
 
-                ClearEntryFields(true);
+                ClearEntryFields(true, false, false);
             }
             catch (Exception ex) ///########///
             {
@@ -268,7 +277,7 @@ namespace Complaints_WPF.ViewModels
         public void FindCitizen()
         {
             //CurrentComplaint.CitizenID = 0; //better:
-            ClearEntryFields(false);
+            ClearEntryFields(false, false, true);
             try
             {
                 Complaint citizen = complaintService.SearchCitizen(CurrentComplaint.Citizen.CitizenName);
@@ -324,7 +333,7 @@ namespace Complaints_WPF.ViewModels
             {
                 Message = ex.Message;
             }
-            ClearEntryFields(true);
+            ClearEntryFields(true, false, false);
         }
         private bool DeleteComplaint_CanExecute()
         {
