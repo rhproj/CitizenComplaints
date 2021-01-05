@@ -308,6 +308,7 @@
                                 </Style>
                             </Button.Resources>
                         </Button>
+                        <Button x:Name="btn_Constructor" Grid.Row="1" Content="K" HorizontalAlignment="Left" Width="50" Click="Btn_Constructor_Click"/>
                         <Label Grid.Row="1" Content="{Binding Message}" Foreground="Black"/>
                     </Grid>
 

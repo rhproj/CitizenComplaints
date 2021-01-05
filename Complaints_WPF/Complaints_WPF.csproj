@@ -65,6 +65,9 @@
     <Compile Include="Models\OZhClassification.cs" />
     <Compile Include="Services\ComplaintServiceADO.cs" />
     <Compile Include="ViewModels\ComplaintsViewModel.cs" />
+    <Compile Include="Views\ComboConstructor.xaml.cs">
+      <DependentUpon>ComboConstructor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ComplaintsView.xaml.cs">
       <DependentUpon>ComplaintsView.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Style\StyleDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ComboConstructor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -130,19 +137,10 @@
     <Resource Include="Images\searchCitBtn.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\CoA2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="ComplaintsLogo.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\CoA2gray.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\CoA2 WhiteSmoke.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\CoA2W.jpg" />

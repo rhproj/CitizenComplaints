@@ -10,25 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Complaints_WPF.Views
 {
     /// <summary>
-    /// Interaction logic for ComplaintsView.xaml
+    /// Interaction logic for ComboConstructor.xaml
     /// </summary>
-    public partial class ComplaintsView : UserControl
+    public partial class ComboConstructor : Window
     {
-        public ComplaintsView()
+        public ComboConstructor()
         {
             InitializeComponent();
-        }
-
-        private void Btn_Constructor_Click(object sender, RoutedEventArgs e)
-        {
-            ComboConstructor comboConstr = new ComboConstructor();
-            comboConstr.ShowDialog();
+            btnClose.Click += (s, e) => Close();
         }
     }
 }
