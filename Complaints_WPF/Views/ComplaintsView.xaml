@@ -168,14 +168,14 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Листов:" Grid.Column="1" HorizontalAlignment="Left" Height="22" Margin="0,0,5,0"/>
-                        <TextBox x:Name="tbPages" Grid.Column="2" Width="65" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.PageNum, Mode=TwoWay}"  />
+                        <TextBox x:Name="tbPages" Grid.Column="2" Width="64" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.PageNum, Mode=TwoWay}"  />
                         <TextBlock Grid.Column="3" Text="Приложений:" HorizontalAlignment="Left" Margin="5,0,2,0" Height="22" />
-                        <TextBox x:Name="tbApend" Grid.Column="4" Width="65" HorizontalAlignment="Left"  Text="{Binding CurrentComplaint.AppendNum, Mode=TwoWay}"    />
+                        <TextBox x:Name="tbApend" Grid.Column="4" Width="63" HorizontalAlignment="Left"  Text="{Binding CurrentComplaint.AppendNum, Mode=TwoWay}"    />
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="133"/>
-                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="299"/>
                             <!--<ColumnDefinition Width="auto" />-->
 
                         </Grid.ColumnDefinitions>
@@ -341,6 +341,11 @@
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
                         </Style>
                     </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.RowStyle >
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Height" Value="28"/>
+                        </Style>
+                    </DataGrid.RowStyle>
                     <!--AlternationCount="{Binding Path=ComplaintsListEnumerator}"-->
                     <!-- EnableRowVirtualization="False"   -this add above to prevent errors in the row sequencing -->
                     <!-- EmpList is the prop that contains it all-->
@@ -348,7 +353,7 @@
                         <!--"{Binding Path=AlternationIndex, RelativeSource={RelativeSource AncestorType=DataGridRow}}"-->
                         <DataGridTextColumn Header="#" Width="30" 
                                                 Binding="{Binding Path=Enumerator}" />
-                        <DataGridTextColumn Header="Дата" Width="115"
+                        <DataGridTextColumn Header="Дата" Width="115" 
                                                 Binding="{Binding Path=ReceiptDate, StringFormat='{}{0:dd.MM.yy, HH:mm}'}" />
                         <DataGridTextColumn Header="Имя" Width="200" 
                                                 Binding="{Binding Path=Citizen.CitizenName}"/>

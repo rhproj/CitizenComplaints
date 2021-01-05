@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ComplaintsLogo.ico</ApplicationIcon>
+    <ApplicationIcon>LogoLbl.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -149,6 +149,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\LogoLbl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="LogoLbl.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
