@@ -25,7 +25,7 @@ namespace Complaints_WPF.Models
         #endregion
 
         #region METH
-        public List<Complaint> GetAllComplaints()
+        public List<Complaint> GetAllComplaints()  //old one, uses SP
         {
             List<Complaint> listOfComplaints = new List<Complaint>();  //list that will be fed by StoredP
             try
@@ -56,6 +56,53 @@ namespace Complaints_WPF.Models
                             if (!dataReader.IsDBNull(5)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(5); }
 
                             if (!dataReader.IsDBNull(6)) { complaint.Chief.ChiefName = dataReader.GetString(6); }
+                            listOfComplaints.Add(complaint);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+            return listOfComplaints;
+        } 
+
+        public List<Complaint> GetAllComplaintsByYear()  //using view
+        {
+            List<Complaint> listOfComplaints = new List<Complaint>();  //list that will be fed by StoredP
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.Text;
+                SqlCommand.CommandText = "select * from v_GetComplaintsByYear order by [N] desc"; //used to be sp_SelectAllComplaints01, without prosecs
+
+                SqlConnect.Open();
+                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        //int count = 0;
+
+                        while (dataReader.Read()) //what happens w/o while? it simply won't work
+                        {
+                            //count++;
+                            Complaint complaint = new Complaint();
+
+                            //complaint.Enumerator = count;
+                            complaint.Enumerator = dataReader.GetInt32(0);    //added new!
+                            complaint.ComplaintID = dataReader.GetInt32(1);
+                            complaint.ReceiptDate = dataReader.GetDateTime(2);
+                            complaint.Citizen.CitizenName = dataReader.GetString(3);
+                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(4);    //b4://complaint.ComplaintText = dataReader.GetString(3);
+                            if (!dataReader.IsDBNull(5)) { complaint.Result.Rezolution = dataReader.GetString(5); }
+                            //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
+                            if (!dataReader.IsDBNull(6)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(6); }
+                            if (!dataReader.IsDBNull(7)) { complaint.Chief.ChiefName = dataReader.GetString(7); }
                             listOfComplaints.Add(complaint);
                         }
                     }

@@ -206,8 +206,8 @@ namespace Complaints_WPF.ViewModels
             FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);           
             UnFilterCommand = new RelayCommand(UnFilteromplaints, null);
 
-            AddOzhCommand = new RelayCommand(AddToCombobox,null); //ComboConstructor
-            AddChiefCommand = new RelayCommand(AddToCombobox, null);
+            AddOzhCommand = new RelayCommand(AddToOzhCombobox, AddToCombobox_CanExecute); //ComboConstructor
+            AddChiefCommand = new RelayCommand(AddToChiefsCombobox, AddToCombobox_CanExecute);
 
             OZhClassificationList = new ObservableCollection<string>(complaintService.LoadOZhClassification());
             ResultsList = new ObservableCollection<string>(complaintService.LoadResults());     //moved this 2 from Load() so they don't have to reload every entry         
@@ -216,13 +216,14 @@ namespace Complaints_WPF.ViewModels
 
             LoadData();
         }
+
         #endregion
 
         #region METHODS (Mirrors whats in Services, but there we can use differend data base techniques)
 
         private void LoadData() //we repeating our GetAll method, why not have it somewhere once and use it? NO, cuz it's easier to feed it to ObsColl this way
         {
-            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaints()); //GetAllComplaints());
+            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear()); //GetAllComplaints()); //GetAllComplaints());
         }
 
         private void ClearEntryFields(bool withName, bool withChief, bool withMessage)
@@ -420,10 +421,23 @@ namespace Complaints_WPF.ViewModels
             DateToFilter = NameToFilter = OZhComplaintToFilter = ProsecutorToFilter = ChiefToFilter = null;     //ive replased ContentTo.. with oZh
         }
 
-
-        private void AddToCombobox()
+        private void AddToOzhCombobox()
         {
             ClearValueToAdd();
+        }
+
+        private void AddToChiefsCombobox()
+        {
+            ClearValueToAdd();
+        }
+
+
+        private bool AddToCombobox_CanExecute()
+        {
+            if (string.IsNullOrWhiteSpace(AddValueToCombobox))
+                return false;
+            else
+                return true;
         }
 
         private void ClearValueToAdd()

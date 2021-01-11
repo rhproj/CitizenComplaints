@@ -353,9 +353,9 @@
                     <DataGrid.Columns>
                         <!--"{Binding Path=AlternationIndex, RelativeSource={RelativeSource AncestorType=DataGridRow}}"-->
                         <DataGridTextColumn Header="#" Width="30" 
-                                                Binding="{Binding Path=Enumerator}" />
+                                                Binding="{Binding Path=Enumerator}"/>
                         <DataGridTextColumn Header="Дата" Width="115" 
-                                                Binding="{Binding Path=ReceiptDate, StringFormat='{}{0:dd.MM.yy, HH:mm}'}" />
+                                                Binding="{Binding Path=ReceiptDate, StringFormat='{}{0:dd.MM.yy, HH:mm}'}"/>
                         <DataGridTextColumn Header="Имя" Width="200" 
                                                 Binding="{Binding Path=Citizen.CitizenName}"/>
                         <DataGridTextColumn Header="Жалоба" Width="*" 
