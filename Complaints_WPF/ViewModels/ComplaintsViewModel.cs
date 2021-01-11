@@ -68,15 +68,11 @@ namespace Complaints_WPF.ViewModels
             set { _chiefsList = value; OnPropertyChanged("ChiefsList"); }
         }
 
-        private string _message; //Don't forget to implement it later
-        public string Message  //will be bind to tBlock in UI
+        private string _message; 
+        public string Message 
         {
             get { return _message; }
-            set
-            {
-                _message = value;
-                OnPropertyChanged("Message");
-            }
+            set{_message = value; OnPropertyChanged("Message");}
         }
 
 
@@ -120,7 +116,15 @@ namespace Complaints_WPF.ViewModels
         {
             get { return _chiefToFilter; }
             set { _chiefToFilter = value; OnPropertyChanged("ChiefToFilter"); }
-        } 
+        }
+
+        private string _addValueToCombobox;
+        public string AddValueToCombobox
+        {
+            get { return _addValueToCombobox; }
+            set { _addValueToCombobox = value; OnPropertyChanged("AddValueToCombobox"); }
+        }
+
         #endregion
         #region AUTHORIZATION
         public static string ProsecutorLogin { get; set; } //workaround for ProsName to be passed
@@ -175,6 +179,12 @@ namespace Complaints_WPF.ViewModels
         }
 
         public RelayCommand FilterCommand { get; }
+
+        #region ComboConstruct
+        public RelayCommand AddOzhCommand { get; set; }
+        public RelayCommand AddChiefCommand { get; set; }
+        #endregion
+
         #endregion
         #endregion
 
@@ -195,6 +205,9 @@ namespace Complaints_WPF.ViewModels
 
             FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);           
             UnFilterCommand = new RelayCommand(UnFilteromplaints, null);
+
+            AddOzhCommand = new RelayCommand(AddToCombobox,null); //ComboConstructor
+            AddChiefCommand = new RelayCommand(AddToCombobox, null);
 
             OZhClassificationList = new ObservableCollection<string>(complaintService.LoadOZhClassification());
             ResultsList = new ObservableCollection<string>(complaintService.LoadResults());     //moved this 2 from Load() so they don't have to reload every entry         
@@ -406,6 +419,18 @@ namespace Complaints_WPF.ViewModels
 
             DateToFilter = NameToFilter = OZhComplaintToFilter = ProsecutorToFilter = ChiefToFilter = null;     //ive replased ContentTo.. with oZh
         }
+
+
+        private void AddToCombobox()
+        {
+            ClearValueToAdd();
+        }
+
+        private void ClearValueToAdd()
+        {
+            AddValueToCombobox = null;
+        }
+
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
