@@ -79,7 +79,7 @@ namespace Complaints_WPF.Models
             {
                 SqlCommand.Parameters.Clear();
                 SqlCommand.CommandType = CommandType.Text;
-                SqlCommand.CommandText = "select * from v_GetComplaintsByYear order by [N] desc"; //used to be sp_SelectAllComplaints01, without prosecs
+                SqlCommand.CommandText = "select * from f_GetComplaintsByYear (2021) order by [N] desc"; //used to be sp_SelectAllComplaints01, without prosecs
 
                 SqlConnect.Open();
                 using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
