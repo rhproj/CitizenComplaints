@@ -118,7 +118,7 @@ namespace Complaints_WPF.ViewModels
             set { _chiefToFilter = value; OnPropertyChanged("ChiefToFilter"); }
         }
 
-        private string _addValueToCombobox;
+        private string _addValueToCombobox;  // K !
         public string AddValueToCombobox
         {
             get { return _addValueToCombobox; }
@@ -180,7 +180,7 @@ namespace Complaints_WPF.ViewModels
 
         public RelayCommand FilterCommand { get; }
 
-        #region ComboConstruct
+        #region ComboConstruct // K !
         public RelayCommand AddOzhCommand { get; set; }
         public RelayCommand AddChiefCommand { get; set; }
         #endregion
@@ -223,7 +223,7 @@ namespace Complaints_WPF.ViewModels
 
         private void LoadData() //we repeating our GetAll method, why not have it somewhere once and use it? NO, cuz it's easier to feed it to ObsColl this way
         {
-            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear()); //GetAllComplaints()); //GetAllComplaints());
+            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaints()); //GetAllComplaintsByYear("2021")); //
         }
 
         private void ClearEntryFields(bool withName, bool withChief, bool withMessage)
@@ -385,11 +385,11 @@ namespace Complaints_WPF.ViewModels
             {
                 if (!string.IsNullOrWhiteSpace(DateToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByDate", "@receiptDate", DateToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByDate", "@receiptDate", DateToFilter)); //FilterComplaintsFun(complaintService.SqlCommandFilterByDate, "[ReceiptDate]", DateToFilter, "2020")); //
                 }
                 else if (!string.IsNullOrWhiteSpace(NameToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));  //FilterComplaintsFun(complaintService.SqlCommandFilterByCitizenName, "[FullName]", NameToFilter, "2020"));  //
                 }
                 else if (!string.IsNullOrWhiteSpace(OZhComplaintToFilter))    //b4: //ContentToFilter))
                 {

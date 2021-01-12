@@ -72,14 +72,14 @@ namespace Complaints_WPF.Models
             return listOfComplaints;
         } 
 
-        public List<Complaint> GetAllComplaintsByYear()  //using view
+        public List<Complaint> GetAllComplaintsByYear(string year)  //using view
         {
             List<Complaint> listOfComplaints = new List<Complaint>();  //list that will be fed by StoredP
             try
             {
                 SqlCommand.Parameters.Clear();
                 SqlCommand.CommandType = CommandType.Text;
-                SqlCommand.CommandText = "select * from f_GetComplaintsByYear (2021) order by [N] desc"; //used to be sp_SelectAllComplaints01, without prosecs
+                SqlCommand.CommandText = $"select * from f_GetComplaintsByYear ({year}) order by [N] desc"; //used to be sp_SelectAllComplaints01, without prosecs
 
                 SqlConnect.Open();
                 using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
@@ -166,6 +166,62 @@ namespace Complaints_WPF.Models
             }
             return listOfComplaints;
         }
+
+
+        public delegate string FilterComplaintDel(string sqlParam, string param, string year);
+
+        public string SqlCommandFilterByDate(string sqlParam, string param, string year)
+        {
+            return $"select * from f_GetComplaintsByYear({year}) where SUBSTRING(Convert(varchar,{sqlParam},104),0,7)+SUBSTRING(Convert(varchar,{sqlParam},104),7,2) like '%' + '{param}' + '%' order by[N] desc";
+        }
+
+        public string SqlCommandFilterByCitizenName(string sqlParam, string param, string year)
+        {
+            return $"select * from f_GetComplaintsByYear({year}) where {sqlParam} like '%'+ '{param}' +'%' order by [N] desc";
+        }
+
+        public List<Complaint> FilterComplaintsFun(FilterComplaintDel filterComplaintDel, string sqlParam, string param, string year) // string receiptDate, string name, string content
+        {
+            List<Complaint> listOfComplaints = new List<Complaint>();
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.Text;
+                SqlCommand.CommandText = filterComplaintDel(sqlParam, param, year);
+
+                SqlConnect.Open();
+                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            Complaint complaint = new Complaint();
+
+                            complaint.Enumerator = dataReader.GetInt32(0);    
+                            complaint.ComplaintID = dataReader.GetInt32(1);
+                            complaint.ReceiptDate = dataReader.GetDateTime(2);
+                            complaint.Citizen.CitizenName = dataReader.GetString(3);
+                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(4);    
+                            if (!dataReader.IsDBNull(5)) { complaint.Result.Rezolution = dataReader.GetString(5); }
+                            if (!dataReader.IsDBNull(6)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(6); }
+                            if (!dataReader.IsDBNull(7)) { complaint.Chief.ChiefName = dataReader.GetString(7); }
+                            listOfComplaints.Add(complaint);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+            return listOfComplaints;
+        }
+
 
         public List<string> LoadOZhClassification()
         {
