@@ -76,7 +76,15 @@ namespace Complaints_WPF.ViewModels
         }
 
 
-        #region Filtering
+        #region Props to Filter
+        private string _numberToFilter;
+        public string NumberToFilter
+        {
+            get { return _numberToFilter; }
+            set { _numberToFilter = value; OnPropertyChanged("NumberToFilter"); }
+        }
+
+
         private string _dateToFilter;
         public string DateToFilter
         {
@@ -383,13 +391,17 @@ namespace Complaints_WPF.ViewModels
         {
             try
             {
-                if (!string.IsNullOrWhiteSpace(DateToFilter))
+                if (!string.IsNullOrWhiteSpace(NumberToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByDate", "@receiptDate", DateToFilter)); //FilterComplaintsFun(complaintService.SqlCommandFilterByDate, "[ReceiptDate]", DateToFilter, "2020")); //
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterByNumber, "[N]", NumberToFilter, "2021"));
+                }
+                else if (!string.IsNullOrWhiteSpace(DateToFilter))
+                {
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterByDate, "[ReceiptDate]", DateToFilter, "2021")); //FilterComplaints("sp_FilterComplaintsByDate", "@receiptDate", DateToFilter)); //
                 }
                 else if (!string.IsNullOrWhiteSpace(NameToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));  //FilterComplaintsFun(complaintService.SqlCommandFilterByCitizenName, "[FullName]", NameToFilter, "2020"));  //
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterByCitizenName, "[FullName]", NameToFilter, "2021"));  //FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));  //
                 }
                 else if (!string.IsNullOrWhiteSpace(OZhComplaintToFilter))    //b4: //ContentToFilter))
                 {

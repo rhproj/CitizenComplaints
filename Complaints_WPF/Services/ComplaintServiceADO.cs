@@ -171,6 +171,11 @@ namespace Complaints_WPF.Models
         #region Filtering
         public delegate string FilterComplaintDel(string sqlParam, string param, string year);
 
+        public string SqlCommandFilterByNumber(string sqlParam, string param, string year)
+        {
+            return $"select * from f_GetComplaintsByYear({year}) where {sqlParam} = '{param}'";
+        }
+
         public string SqlCommandFilterByDate(string sqlParam, string param, string year)
         {
             return $"select * from f_GetComplaintsByYear({year}) where SUBSTRING(Convert(varchar,{sqlParam},104),0,7)+SUBSTRING(Convert(varchar,{sqlParam},104),7,2) like '%' + '{param}' + '%' order by[N] desc";
