@@ -393,7 +393,7 @@ namespace Complaints_WPF.ViewModels
             {
                 if (!string.IsNullOrWhiteSpace(NumberToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterByNumber, "[N]", NumberToFilter, "2021"));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[N]", NumberToFilter, "2021"));
                 }
                 else if (!string.IsNullOrWhiteSpace(DateToFilter))
                 {
@@ -401,23 +401,23 @@ namespace Complaints_WPF.ViewModels
                 }
                 else if (!string.IsNullOrWhiteSpace(NameToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterByCitizenName, "[FullName]", NameToFilter, "2021"));  //FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));  //
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterLike, "[FullName]", NameToFilter, "2021"));  //FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));  //
                 }
                 else if (!string.IsNullOrWhiteSpace(OZhComplaintToFilter))    //b4: //ContentToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByСontent", "@content", OZhComplaintToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[Content]", OZhComplaintToFilter, "2021"));  //FilterComplaints("sp_FilterComplaintsByСontent", "@content", OZhComplaintToFilter));
                 }
                 else if (!string.IsNullOrWhiteSpace(ProsecutorToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByProsecutor", "@prosecutor", ProsecutorToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ProsecutorName]", ProsecutorToFilter, "2021")); //FilterComplaints("sp_FilterComplaintsByProsecutor", "@prosecutor", ProsecutorToFilter));
                 }
                 else if (!string.IsNullOrWhiteSpace(ChiefToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaints("sp_FilterComplaintsByChief", "@chiefName", ChiefToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ChiefName]", ChiefToFilter, "2021"));  //FilterComplaints("sp_FilterComplaintsByChief", "@chiefName", ChiefToFilter));
                 }
                 else
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaints()); //GetAllComplaints());
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear("2021")); //GetAllComplaints());
                 }
             }
             catch (Exception ex)

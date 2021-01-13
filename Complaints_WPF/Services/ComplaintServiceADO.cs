@@ -171,9 +171,9 @@ namespace Complaints_WPF.Models
         #region Filtering
         public delegate string FilterComplaintDel(string sqlParam, string param, string year);
 
-        public string SqlCommandFilterByNumber(string sqlParam, string param, string year)
+        public string SqlCommandFilterEquals(string sqlParam, string param, string year)
         {
-            return $"select * from f_GetComplaintsByYear({year}) where {sqlParam} = '{param}'";
+            return $"select * from f_GetComplaintsByYear({year}) where {sqlParam} = '{param}' order by [N] desc";
         }
 
         public string SqlCommandFilterByDate(string sqlParam, string param, string year)
@@ -181,10 +181,16 @@ namespace Complaints_WPF.Models
             return $"select * from f_GetComplaintsByYear({year}) where SUBSTRING(Convert(varchar,{sqlParam},104),0,7)+SUBSTRING(Convert(varchar,{sqlParam},104),7,2) like '%' + '{param}' + '%' order by[N] desc";
         }
 
-        public string SqlCommandFilterByCitizenName(string sqlParam, string param, string year)
+        public string SqlCommandFilterLike(string sqlParam, string param, string year)
         {
             return $"select * from f_GetComplaintsByYear({year}) where {sqlParam} like '%'+ '{param}' +'%' order by [N] desc";
         }
+
+        //public string SqlCommandFilterByContent(string sqlParam, string param, string year)
+        //{
+        //    return $"select * from f_GetComplaintsByYear({year}) where {sqlParam} = '{param}'";
+        //}
+
 
         public List<Complaint> FilterComplaintsFun(FilterComplaintDel filterComplaintDel, string sqlParam, string param, string year) // string receiptDate, string name, string content
         {
