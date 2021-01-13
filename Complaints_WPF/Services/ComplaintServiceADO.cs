@@ -20,7 +20,7 @@ namespace Complaints_WPF.Models
             SqlConnect = new SqlConnection(ConfigurationManager.ConnectionStrings["cs_ComplaintsADO"].ConnectionString);
             SqlCommand = new SqlCommand();
             SqlCommand.Connection = SqlConnect;
-            SqlCommand.CommandType = CommandType.StoredProcedure;
+            //SqlCommand.CommandType = CommandType.StoredProcedure;
         }
         #endregion
 
@@ -125,6 +125,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure; 
                 SqlCommand.CommandText = storedProc;
                 SqlCommand.Parameters.AddWithValue(sp_param, param);
 
@@ -167,7 +168,7 @@ namespace Complaints_WPF.Models
             return listOfComplaints;
         }
 
-
+        #region Filtering
         public delegate string FilterComplaintDel(string sqlParam, string param, string year);
 
         public string SqlCommandFilterByDate(string sqlParam, string param, string year)
@@ -221,7 +222,7 @@ namespace Complaints_WPF.Models
             }
             return listOfComplaints;
         }
-
+        #endregion
 
         public List<string> LoadOZhClassification()
         {
@@ -229,6 +230,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_LoadOZhClassification";
 
                 SqlConnect.Open();
@@ -265,6 +267,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_LoadProsecutors";
 
                 SqlConnect.Open();
@@ -301,6 +304,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_LoadChief";
 
                 SqlConnect.Open();
@@ -337,6 +341,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_SelectAllResults";
 
                 SqlConnect.Open();
@@ -366,8 +371,6 @@ namespace Complaints_WPF.Models
             return resultsList;
         }
 
-
-
         #region New Complaint:
         public bool AddToComplaintList(Complaint newComplaint, string prosName)
         {
@@ -375,27 +378,10 @@ namespace Complaints_WPF.Models
             if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.OZhComplaintText.OZhComplaint))       //b4: //string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
                 throw new ArgumentException("Поля имя и текст жалобы болжны быть заполнены");
 
-            #region works well with sp_2
-            //try
-            //{
-            //    SqlCommand.Parameters.Clear();
-            //    SqlCommand.CommandText = "sp_InsertComplaint2"; //think of the way to create if/switch with another SP_ where Citizen already exists
-
-            //    SqlCommand.Parameters.AddWithValue("@fullName", newComplaint.CitizenName);
-            //    SqlCommand.Parameters.AddWithValue("@addressLine", newComplaint.CitizenAdress);
-            //    SqlCommand.Parameters.AddWithValue("@phoneNumber", newComplaint.PhoneNumber);
-            //    SqlCommand.Parameters.AddWithValue("@content", newComplaint.ComplaintText);
-            //    SqlCommand.Parameters.AddWithValue("@pageNum", newComplaint.PageNum);
-
-            //    SqlConnect.Open(); //is this where the actuall StoredP called?
-
-            //    isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false
-            //} 
-            #endregion
-
             try
             {
                 SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_InsertComplaint"; //think of the way to create if/switch with another SP_ where Citizen already exists
 
                 SqlCommand.Parameters.AddWithValue("@fullName", newComplaint.Citizen.CitizenName);
@@ -427,11 +413,6 @@ namespace Complaints_WPF.Models
             return isAdded;
         }
 
-        //internal bool AddToComplaintList(Complaint currentComplaint, object prosecutorsLogin)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public bool AddToComplaintListUpd(Complaint newComplaint, string prosName)
         {
             bool isAdded = false;
@@ -441,6 +422,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_InsertComplaintUpd";
 
                 SqlCommand.Parameters.AddWithValue("@personId", newComplaint.Citizen.CitizenID);
@@ -479,6 +461,7 @@ namespace Complaints_WPF.Models
             {
                 //may be: if currentC != selectedC ... //to ovoid overwriting //NO! only in sp it could be done.?. i think
                 SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_UpdateComplaint";
 
                 SqlCommand.Parameters.AddWithValue("@personId", complToUpdate.Citizen.CitizenID);
@@ -518,6 +501,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_EditComplaint";
                 SqlCommand.Parameters.AddWithValue("@fullName", citizenName);
                 SqlCommand.Parameters.AddWithValue("@dateTime", dateTime);
@@ -566,6 +550,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_SelectPersonByName";
                 SqlCommand.Parameters.AddWithValue("@fullName", citizenName);
 
@@ -623,6 +608,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_DeleteComplaintByID";
                 SqlCommand.Parameters.AddWithValue("@complaintID", id);
                 //SqlCommand.Parameters.AddWithValue("@dateTime", dateTime);

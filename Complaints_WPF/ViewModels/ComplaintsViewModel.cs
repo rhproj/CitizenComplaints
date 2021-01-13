@@ -223,7 +223,7 @@ namespace Complaints_WPF.ViewModels
 
         private void LoadData() //we repeating our GetAll method, why not have it somewhere once and use it? NO, cuz it's easier to feed it to ObsColl this way
         {
-            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaints()); //GetAllComplaintsByYear("2021")); //
+            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear("2021")); //GetAllComplaints()); //
         }
 
         private void ClearEntryFields(bool withName, bool withChief, bool withMessage)
@@ -282,12 +282,12 @@ namespace Complaints_WPF.ViewModels
                     isSaved = complaintService.UpdateComplaint(CurrentComplaint); //корректировка всего Заявления с инфой по гр-ну
                 }
 
-                LoadData(); //refreshes
-
                 if (isSaved)
                     Message = "Заявление сохранено";
                 else
                     Message = "Не удалось сохранить заявление";
+
+                LoadData(); //refreshes
                 //try later: //Message = isSaved? "Employee saved": "RegisterCommand failed";
 
                 ClearEntryFields(true, false, false);
