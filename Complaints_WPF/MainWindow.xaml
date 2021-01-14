@@ -35,6 +35,7 @@
                     <!--<Label x:Name="lblChief" FontSize="20" FontWeight="DemiBold" FontStyle="Italic" Foreground="DarkGray" VerticalAlignment="Center"/>-->
                 </StackPanel>
                 <TextBlock  Grid.Column="1" Text="Журнал регистрации жалоб" FontSize="32"  FontFamily="Times New Roman" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--<TextBox IsEnabled="True" Grid.Column="1" Text="{Binding Path=CurrentYear, Mode=TwoWay}" Margin="10,0,0,0" FontSize="22"  FontFamily="Times New Roman" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Height="20" Margin="0,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" WindowChrome.IsHitTestVisibleInChrome="True">
                     <Button x:Name="btnMin"  Width="20" Margin="5,0" Background="Navy" HorizontalContentAlignment="Center" Foreground="LightYellow" FontWeight="Bold" Content="-" />
                     <Button x:Name="btnMax"  Width="20" Margin="5,0" Background="Navy" HorizontalContentAlignment="Center" Foreground="LightYellow" FontWeight="Bold" Content="[ ]"/>

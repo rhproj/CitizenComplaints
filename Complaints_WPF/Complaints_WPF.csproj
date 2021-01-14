@@ -151,5 +151,14 @@
   <ItemGroup>
     <Resource Include="LogoLbl.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\new_c.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit_c.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete_c.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -142,6 +142,17 @@ namespace Complaints_WPF.ViewModels
         #endregion
         #region AUTHORIZATION
         public static string ProsecutorLogin { get; set; } //workaround for ProsName to be passed
+
+        //public static string CurrentYear { get; set; }
+        //private string _currentYear;
+        //public string CurrentYear
+        //{
+        //    get { return _currentYear; }
+        //    set { _currentYear = value; OnPropertyChanged("CurrentYear"); }
+        //}
+
+        public static string YearToFilter { get; set; }
+
         //public static string СhiefProsecutor { get; set; } //when Chiefs were upfront
         //private string _loginName;
         //public string LoginName
@@ -208,6 +219,8 @@ namespace Complaints_WPF.ViewModels
             complaintService = new ComplaintServiceADO(); //using ADO.Net
             CurrentComplaint = new Complaint(); //? why do we need this? see if it can be omitted //NO cuz its thru this all fields are filled and passed to methods           
 
+            YearToFilter = DateTime.Now.Year.ToString();
+            
             _newEntryCommand = new RelayCommand(NewEntry, null);
             _registerCommand = new RelayCommand(RegisterComplaint, RegisterComplaint_CanExecute); //b/f not prop, cuz it's read-only (no set) And that's why no set! - we set it here!
 
@@ -228,16 +241,16 @@ namespace Complaints_WPF.ViewModels
             ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors()); //for login window only
             ChiefsList = new ObservableCollection<string>(complaintService.LoadChiefs()); 
 
-            LoadData();
+            LoadData(YearToFilter);
         }
 
         #endregion
 
         #region METHODS (Mirrors whats in Services, but there we can use differend data base techniques)
 
-        private void LoadData() //we repeating our GetAll method, why not have it somewhere once and use it? NO, cuz it's easier to feed it to ObsColl this way
+        private void LoadData(string year) //we repeating our GetAll method, why not have it somewhere once and use it? NO, cuz it's easier to feed it to ObsColl this way
         {
-            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear("2021")); //GetAllComplaints()); //
+            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(year)); //GetAllComplaints()); //
             CurrentNum = ComplaintsList.Count;
         }
 
@@ -303,7 +316,7 @@ namespace Complaints_WPF.ViewModels
                 else
                     Message = "Не удалось сохранить заявление";
 
-                LoadData(); //refreshes
+                LoadData(YearToFilter); //refreshes
                 //try later: //Message = isSaved? "Employee saved": "RegisterCommand failed";
 
                 ClearEntryFields(true, false, false);
@@ -353,7 +366,7 @@ namespace Complaints_WPF.ViewModels
             try
             {
                 //im thinking Clear Fields not req-ed since we asigning every field anyway
-                CurrentComplaint = complaintService.SelectComplaint("2021",SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);  //SelectComplaintFun("2021", SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);    //
+                CurrentComplaint = complaintService.SelectComplaint(YearToFilter, SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);  //SelectComplaintFun("2021", SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);    //
             }
             catch (Exception ex)
             {
@@ -361,6 +374,7 @@ namespace Complaints_WPF.ViewModels
             }
         }
 
+        #region DELETE has been disabled
         public void DeleteComplaint()
         {
             try
@@ -368,7 +382,7 @@ namespace Complaints_WPF.ViewModels
                 bool isDeleted = complaintService.DeleteComplaint(CurrentComplaint.ComplaintID); //, CurrentComplaint.ReceiptDate);
                 if (isDeleted)
                 {
-                    LoadData();
+                    LoadData(YearToFilter);
                     Message = "Жалоба удалена";
                 }
                 else
@@ -389,11 +403,7 @@ namespace Complaints_WPF.ViewModels
             else
                 return true;
         }
-
-        //private bool CanEvaluatorTrue()
-        //{
-        //    return true;
-        //}
+        #endregion
 
         private void FilterComplaints()
         {
@@ -401,31 +411,31 @@ namespace Complaints_WPF.ViewModels
             {
                 if (!string.IsNullOrWhiteSpace(NumberToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[N]", NumberToFilter, "2021"));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[N]", NumberToFilter, YearToFilter));
                 }
                 else if (!string.IsNullOrWhiteSpace(DateToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterByDate, "[ReceiptDate]", DateToFilter, "2021")); //FilterComplaints("sp_FilterComplaintsByDate", "@receiptDate", DateToFilter)); //
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterByDate, "[ReceiptDate]", DateToFilter, YearToFilter)); //FilterComplaints("sp_FilterComplaintsByDate", "@receiptDate", DateToFilter)); //
                 }
                 else if (!string.IsNullOrWhiteSpace(NameToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterLike, "[FullName]", NameToFilter, "2021"));  //FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));  //
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterLike, "[FullName]", NameToFilter, YearToFilter));  //FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));  //
                 }
                 else if (!string.IsNullOrWhiteSpace(OZhComplaintToFilter))    //b4: //ContentToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[Content]", OZhComplaintToFilter, "2021"));  //FilterComplaints("sp_FilterComplaintsByСontent", "@content", OZhComplaintToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[Content]", OZhComplaintToFilter, YearToFilter));  //FilterComplaints("sp_FilterComplaintsByСontent", "@content", OZhComplaintToFilter));
                 }
                 else if (!string.IsNullOrWhiteSpace(ProsecutorToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ProsecutorName]", ProsecutorToFilter, "2021")); //FilterComplaints("sp_FilterComplaintsByProsecutor", "@prosecutor", ProsecutorToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ProsecutorName]", ProsecutorToFilter, YearToFilter)); //FilterComplaints("sp_FilterComplaintsByProsecutor", "@prosecutor", ProsecutorToFilter));
                 }
                 else if (!string.IsNullOrWhiteSpace(ChiefToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ChiefName]", ChiefToFilter, "2021"));  //FilterComplaints("sp_FilterComplaintsByChief", "@chiefName", ChiefToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ChiefName]", ChiefToFilter, YearToFilter));  //FilterComplaints("sp_FilterComplaintsByChief", "@chiefName", ChiefToFilter));
                 }
                 else
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear("2021")); //GetAllComplaints());
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(YearToFilter)); //GetAllComplaints());
                 }
             }
             catch (Exception ex)
@@ -436,7 +446,7 @@ namespace Complaints_WPF.ViewModels
 
         private void UnFilteromplaints()
         {
-            LoadData();
+            LoadData(YearToFilter);
 
             DateToFilter = NameToFilter = OZhComplaintToFilter = ProsecutorToFilter = ChiefToFilter = null;     //ive replased ContentTo.. with oZh
         }
