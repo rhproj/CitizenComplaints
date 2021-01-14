@@ -306,10 +306,6 @@
                         <TextBox x:Name="tb" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Citizen.Email, Mode=TwoWay}" />
                     </Grid>
                     <Grid >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="30" />
-                        </Grid.RowDefinitions>
                         <Button Height="55" Width="180" Margin="10" FontSize="20" VerticalAlignment="Center" Background="Navy" Foreground="LightYellow" Content="Зарегистрировать" Command="{Binding Path=RegisterCommand}">
                             <Button.Resources>
                                 <Style TargetType="Border">
@@ -317,8 +313,8 @@
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="btn_Constructor" Grid.Row="1" Content="K" HorizontalAlignment="Left" Width="50" Click="Btn_Constructor_Click"/>
-                        <Label Grid.Row="1" Content="{Binding Message}" Foreground="Black"/>
+                        <Button x:Name="btn_Constructor" Grid.Row="1" VerticalAlignment="Bottom"  Content="K" HorizontalAlignment="Left" Width="50" Click="Btn_Constructor_Click"/>
+
                     </Grid>
 
                 </StackPanel>
@@ -383,8 +379,8 @@
                 </DataGrid>
                 <Grid Grid.Row="1" Grid.ColumnSpan="2" Background="Navy">
                     <Label Margin="5,-7,0,0" HorizontalAlignment="Left" Foreground="White" FontSize="15" Content="Зарегистрировано жалоб:"/>
-                    <!--<TextBlock Margin="53,-4,0,0" HorizontalAlignment="Left" Foreground="White" FontSize="12" Text="{Binding CurrentNum}" />-->
                     <Label Margin="193,-3,0,0" HorizontalAlignment="Left" Foreground="White"  Content="{Binding CurrentNum}"/>
+                    <Label Margin="0,-7,5,0" Grid.Row="1" HorizontalAlignment="Right" FontSize="15" Foreground="White" Content="{Binding Message}"/>
                 </Grid>
             </Grid>
         </Grid>
