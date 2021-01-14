@@ -107,22 +107,22 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="ИН Заявления:"/>
-                        <Label Grid.Column="1" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.ComplaintID}"/>
+                        <!--<Label Content="ИН Заявления:"/>
+                        <Label Grid.Column="1" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.ComplaintID}"/>-->
                         
                         <!--, Converter={StaticResource zeroLabelConverter}-->
                         
-                        <Label Grid.Column="2" Content="ИН Заявителя:"/>
-                        <Label x:Name="lblCitizenId" Grid.Column="3" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.Citizen.CitizenID}"/>
+                        <!--<Label Grid.Column="2" Content="ИН Заявителя:"/>
+                        <Label x:Name="lblCitizenId" Grid.Column="3" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.Citizen.CitizenID}"/>-->
                         <!--, Converter={StaticResource zeroLabelConverter}-->
                     </Grid>
-                    <Grid  Margin="5,0,5,0">
+                    <Grid  >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Label HorizontalAlignment="Right" FontSize="20"  FontWeight="DemiBold"  Content="Жалоба №:"/>
-                        <Label Grid.Column="1" HorizontalAlignment="Left" FontSize="20"  FontWeight="DemiBold" Content="{Binding CurrentComplaint.Enumerator}"  />
+                        <Label Grid.Column="0" HorizontalAlignment="Right" FontSize="20"  FontWeight="DemiBold"  Content="Жалоба №:"/>
+                        <TextBlock Grid.Column="1" Margin="0,1,0,0" VerticalAlignment="Center" FontSize="24" Foreground="LightYellow" FontWeight="Bold" FontStyle="Italic" Text="{Binding CurrentComplaint.Enumerator}"/>
                     </Grid>
                     <Grid Margin="5,7,5,5">
                         <Grid.RowDefinitions>
@@ -329,6 +329,10 @@
                     <ColumnDefinition Width="18*"/>
                     <ColumnDefinition Width="407*"/>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
                 <Grid.Background>
                     <ImageBrush ImageSource="\Images\CoA2W.jpg" Stretch="UniformToFill"/>
                 </Grid.Background>
@@ -377,8 +381,11 @@
                                                 Binding="{Binding Path=Chief.ChiefName}"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <!--<Border Grid.Column="1" Grid.Row="9" BorderBrush="Black" BorderThickness="1">
-                </Border>-->
+                <Grid Grid.Row="1" Grid.ColumnSpan="2" Background="Navy">
+                    <Label Margin="5,-7,0,0" HorizontalAlignment="Left" Foreground="White" FontSize="15" Content="Зарегистрировано жалоб:"/>
+                    <!--<TextBlock Margin="53,-4,0,0" HorizontalAlignment="Left" Foreground="White" FontSize="12" Text="{Binding CurrentNum}" />-->
+                    <Label Margin="193,-3,0,0" HorizontalAlignment="Left" Foreground="White"  Content="{Binding CurrentNum}"/>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

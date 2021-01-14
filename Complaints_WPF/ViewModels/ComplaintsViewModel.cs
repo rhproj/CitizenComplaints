@@ -68,8 +68,8 @@ namespace Complaints_WPF.ViewModels
             set { _chiefsList = value; OnPropertyChanged("ChiefsList"); }
         }
 
-        private string _currentNum; //13.01
-        public string CurrentNum
+        private int _currentNum; //13.01
+        public int CurrentNum
         {
             get { return _currentNum; }
             set { _currentNum = value; OnPropertyChanged("CurrentNum"); }
@@ -238,6 +238,7 @@ namespace Complaints_WPF.ViewModels
         private void LoadData() //we repeating our GetAll method, why not have it somewhere once and use it? NO, cuz it's easier to feed it to ObsColl this way
         {
             ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear("2021")); //GetAllComplaints()); //
+            CurrentNum = ComplaintsList.Count;
         }
 
         private void ClearEntryFields(bool withName, bool withChief, bool withMessage)
@@ -255,7 +256,7 @@ namespace Complaints_WPF.ViewModels
                 Message = null;
             }
 
-            //CurrentComplaint.Enumerator = 0;//activate later with increment !
+            CurrentComplaint.Enumerator = CurrentNum + 1;//activate later with increment !
             CurrentComplaint.Citizen.BirthDate = null;//string.Empty;
             CurrentComplaint.Citizen.CitizenAdress = null;//string.Empty;
             CurrentComplaint.Comments = null;//string.Empty;
