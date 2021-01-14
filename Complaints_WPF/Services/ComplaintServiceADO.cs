@@ -506,14 +506,15 @@ namespace Complaints_WPF.Models
         }
         #endregion
 
-        public Complaint SelectComplaint(string citizenName, DateTime dateTime)
+        public Complaint SelectComplaint(string year, string citizenName, DateTime dateTime)
         {
             Complaint selectedComplaint = null;
             try
             {
                 SqlCommand.Parameters.Clear();
                 SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_EditComplaint";
+                SqlCommand.CommandText = "sp_EditComplaintFromFunction";//"sp_EditComplaint";
+                SqlCommand.Parameters.AddWithValue("@year", year);
                 SqlCommand.Parameters.AddWithValue("@fullName", citizenName);
                 SqlCommand.Parameters.AddWithValue("@dateTime", dateTime);
 
@@ -541,6 +542,7 @@ namespace Complaints_WPF.Models
                         selectedComplaint.Comments = dataReader.IsDBNull(12) ? null : dataReader.GetString(12);
                         selectedComplaint.Result.Rezolution = dataReader.IsDBNull(13) ? null : dataReader.GetString(13);
                         selectedComplaint.Chief.ChiefName = dataReader.IsDBNull(14) ? null : dataReader.GetString(14);
+                        selectedComplaint.Enumerator = dataReader.GetInt32(15);
                     }
                 }
             }
@@ -554,6 +556,55 @@ namespace Complaints_WPF.Models
             }
             return selectedComplaint;
         }
+
+        public Complaint SelectComplaintFun(string year, string citizenName, DateTime dateTime)
+        {
+            Complaint selectedComplaint = null;
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                //SqlCommand.CommandType = CommandType.Text;
+                SqlCommand.CommandText = $"select * from f_PickAComplaint({year}) where [FullName] = '{citizenName}' and [ReceiptDate] = '{dateTime}'";
+
+                SqlConnect.Open();
+                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        dataReader.Read();
+                        selectedComplaint = new Complaint();
+
+                        selectedComplaint.Citizen.CitizenID = dataReader.GetInt32(0);
+                        selectedComplaint.Citizen.CitizenName = dataReader.GetString(1);
+                        selectedComplaint.Citizen.CitizenAdress = dataReader.IsDBNull(2) ? null : dataReader.GetString(2);
+                        selectedComplaint.Citizen.Occupation = dataReader.IsDBNull(3) ? null : dataReader.GetString(3);
+                        selectedComplaint.Citizen.PhoneNumber = dataReader.IsDBNull(4) ? null : dataReader.GetString(4);
+                        selectedComplaint.Citizen.Email = dataReader.IsDBNull(5) ? null : dataReader.GetString(5);
+                        selectedComplaint.Citizen.BirthDate = dataReader.IsDBNull(6) ? null : dataReader.GetString(6);
+
+                        selectedComplaint.ComplaintID = dataReader.GetInt32(7);
+                        selectedComplaint.ReceiptDate = dataReader.GetDateTime(8);
+                        selectedComplaint.OZhComplaintText.OZhComplaint = dataReader.GetString(9);        //b4: //selectedComplaint.ComplaintText = dataReader.GetString(9);
+                        selectedComplaint.PageNum = dataReader.IsDBNull(10) ? null : dataReader.GetString(10);
+                        selectedComplaint.AppendNum = dataReader.IsDBNull(11) ? null : dataReader.GetString(11);
+                        selectedComplaint.Comments = dataReader.IsDBNull(12) ? null : dataReader.GetString(12);
+                        selectedComplaint.Result.Rezolution = dataReader.IsDBNull(13) ? null : dataReader.GetString(13);
+                        selectedComplaint.Chief.ChiefName = dataReader.IsDBNull(14) ? null : dataReader.GetString(14);
+                        //selectedComplaint.Enumerator = dataReader.GetInt32(15);
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+            return selectedComplaint;
+        }
+
 
         public Complaint SearchCitizen(string citizenName)
         {

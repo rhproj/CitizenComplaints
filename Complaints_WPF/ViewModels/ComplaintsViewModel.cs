@@ -68,13 +68,19 @@ namespace Complaints_WPF.ViewModels
             set { _chiefsList = value; OnPropertyChanged("ChiefsList"); }
         }
 
+        private string _currentNum; //13.01
+        public string CurrentNum
+        {
+            get { return _currentNum; }
+            set { _currentNum = value; OnPropertyChanged("CurrentNum"); }
+        }
+
         private string _message; 
         public string Message 
         {
             get { return _message; }
             set{_message = value; OnPropertyChanged("Message");}
         }
-
 
         #region Props to Filter
         private string _numberToFilter;
@@ -180,11 +186,11 @@ namespace Complaints_WPF.ViewModels
             get { return _editCommand; }
         }
 
-        private RelayCommand _deleteComplaintCommand;
-        public RelayCommand DeleteComplaintCommand //{ get; }
-        {
-            get { return _deleteComplaintCommand; }
-        }
+        //private RelayCommand _deleteComplaintCommand;
+        //public RelayCommand DeleteComplaintCommand //{ get; }
+        //{
+        //    get { return _deleteComplaintCommand; }
+        //}
 
         public RelayCommand FilterCommand { get; }
 
@@ -209,7 +215,7 @@ namespace Complaints_WPF.ViewModels
             _findCitizenCommand = new RelayCommand(FindCitizen, null);
 
             _editCommand = new RelayCommand(EditComplaint, null);
-            _deleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
+            //_deleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
 
             FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);           
             UnFilterCommand = new RelayCommand(UnFilteromplaints, null);
@@ -248,7 +254,8 @@ namespace Complaints_WPF.ViewModels
             {
                 Message = null;
             }
-            
+
+            //CurrentComplaint.Enumerator = 0;//activate later with increment !
             CurrentComplaint.Citizen.BirthDate = null;//string.Empty;
             CurrentComplaint.Citizen.CitizenAdress = null;//string.Empty;
             CurrentComplaint.Comments = null;//string.Empty;
@@ -345,7 +352,7 @@ namespace Complaints_WPF.ViewModels
             try
             {
                 //im thinking Clear Fields not req-ed since we asigning every field anyway
-                CurrentComplaint = complaintService.SelectComplaint(SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);
+                CurrentComplaint = complaintService.SelectComplaint("2021",SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);  //SelectComplaintFun("2021", SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);    //
             }
             catch (Exception ex)
             {
