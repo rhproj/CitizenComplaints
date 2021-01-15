@@ -99,6 +99,7 @@ namespace Complaints_WPF.Models
                             complaint.ReceiptDate = dataReader.GetDateTime(2);
                             complaint.Citizen.CitizenName = dataReader.GetString(3);
                             complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(4);    //b4://complaint.ComplaintText = dataReader.GetString(3);
+
                             if (!dataReader.IsDBNull(5)) { complaint.Result.Rezolution = dataReader.GetString(5); }
                             //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
                             if (!dataReader.IsDBNull(6)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(6); }

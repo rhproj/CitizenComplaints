@@ -111,11 +111,19 @@ namespace Complaints_WPF.ViewModels
         //    get { return _contentToFilter; }
         //    set { _contentToFilter = value; OnPropertyChanged("ContentToFilter"); }
         //}
+
         private string _oZhComplaintToFilter;
         public string OZhComplaintToFilter
         {
             get { return _oZhComplaintToFilter; }
             set { _oZhComplaintToFilter = value; OnPropertyChanged("OZhComplaintToFilter"); }
+        }
+
+        private string _commentsToFilter;
+        public string CommentsToFilter
+        {
+            get { return _commentsToFilter; }
+            set { _commentsToFilter = value; OnPropertyChanged("CommentsToFilter"); }
         }
 
         private string _prosecutorToFilter;
