@@ -305,7 +305,15 @@
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="btn_Constructor" Grid.Row="1" VerticalAlignment="Bottom"  Content="K" HorizontalAlignment="Left" Width="50" Click="Btn_Constructor_Click"/>
+                        <Button x:Name="btn_Constructor" Grid.Row="1" VerticalAlignment="Bottom"  HorizontalAlignment="Left" Width="45" Height="45" Click="Btn_Constructor_Click">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="30"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                </Style>
+                            </Button.Resources>
+                            <Image Source="\Images\gear_c.png"/>
+                        </Button>
 
                     </Grid>
 

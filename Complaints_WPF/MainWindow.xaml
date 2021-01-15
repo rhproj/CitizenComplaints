@@ -29,8 +29,18 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
-                    <Image Source="Images\LogoLbl.png" Height="25" Margin="3,0,0,0"/>
+                    <!--<Image Source="Images\LogoLbl.png" Height="25" Margin="3,0,0,0"/>-->
+                    <Button Margin="5,0,0,0" Background="Transparent" Width="35" Height="35">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="30"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </Button.Resources>
+                        <Image Source="\Images\select_user.png"/>
+                    </Button>
                     <Label x:Name="lblProsecutor" Margin="6,0" FontSize="22" FontFamily="Times New Roman" FontWeight="DemiBold" FontStyle="Italic" Foreground="Navy" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
                     <!--<Label x:Name="lblByChief" Content="Прием руководителем:" FontSize="18" FontWeight="DemiBold" Foreground="DarkGray" VerticalAlignment="Center"/>-->
                     <!--<Label x:Name="lblChief" FontSize="20" FontWeight="DemiBold" FontStyle="Italic" Foreground="DarkGray" VerticalAlignment="Center"/>-->
                 </StackPanel>

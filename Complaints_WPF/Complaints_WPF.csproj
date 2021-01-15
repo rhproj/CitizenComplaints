@@ -178,5 +178,11 @@
   <ItemGroup>
     <Resource Include="Images\unfilter.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\gear_c.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\select_user.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
