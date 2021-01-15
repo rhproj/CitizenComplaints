@@ -448,7 +448,7 @@ namespace Complaints_WPF.ViewModels
         {
             LoadData(YearToFilter);
 
-            DateToFilter = NameToFilter = OZhComplaintToFilter = ProsecutorToFilter = ChiefToFilter = null;     //ive replased ContentTo.. with oZh
+            NumberToFilter = DateToFilter = NameToFilter = OZhComplaintToFilter = ProsecutorToFilter = ChiefToFilter = null;     //ive replased ContentTo.. with oZh
         }
 
         private void AddToOzhCombobox()
