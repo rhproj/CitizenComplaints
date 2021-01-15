@@ -100,10 +100,13 @@ namespace Complaints_WPF.Models
                             complaint.Citizen.CitizenName = dataReader.GetString(3);
                             complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(4);    //b4://complaint.ComplaintText = dataReader.GetString(3);
 
-                            if (!dataReader.IsDBNull(5)) { complaint.Result.Rezolution = dataReader.GetString(5); }
+                            if (!dataReader.IsDBNull(5)) { complaint.Comments = dataReader.GetString(5); }
+
+                            if (!dataReader.IsDBNull(6)) { complaint.Result.Rezolution = dataReader.GetString(6); }
+                            
                             //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
-                            if (!dataReader.IsDBNull(6)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(6); }
-                            if (!dataReader.IsDBNull(7)) { complaint.Chief.ChiefName = dataReader.GetString(7); }
+                            if (!dataReader.IsDBNull(7)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(7); }
+                            if (!dataReader.IsDBNull(8)) { complaint.Chief.ChiefName = dataReader.GetString(8); }
                             listOfComplaints.Add(complaint);
                         }
                     }
@@ -215,10 +218,13 @@ namespace Complaints_WPF.Models
                             complaint.ComplaintID = dataReader.GetInt32(1);
                             complaint.ReceiptDate = dataReader.GetDateTime(2);
                             complaint.Citizen.CitizenName = dataReader.GetString(3);
-                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(4);    
-                            if (!dataReader.IsDBNull(5)) { complaint.Result.Rezolution = dataReader.GetString(5); }
-                            if (!dataReader.IsDBNull(6)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(6); }
-                            if (!dataReader.IsDBNull(7)) { complaint.Chief.ChiefName = dataReader.GetString(7); }
+                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(4);
+
+                            if (!dataReader.IsDBNull(5)) { complaint.Comments = dataReader.GetString(5); }
+
+                            if (!dataReader.IsDBNull(6)) { complaint.Result.Rezolution = dataReader.GetString(6); }
+                            if (!dataReader.IsDBNull(7)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(7); }
+                            if (!dataReader.IsDBNull(8)) { complaint.Chief.ChiefName = dataReader.GetString(8); }
                             listOfComplaints.Add(complaint);
                         }
                     }

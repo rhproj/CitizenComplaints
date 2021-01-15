@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Complaints_WPF.Views"
              xmlns:app="clr-namespace:Complaints_WPF.ViewModels"
              mc:Ignorable="d" 
-              d:DesignHeight="950" d:DesignWidth="1505"
+              d:DesignHeight="956" d:DesignWidth="1505"
              x:Name="MainUC"
              >
     <UserControl.Background>

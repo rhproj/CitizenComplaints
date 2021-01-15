@@ -442,6 +442,10 @@ namespace Complaints_WPF.ViewModels
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[Content]", OZhComplaintToFilter, YearToFilter));  //FilterComplaints("sp_FilterComplaintsByСontent", "@content", OZhComplaintToFilter));
                 }
+                else if (!string.IsNullOrWhiteSpace(CommentsToFilter))
+                {
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterLike, "[Comments]", CommentsToFilter, YearToFilter));  //FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));  //
+                }
                 else if (!string.IsNullOrWhiteSpace(ProsecutorToFilter))
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ProsecutorName]", ProsecutorToFilter, YearToFilter)); //FilterComplaints("sp_FilterComplaintsByProsecutor", "@prosecutor", ProsecutorToFilter));
@@ -465,7 +469,7 @@ namespace Complaints_WPF.ViewModels
         {
             LoadData(YearToFilter);
 
-            NumberToFilter = DateToFilter = NameToFilter = OZhComplaintToFilter = ProsecutorToFilter = ChiefToFilter = null;     //ive replased ContentTo.. with oZh
+            NumberToFilter = DateToFilter = NameToFilter = OZhComplaintToFilter = CommentsToFilter = ProsecutorToFilter = ChiefToFilter = null;     //ive replased ContentTo.. with oZh
         }
 
         private void AddToOzhCombobox()
