@@ -160,5 +160,23 @@
   <ItemGroup>
     <Resource Include="Images\delete_c.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\excel_c.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\calc0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\descending-filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\filterG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\un_filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\unfilter.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

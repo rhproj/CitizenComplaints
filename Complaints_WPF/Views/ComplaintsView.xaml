@@ -41,47 +41,20 @@
         </Grid>-->
         <!--<Border Grid.Row="1" BorderThickness="2" BorderBrush="Black">
         </Border>-->
-        <Grid Grid.Row="1" Background="Navy">
+        
+        
+        
+        <!--<Grid Grid.Row="1" Background="Navy">
             <Grid.RowDefinitions>
                 <RowDefinition Height="45"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="450"/>
+                --><!--<ColumnDefinition Width="450"/>--><!--
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Новое" Command="{Binding Path=NewEntryCommand}" />
-                <Button Grid.Column="1" Content="Изменить" Command="{Binding Path=EditCommand}"/>
-                <!--<Button Grid.Column="2" Content="Удалить" Command="{Binding Path=DeleteComplaintCommand}"/>-->
-            </Grid>
-            <Grid Grid.Column="1" Margin="0,0,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="90"/>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="130"/>
-                    <ColumnDefinition Width="130"/>
-                    <ColumnDefinition Width="40"/>
-                    <ColumnDefinition Width="40"/>
-                </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0"  Height="28" Text="{Binding Path=NumberToFilter, Mode=TwoWay}"/>
-                <TextBox Grid.Column="1"  Height="28" Text="{Binding Path=DateToFilter, Mode=TwoWay}"/>
-                <TextBox Grid.Column="2"  Height="28"  Text="{Binding Path=NameToFilter, Mode=TwoWay}"/>
-                <!--<TextBox Grid.Column="3"  Height="28"  Text="{Binding Path=ContentToFilter, Mode=TwoWay}"/>-->
-                <ComboBox Grid.Column="3" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=OZhClassificationList}" SelectedItem="{Binding Path=OZhComplaintToFilter}"/>
-                <!--<TextBox Grid.Column="4"  Height="30"  Text="{Binding Path=ProsecutorToFilter, Mode=TwoWay}"/>-->
-                <ComboBox Grid.Column="4" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=ProsecutorsList}" SelectedItem="{Binding Path=ProsecutorToFilter}"/>
-                <ComboBox Grid.Column="5" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=ChiefsList}" SelectedItem="{Binding Path=ChiefToFilter}"/>
-                <Button Grid.Column="6" Content="Ф" HorizontalAlignment="Right" Width="35" Command="{Binding Path=FilterCommand}" />
-                <Button Grid.Column="7" Content="Н" HorizontalAlignment="Left" Width="35" Command="{Binding Path=UnFilterCommand}" />
-            </Grid>
-        </Grid>
+
+
+        </Grid>-->
 
         <Grid Grid.Row="2" >
             <Grid.ColumnDefinitions>
@@ -99,14 +72,33 @@
                 <StackPanel Orientation="Vertical">
                     <Grid Background="Navy">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="26" />
+                            <RowDefinition Height="66" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Padding="0" Command="{Binding Path=NewEntryCommand}" >
+                            <Image Source="\Images\new_c.png" Stretch="Fill" />
+                        </Button>
+                        <Button Grid.Column="1" Command="{Binding Path=EditCommand}">
+                            <Image Source="\Images\edit_c.png" Stretch="Fill" />
+                        </Button>
+
+                        <Button Grid.Column="2" Command="{Binding Path=DeleteComplaintCommand}">
+                            <Image Source="\Images\delete_c.png" Stretch="Fill"/>
+                        </Button>
+
+                        <Button Grid.Column="3" >
+                            <Image Source="\Images\excel_c.png" Stretch="Fill"/>
+                        </Button>
+
+                        <Button Grid.Column="4" >
+                            <Image Source="\Images\calc0.png" Stretch="Fill"/>
+                        </Button>
                         <!--<Label Content="ИН Заявления:"/>
                         <Label Grid.Column="1" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.ComplaintID}"/>-->
                         
@@ -121,7 +113,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" HorizontalAlignment="Right" FontSize="20"  FontWeight="DemiBold"  Content="Жалоба №:"/>
+                        <Label Grid.Column="0" HorizontalAlignment="Right" FontSize="20"  FontWeight="SemiBold"  Content="Жалоба №:"/>
                         <TextBlock Grid.Column="1" Margin="0,1,0,0" VerticalAlignment="Center" FontSize="24" Foreground="LightYellow" FontWeight="Bold" FontStyle="Italic" Text="{Binding CurrentComplaint.Enumerator}"/>
                     </Grid>
                     <Grid Margin="5,7,5,5">
@@ -326,13 +318,53 @@
                     <ColumnDefinition Width="407*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
                 <Grid.Background>
                     <ImageBrush ImageSource="\Images\CoA2W.jpg" Stretch="UniformToFill"/>
                 </Grid.Background>
-                <DataGrid AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
+                <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0" Background="Navy">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0"  Height="28" Text="{Binding Path=NumberToFilter, Mode=TwoWay}"/>
+                    <TextBox Grid.Column="1"  Height="28" Text="{Binding Path=DateToFilter, Mode=TwoWay}"/>
+                    <TextBox Grid.Column="2"  Height="28"  Text="{Binding Path=NameToFilter, Mode=TwoWay}"/>
+                    <!--<TextBox Grid.Column="3"  Height="28"  Text="{Binding Path=ContentToFilter, Mode=TwoWay}"/>-->
+                    <ComboBox Grid.Column="3" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=OZhClassificationList}" SelectedItem="{Binding Path=OZhComplaintToFilter}"/>
+                    <!--<TextBox Grid.Column="4"  Height="30"  Text="{Binding Path=ProsecutorToFilter, Mode=TwoWay}"/>-->
+                    <ComboBox Grid.Column="4" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=ProsecutorsList}" SelectedItem="{Binding Path=ProsecutorToFilter}"/>
+                    <ComboBox Grid.Column="5" Height="28" VerticalAlignment="Center" ItemsSource="{Binding Path=ChiefsList}" SelectedItem="{Binding Path=ChiefToFilter}"/>
+                    <Button Grid.Column="6" Height="35" Width="35" HorizontalAlignment="Right" Command="{Binding Path=FilterCommand}" >
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="30"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </Button.Resources>
+                        <Image Source="\Images\filterG.png"/>
+                    </Button>
+                    <Button Grid.Column="7" Height="35" HorizontalAlignment="Left" Width="35" Command="{Binding Path=UnFilterCommand}" >
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="30"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </Button.Resources>
+                        <Image Source="\Images\unfilter.png"/>
+                    </Button>
+                </Grid>
+
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
                           ItemsSource="{Binding Path=ComplaintsList, Mode=TwoWay}" 
                           SelectedItem="{Binding Path=SelectedComplaint}"
                           Background="Transparent" RowBackground="Transparent" AlternatingRowBackground="#f2f6ff"                          
@@ -361,15 +393,21 @@
                     <!-- EmpList is the prop that contains it all-->
                     <DataGrid.Columns>
                         <!--"{Binding Path=AlternationIndex, RelativeSource={RelativeSource AncestorType=DataGridRow}}"-->
-                        <DataGridTextColumn Header="#" Width="30" 
-                                                Binding="{Binding Path=Enumerator}"/>
-                        <DataGridTextColumn Header="Дата" Width="115" 
+                        <DataGridTextColumn Header="#" Width="45" TextBlock.TextAlignment="Center"  
+                                                Binding="{Binding Path=Enumerator}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                            <DataGridTextColumn Header="Дата" Width="52" 
                                                 Binding="{Binding Path=ReceiptDate, StringFormat='{}{0:dd.MM.yy, HH:mm}'}"/>
                         <DataGridTextColumn Header="Имя" Width="200" 
                                                 Binding="{Binding Path=Citizen.CitizenName}"/>
                         <DataGridTextColumn Header="Жалоба" Width="*" 
                                                 Binding="{Binding Path=OZhComplaintText.OZhComplaint}" />
-                        <DataGridTextColumn Header="Результат" Width="155" 
+                        <DataGridTextColumn Header="Результат" Width="90" 
                                                 Binding="{Binding Path=Result.Rezolution}"/>
                         <DataGridTextColumn Header="Принял(а)" Width="110" 
                                                 Binding="{Binding Path=Prosecutor.ProsecutorName}"/>
@@ -377,7 +415,7 @@
                                                 Binding="{Binding Path=Chief.ChiefName}"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <Grid Grid.Row="1" Grid.ColumnSpan="2" Background="Navy">
+                <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="Navy">
                     <Label Margin="5,-7,0,0" HorizontalAlignment="Left" Foreground="White" FontSize="15" Content="Зарегистрировано жалоб:"/>
                     <Label Margin="193,-3,0,0" HorizontalAlignment="Left" Foreground="White"  Content="{Binding CurrentNum}"/>
                     <Label Margin="0,-7,5,0" Grid.Row="1" HorizontalAlignment="Right" FontSize="15" Foreground="White" Content="{Binding Message}"/>

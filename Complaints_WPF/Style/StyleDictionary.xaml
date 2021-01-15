@@ -39,12 +39,13 @@
     </Style>-->
 
     <Style x:Key="BtnStyle" TargetType="Button" BasedOn="{StaticResource Base}">
-        <Setter Property="Background" Value="Cornsilk" />
+        <Setter Property="Background" Value="Transparent" />
         <!--#FFEEEAEA-->
         <Setter Property="FontFamily" Value="Helvetica"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Width" Value="120" />
-        <Setter Property="Height" Value="32"/>
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="BorderThickness" Value="0"/>
     </Style>
 
     <Style x:Key="BtnBorder" TargetType="Border">
