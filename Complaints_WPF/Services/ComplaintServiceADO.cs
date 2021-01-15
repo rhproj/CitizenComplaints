@@ -673,7 +673,6 @@ namespace Complaints_WPF.Models
                 SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_DeleteComplaintByID";
                 SqlCommand.Parameters.AddWithValue("@complaintID", id);
-                //SqlCommand.Parameters.AddWithValue("@dateTime", dateTime);
 
                 SqlConnect.Open();
                 //int rowAffected = SqlCommand.ExecuteNonQuery();

@@ -197,11 +197,11 @@ namespace Complaints_WPF.ViewModels
             get { return _editCommand; }
         }
 
-        //private RelayCommand _deleteComplaintCommand;
-        //public RelayCommand DeleteComplaintCommand //{ get; }
-        //{
-        //    get { return _deleteComplaintCommand; }
-        //}
+        private RelayCommand _deleteComplaintCommand;
+        public RelayCommand DeleteComplaintCommand //{ get; }
+        {
+            get { return _deleteComplaintCommand; }
+        }
 
         public RelayCommand FilterCommand { get; }
 
@@ -228,7 +228,7 @@ namespace Complaints_WPF.ViewModels
             _findCitizenCommand = new RelayCommand(FindCitizen, null);
 
             _editCommand = new RelayCommand(EditComplaint, null);
-            //_deleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
+            _deleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
 
             FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);           
             UnFilterCommand = new RelayCommand(UnFilteromplaints, null);
@@ -379,16 +379,25 @@ namespace Complaints_WPF.ViewModels
         {
             try
             {
-                bool isDeleted = complaintService.DeleteComplaint(CurrentComplaint.ComplaintID); //, CurrentComplaint.ReceiptDate);
-                if (isDeleted)
+                if (CurrentComplaint.Enumerator == CurrentNum)
                 {
-                    LoadData(YearToFilter);
-                    Message = "Жалоба удалена";
+                    bool isDeleted = complaintService.DeleteComplaint(CurrentComplaint.ComplaintID); //, CurrentComplaint.ReceiptDate);
+                    if (isDeleted)
+                    {
+                        LoadData(YearToFilter);
+                        Message = "Жалоба удалена";
+                        ClearEntryFields(true,true,true);
+                    }
+                    else
+                    {
+                        Message = "Не удалось удалить жалобу";
+                    }
                 }
                 else
                 {
-                    Message = "Не удалось удалить жалобу";
+                    Message = "Вы можете удалить только последнюю запись";
                 }
+
             }
             catch (Exception ex)
             {
