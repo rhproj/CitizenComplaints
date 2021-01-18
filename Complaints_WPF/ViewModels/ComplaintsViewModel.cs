@@ -217,7 +217,7 @@ namespace Complaints_WPF.ViewModels
         public RelayCommand AddOzhCommand { get; set; }
         public RelayCommand AddChiefCommand { get; set; }
         public RelayCommand DeleteChiefCommand { get; set; }
-        public RelayCommand DeleteOzhCommand { get; set; }
+        //public RelayCommand DeleteOzhCommand { get; set; }
         #endregion
 
         #endregion
@@ -246,7 +246,7 @@ namespace Complaints_WPF.ViewModels
             AddOzhCommand = new RelayCommand(AddToOzhCombobox, AddToCombobox_CanExecute); //ComboConstructor
             AddChiefCommand = new RelayCommand(AddToChiefsCombobox, AddToCombobox_CanExecute);
             DeleteChiefCommand = new RelayCommand(DeleteChief, DeleteChief_CanExecute);
-            DeleteOzhCommand = new RelayCommand(DeleteOzh, DeleteOzh_CanExecute);
+            //DeleteOzhCommand = new RelayCommand(DeleteOzh, DeleteOzh_CanExecute);
 
             OZhClassificationList = new ObservableCollection<string>(complaintService.LoadOZhClassification());
             ResultsList = new ObservableCollection<string>(complaintService.LoadResults());     //moved this 2 from Load() so they don't have to reload every entry         
@@ -510,7 +510,7 @@ namespace Complaints_WPF.ViewModels
         {
             try
             {
-                bool isDeleted = complaintService.DeleteFromChiefsList(CurrentComplaint.Chief.ChiefName);
+                bool isDeleted = complaintService.DeleteFromOZhClassification(CurrentComplaint.OZhComplaintText.OZhComplaint);
 
                 if (isDeleted)
                 {
