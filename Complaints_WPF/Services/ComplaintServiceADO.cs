@@ -695,6 +695,33 @@ namespace Complaints_WPF.Models
             }
             return isDeleted;
         }
+
+        public bool AddToChiefsList(string chiefName)
+        {
+            bool isAdded = false;
+
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
+                SqlCommand.CommandText = "sp_AddChief";
+
+                SqlCommand.Parameters.AddWithValue("@chiefName", chiefName); //29.12
+
+                SqlConnect.Open();
+                isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+            return isAdded;
+        }
+
         #endregion
     }
 }

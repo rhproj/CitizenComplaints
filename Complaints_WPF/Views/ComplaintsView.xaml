@@ -221,9 +221,6 @@
                                   Text="{Binding CurrentComplaint.Chief.ChiefName, Mode=TwoWay}"
                         />
                     </Grid>
-                    
-
-
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,5,0,0">

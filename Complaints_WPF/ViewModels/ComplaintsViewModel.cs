@@ -479,6 +479,22 @@ namespace Complaints_WPF.ViewModels
 
         private void AddToChiefsCombobox()
         {
+            try
+            { //calling EmpService(which already has data in it's ctor) by passing current Employee
+                bool isAdded = false;
+
+                isAdded = complaintService.AddToChiefsList(AddValueToCombobox);
+
+                if (isAdded)
+                    Message = "Руководитель добавлен";
+                else
+                    Message = "Не удалось добавить руководителя";
+            }
+            catch (Exception ex) ///########///
+            {
+                Message = ex.Message;
+            }
+
             ClearValueToAdd();
         }
 
