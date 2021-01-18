@@ -217,7 +217,7 @@
                                    руководитель:" TextWrapping="Wrap" HorizontalAlignment="Left" />
                         <ComboBox Grid.Column="1" x:Name="comBoxСhief" Width="299" Height="42"
                                   FontSize="20" FontWeight="Bold" Foreground="DarkBlue" HorizontalAlignment="Left"
-                                  ItemsSource="{Binding ChiefsList}"
+                                  ItemsSource="{Binding ChiefsList, Mode=TwoWay}"
                                   Text="{Binding CurrentComplaint.Chief.ChiefName, Mode=TwoWay}"
                         />
                     </Grid>

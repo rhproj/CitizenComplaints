@@ -696,6 +696,57 @@ namespace Complaints_WPF.Models
             return isDeleted;
         }
 
+        #region Editing Comboboxes
+        public bool AddToOZhClassification(string ozhComplaint)
+        {
+            bool isAddel = false;
+
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
+                SqlCommand.CommandText = "sp_AddOZhClasiff";
+                SqlCommand.Parameters.AddWithValue("@oZhComplaint", ozhComplaint);
+                
+                SqlConnect.Open();
+                isAddel = SqlCommand.ExecuteNonQuery() > 0;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+            return isAddel;
+        }
+
+        public bool DeleteFromOZhClassification(string ozhComplaint)
+        {
+            bool isDeleted = false;
+
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
+                SqlCommand.CommandText = "sp_DeleteOZhClasiff";
+                SqlCommand.Parameters.AddWithValue("@oZhComplaint", ozhComplaint);
+
+                SqlConnect.Open();
+                isDeleted = SqlCommand.ExecuteNonQuery() > 0;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+            return isDeleted;
+        }
+
         public bool AddToChiefsList(string chiefName)
         {
             bool isAdded = false;
@@ -705,7 +756,6 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.Clear();
                 SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_AddChief";
-
                 SqlCommand.Parameters.AddWithValue("@chiefName", chiefName); //29.12
 
                 SqlConnect.Open();
@@ -721,6 +771,33 @@ namespace Complaints_WPF.Models
             }
             return isAdded;
         }
+
+        public bool DeleteFromChiefsList(string chiefName)
+        {
+            bool isDeleted = false;
+
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
+                SqlCommand.CommandText = "sp_DeleteChief";
+                SqlCommand.Parameters.AddWithValue("@chiefName", chiefName);
+
+                SqlConnect.Open();
+                isDeleted = SqlCommand.ExecuteNonQuery() > 0;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+
+            return isDeleted;
+        }
+        #endregion
 
         #endregion
     }

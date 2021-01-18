@@ -105,13 +105,13 @@ namespace Complaints_WPF.ViewModels
             set { _nameToFilter = value; OnPropertyChanged("NameToFilter"); }
         }
 
-        //private string _contentToFilter;
+        //private string _contentToFilter; //before it became Combobox
         //public string ContentToFilter
         //{
         //    get { return _contentToFilter; }
         //    set { _contentToFilter = value; OnPropertyChanged("ContentToFilter"); }
         //}
-
+        
         private string _oZhComplaintToFilter;
         public string OZhComplaintToFilter
         {
@@ -216,6 +216,8 @@ namespace Complaints_WPF.ViewModels
         #region ComboConstruct // K !
         public RelayCommand AddOzhCommand { get; set; }
         public RelayCommand AddChiefCommand { get; set; }
+        public RelayCommand DeleteChiefCommand { get; set; }
+        public RelayCommand DeleteOzhCommand { get; set; }
         #endregion
 
         #endregion
@@ -243,6 +245,8 @@ namespace Complaints_WPF.ViewModels
 
             AddOzhCommand = new RelayCommand(AddToOzhCombobox, AddToCombobox_CanExecute); //ComboConstructor
             AddChiefCommand = new RelayCommand(AddToChiefsCombobox, AddToCombobox_CanExecute);
+            DeleteChiefCommand = new RelayCommand(DeleteChief, DeleteChief_CanExecute);
+            DeleteOzhCommand = new RelayCommand(DeleteOzh, DeleteOzh_CanExecute);
 
             OZhClassificationList = new ObservableCollection<string>(complaintService.LoadOZhClassification());
             ResultsList = new ObservableCollection<string>(complaintService.LoadResults());     //moved this 2 from Load() so they don't have to reload every entry         
@@ -251,7 +255,6 @@ namespace Complaints_WPF.ViewModels
 
             LoadData(YearToFilter);
         }
-
         #endregion
 
         #region METHODS (Mirrors whats in Services, but there we can use differend data base techniques)
@@ -382,7 +385,6 @@ namespace Complaints_WPF.ViewModels
             }
         }
 
-        #region DELETE has been disabled
         public void DeleteComplaint()
         {
             try
@@ -405,7 +407,6 @@ namespace Complaints_WPF.ViewModels
                 {
                     Message = "Вы можете удалить только последнюю запись";
                 }
-
             }
             catch (Exception ex)
             {
@@ -420,7 +421,7 @@ namespace Complaints_WPF.ViewModels
             else
                 return true;
         }
-        #endregion
+
 
         private void FilterComplaints()
         {
@@ -472,9 +473,72 @@ namespace Complaints_WPF.ViewModels
             NumberToFilter = DateToFilter = NameToFilter = OZhComplaintToFilter = CommentsToFilter = ProsecutorToFilter = ChiefToFilter = null;     //ive replased ContentTo.. with oZh
         }
 
+        #region Editing
+        private bool AddToCombobox_CanExecute()
+        {
+            if (string.IsNullOrWhiteSpace(AddValueToCombobox))
+                return false;
+            else
+                return true;
+        }
+
         private void AddToOzhCombobox()
         {
+            try
+            {
+                bool isAdded = false;
+
+                isAdded = complaintService.AddToOZhClassification(AddValueToCombobox);
+
+                if (isAdded)
+                {
+                    Message = "Запись добавлеа, чтоб отобразить изменения перезапустите программу";
+                }
+                else
+                {
+                    Message = "Не удалось добавить запись";
+                }
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+            }
             ClearValueToAdd();
+        }
+
+        private void DeleteOzh()
+        {
+            try
+            {
+                bool isDeleted = complaintService.DeleteFromChiefsList(CurrentComplaint.Chief.ChiefName);
+
+                if (isDeleted)
+                {
+                    Message = "Запись удалена, чтобы отобразить изменения перезапустите программу";
+                }
+                else
+                {
+                    Message = "Не удалось удалить запись";
+                }
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+            }
+
+            ClearValueToAdd();
+        }
+
+        private bool DeleteOzh_CanExecute()
+        {
+            if (string.IsNullOrEmpty(CurrentComplaint.OZhComplaintText.OZhComplaint))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         private void AddToChiefsCombobox()
@@ -486,7 +550,7 @@ namespace Complaints_WPF.ViewModels
                 isAdded = complaintService.AddToChiefsList(AddValueToCombobox);
 
                 if (isAdded)
-                    Message = "Руководитель добавлен";
+                    Message = "Руководитель добавлен, чтобы отобразить изменения перезапустите программу";
                 else
                     Message = "Не удалось добавить руководителя";
             }
@@ -498,19 +562,47 @@ namespace Complaints_WPF.ViewModels
             ClearValueToAdd();
         }
 
-
-        private bool AddToCombobox_CanExecute()
+        private void DeleteChief()
         {
-            if (string.IsNullOrWhiteSpace(AddValueToCombobox))
+            try
+            {
+                bool isDeleted = complaintService.DeleteFromChiefsList(CurrentComplaint.Chief.ChiefName);
+
+                if (isDeleted)
+                {                   
+                    Message = "Руководитель удален, чтобы отобразить изменения перезапустите программу";
+                }
+                else
+                {
+                    Message = "Не удалось удалить руководителя";
+                }
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+            }
+
+            ClearValueToAdd();
+        }
+
+        private bool DeleteChief_CanExecute()
+        {
+            if (string.IsNullOrEmpty(CurrentComplaint.Chief.ChiefName))
+            {
                 return false;
+            }
             else
+            {
                 return true;
+            }
         }
 
         private void ClearValueToAdd()
         {
-            AddValueToCombobox = null;
+            AddValueToCombobox = CurrentComplaint.Chief.ChiefName = CurrentComplaint.OZhComplaintText.OZhComplaint = null;
         }
+        #endregion
+
 
         #endregion
 
