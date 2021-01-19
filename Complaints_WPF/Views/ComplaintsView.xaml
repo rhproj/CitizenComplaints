@@ -88,7 +88,7 @@
                             <Image Source="\Images\edit_c.png" Stretch="Fill" />
                         </Button>
 
-                        <Button Grid.Column="2" >
+                        <Button x:Name="btn_SummOZh" Grid.Column="2" Click="Btn_SummOZh_Click" >
                             <Image Source="\Images\calc0.png" Stretch="Fill"/>
                         </Button>
                         

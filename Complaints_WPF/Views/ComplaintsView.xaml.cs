@@ -30,5 +30,11 @@ namespace Complaints_WPF.Views
             ComboConstructor comboConstr = new ComboConstructor();
             comboConstr.ShowDialog();
         }
+
+        private void Btn_SummOZh_Click(object sender, RoutedEventArgs e)
+        {
+            SummOZhView summOZhView = new SummOZhView();
+            summOZhView.ShowDialog();
+        }
     }
 }
