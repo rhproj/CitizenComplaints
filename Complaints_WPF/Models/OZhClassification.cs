@@ -10,7 +10,6 @@ namespace Complaints_WPF.Models
     public class OZhClassification : INotifyPropertyChanged
     {
         private string _oZhComplaint;
-
         public string OZhComplaint
         {
             get { return  _oZhComplaint; }

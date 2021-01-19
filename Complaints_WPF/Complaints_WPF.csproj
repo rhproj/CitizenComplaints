@@ -65,6 +65,7 @@
     <Compile Include="Models\OZhClassification.cs" />
     <Compile Include="Services\ComplaintServiceADO.cs" />
     <Compile Include="ViewModels\ComplaintsViewModel.cs" />
+    <Compile Include="ViewModels\SummOZhViewModel.cs" />
     <Compile Include="Views\ComboConstructor.xaml.cs">
       <DependentUpon>ComboConstructor.xaml</DependentUpon>
     </Compile>

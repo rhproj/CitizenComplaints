@@ -9,7 +9,7 @@
         Height="450" Width="800"
         WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
-        <vm:ComplaintsViewModel/>
+        <vm:SummOZhViewModel/>
     </Window.DataContext>
     <Window.Resources>
         <SolidColorBrush x:Key="WindowBackground" 
@@ -53,13 +53,12 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
-                          ItemsSource="{Binding Path=ComplaintsList, Mode=TwoWay}" 
-                          SelectedItem="{Binding Path=SelectedComplaint}"
-                          Background="Transparent" RowBackground="Transparent" AlternatingRowBackground="#f2f6ff"                          
-                          BorderBrush="Navy"
-                          HeadersVisibility="Column" Grid.ColumnSpan="2"
-                          >
+        <!--<ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=OZhClassificationList, Mode=TwoWay}"/>-->
+        <!--<ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=OZhClassificationList}" DisplayMemberPath="OZhComplaint"  />-->
+
+        <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" CanUserAddRows="False"
+                          ItemsSource="{Binding Path=OZhClassificationList}"                      
+                   >
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Background" Value="Navy" />
@@ -76,11 +75,12 @@
                     <Setter Property="Height" Value="28"/>
                 </Style>
             </DataGrid.RowStyle>
+            
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Обращения" Width="*" 
-                                                Binding="{Binding Path=OZhComplaintText.OZhComplaint}" />
-                <DataGridTextColumn Header="Сумма" Width="80" 
-                                                Binding="{Binding Path=Chief.ChiefName}"/>
+                <DataGridTextColumn Header="Обращения" Width="*" Foreground="Black" 
+                 Binding="{Binding}" />
+                <!--Path=OZhComplaint-->
+                <DataGridTextColumn Header="Сумма" Width="80" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

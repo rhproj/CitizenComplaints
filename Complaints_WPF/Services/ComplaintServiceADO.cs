@@ -242,6 +242,58 @@ namespace Complaints_WPF.Models
         }
         #endregion
 
+        #region Load/Populate Lists form DB
+
+        public List<OZhClassification> LoadOzh()
+        {
+
+            List<OZhClassification> OzhList = new List<OZhClassification>();
+            for (int i = 0; i < 6; i++)
+            {
+                OZhClassification oZh = new OZhClassification();
+                oZh.OZhComplaint =  $"Some classification item # {i}";
+
+                OzhList.Add(oZh);
+            }
+
+            return OzhList;
+        }
+
+        public List<OZhClassification> LoadOZhClassif()
+        {
+            List<OZhClassification> OZhClassificationList = new List<OZhClassification>();
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
+                SqlCommand.CommandText = "sp_LoadOZhClassification";
+
+                SqlConnect.Open();
+
+                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            OZhClassification oZh = new OZhClassification();
+                            oZh.OZhComplaint = dataReader.GetString(1);
+                            OZhClassificationList.Add(oZh);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+            return OZhClassificationList;
+        }
+
         public List<string> LoadOZhClassification()
         {
             List<string> OZhClassificationList = new List<string>();
@@ -259,9 +311,10 @@ namespace Complaints_WPF.Models
                     {
                         while (dataReader.Read())
                         {
-                            OZhClassification oZh = new OZhClassification();
-                            oZh.OZhComplaint = dataReader.GetString(1);
-                            OZhClassificationList.Add(oZh.OZhComplaint);
+                            OZhClassificationList.Add(dataReader.GetString(1));
+                            //OZhClassification oZh = new OZhClassification();
+                            //oZh.OZhComplaint = dataReader.GetString(1);
+                            //OZhClassificationList.Add(oZh.OZhComplaint);
                         }
                     }
                 }
@@ -296,9 +349,10 @@ namespace Complaints_WPF.Models
                     {
                         while (dataReader.Read())
                         {
-                            Prosecutor prosecutor = new Prosecutor();
-                            prosecutor.ProsecutorName = dataReader.GetString(2);
-                            ProsecutorsList.Add(prosecutor.ProsecutorName);
+                            //Prosecutor prosecutor = new Prosecutor();
+                            //prosecutor.ProsecutorName = dataReader.GetString(2);
+                            //ProsecutorsList.Add(prosecutor.ProsecutorName);
+                            ProsecutorsList.Add(dataReader.GetString(2));
                         }
                     }
                 }
@@ -333,9 +387,10 @@ namespace Complaints_WPF.Models
                     {
                         while (dataReader.Read())
                         {
-                            Chief chief = new Chief();
-                            chief.ChiefName = dataReader.GetString(1);
-                            ChiefsList.Add(chief.ChiefName);
+                            //Chief chief = new Chief();
+                            //chief.ChiefName = dataReader.GetString(1);
+                            //ChiefsList.Add(chief.ChiefName);
+                            ChiefsList.Add(dataReader.GetString(1));
                         }
                     }
                 }
@@ -370,9 +425,10 @@ namespace Complaints_WPF.Models
                     {
                         while (dataReader.Read())
                         {
-                            Result result = new Result();
-                            result.Rezolution = dataReader.GetString(1);
-                            resultsList.Add(result.Rezolution);
+                            //Result result = new Result();
+                            //result.Rezolution = dataReader.GetString(1);
+                            //resultsList.Add(result.Rezolution);
+                            resultsList.Add(dataReader.GetString(1));
                         }
                     }
                 }
@@ -387,7 +443,8 @@ namespace Complaints_WPF.Models
             }
 
             return resultsList;
-        }
+        } 
+        #endregion
 
         #region New Complaint:
         public bool AddToComplaintList(Complaint newComplaint, string prosName)
@@ -611,8 +668,7 @@ namespace Complaints_WPF.Models
             }
             return selectedComplaint;
         }
-
-
+        
         public Complaint SearchCitizen(string citizenName)
         {
             Complaint citizen = null;

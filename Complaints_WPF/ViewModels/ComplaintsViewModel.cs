@@ -197,7 +197,6 @@ namespace Complaints_WPF.ViewModels
             get { return _findCitizenCommand; }
         }
 
-        public RelayCommand UnFilterCommand { get; set; }
 
         private RelayCommand _editCommand;
         public RelayCommand EditCommand
@@ -212,11 +211,12 @@ namespace Complaints_WPF.ViewModels
         }
 
         public RelayCommand FilterCommand { get; }
+        public RelayCommand UnFilterCommand { get; }
 
         #region ComboConstruct // K !
-        public RelayCommand AddOzhCommand { get; set; }
-        public RelayCommand AddChiefCommand { get; set; }
-        public RelayCommand DeleteChiefCommand { get; set; }
+        public RelayCommand AddOzhCommand { get; }
+        public RelayCommand AddChiefCommand { get; }
+        public RelayCommand DeleteChiefCommand { get; }
         //public RelayCommand DeleteOzhCommand { get; set; }
         #endregion
 
