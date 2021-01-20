@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Complaints_WPF.Views"
         xmlns:vm="clr-namespace:Complaints_WPF.ViewModels"
         mc:Ignorable="d"
-        Height="450" Width="800"
+        Height="840" Width="800"
         WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:SummOZhViewModel/>
@@ -34,19 +34,18 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="35" />
     </WindowChrome.WindowChrome>
-    <Grid>
+    <Grid Background="Navy">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="70"/>
-            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btnClose" Grid.Column="3" Content="x" Margin="0,0,8,0" Padding="0,-2,0,0" FontSize="20" Width="30" HorizontalAlignment="Right" WindowChrome.IsHitTestVisibleInChrome="True">
+        <Button x:Name="btnClose" Grid.Column="1" Content="x" Margin="0,0,0,0" Padding="0,-2,0,0" FontSize="20" Width="25" HorizontalAlignment="Right" WindowChrome.IsHitTestVisibleInChrome="True">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5" />
@@ -57,8 +56,13 @@
         <!--<ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=OZhClassificationList}" DisplayMemberPath="OZhComplaint"  />-->
 
         <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" CanUserAddRows="False"
-                          ItemsSource="{Binding Path=OZhClassificationList}"                      
-                   >
+                          SelectedItem="{Binding Path=SelectedComplaint}"
+                          Background="#fff" RowBackground="#fff" AlternatingRowBackground="#f2f6ff"                          
+                          BorderBrush="Navy"
+                          FontWeight="SemiBold"
+                          HeadersVisibility="Column"                 
+                          ItemsSource="{Binding Path=OZhClassificationList}"                                        
+                  >
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Background" Value="Navy" />
@@ -77,10 +81,15 @@
             </DataGrid.RowStyle>
             
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Обращения" Width="*" Foreground="Black" 
-                 Binding="{Binding}" />
+                <DataGridTextColumn Header="Обращения" Width="*" Binding="{Binding Path=OZhComplaint}"/>
                 <!--Path=OZhComplaint-->
-                <DataGridTextColumn Header="Сумма" Width="80" />
+                <DataGridTextColumn Header="Сумма" Width="80" Binding="{Binding Path=SummOzh}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

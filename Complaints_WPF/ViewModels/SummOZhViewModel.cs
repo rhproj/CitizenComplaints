@@ -20,8 +20,8 @@ namespace Complaints_WPF.ViewModels
             set { _oZhClassif = value; OnPropertyChanged("OZhClassif"); }
         }
 
-        private ObservableCollection<string> _oZhClassificationList;
-        public ObservableCollection<string> OZhClassificationList
+        private ObservableCollection<OZhClassification> _oZhClassificationList;
+        public ObservableCollection<OZhClassification> OZhClassificationList
         {
             get { return _oZhClassificationList; }
             set { _oZhClassificationList = value; OnPropertyChanged("OZhClassificationList"); }
@@ -33,7 +33,7 @@ namespace Complaints_WPF.ViewModels
             complaintService = new ComplaintServiceADO();
 
             //LoadOzhClassification();
-            OZhClassificationList = new ObservableCollection<string>(complaintService.LoadOZhClassification()); //LoadOZhClassif()); //
+            OZhClassificationList = new ObservableCollection<OZhClassification>(complaintService.LoadOZhWithSumm(ComplaintsViewModel.YearToFilter)); //LoadOZhClassif()); //
         }
 
         //private void LoadOzhClassification()

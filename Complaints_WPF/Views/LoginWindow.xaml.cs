@@ -41,8 +41,9 @@ namespace Complaints_WPF.Views
                 mw.lblProsecutor.Content = comBoxProsecutor.SelectedItem;
                 //mw.lblChief.Content = comBoxСhief.SelectedItem;
 
-                ComplaintsViewModel.YearToFilter = tbYear.Text;
+                ComplaintsViewModel.YearToFilter = tbYear.Text; //!!## walkaround the date problem, i'm passing it here!
                 ComplaintsViewModel.ProsecutorLogin = comBoxProsecutor.SelectedItem.ToString(); //passing selected pros to VM, so it could be written to dataGridTable in Insert method
+                
                 //if (comBoxСhief.SelectedItem != null)
                 //{
                 //    ComplaintsViewModel.СhiefProsecutor = comBoxСhief.SelectedItem.ToString(); //29.12

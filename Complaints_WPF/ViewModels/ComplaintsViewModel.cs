@@ -197,7 +197,6 @@ namespace Complaints_WPF.ViewModels
             get { return _findCitizenCommand; }
         }
 
-
         private RelayCommand _editCommand;
         public RelayCommand EditCommand
         {

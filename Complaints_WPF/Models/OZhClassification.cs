@@ -16,6 +16,13 @@ namespace Complaints_WPF.Models
             set {  _oZhComplaint = value; OnPropertyChanged("OZhComplaint"); } //could be bcz of this it didn't clear the Ozh Combobox
         }
 
+        private int _summOZh;
+        public int SummOzh
+        {
+            get { return _summOZh; }
+            set { _summOZh = value; OnPropertyChanged("SummOzh"); }
+        }
+        
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propName)
         {

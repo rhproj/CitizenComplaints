@@ -74,7 +74,7 @@ namespace Complaints_WPF.Models
 
         public List<Complaint> GetAllComplaintsByYear(string year)  //using view
         {
-            List<Complaint> listOfComplaints = new List<Complaint>();  //list that will be fed by StoredP
+            List<Complaint> listOfComplaints = new List<Complaint>(); 
             try
             {
                 SqlCommand.Parameters.Clear();
@@ -244,29 +244,29 @@ namespace Complaints_WPF.Models
 
         #region Load/Populate Lists form DB
 
-        public List<OZhClassification> LoadOzh()
-        {
+        //public List<OZhClassification> LoadOzh()
+        //{
 
-            List<OZhClassification> OzhList = new List<OZhClassification>();
-            for (int i = 0; i < 6; i++)
-            {
-                OZhClassification oZh = new OZhClassification();
-                oZh.OZhComplaint =  $"Some classification item # {i}";
+        //    List<OZhClassification> OzhList = new List<OZhClassification>();
+        //    for (int i = 0; i < 6; i++)
+        //    {
+        //        OZhClassification oZh = new OZhClassification();
+        //        oZh.OZhComplaint =  $"Some classification item # {i}";
 
-                OzhList.Add(oZh);
-            }
+        //        OzhList.Add(oZh);
+        //    }
 
-            return OzhList;
-        }
+        //    return OzhList;
+        //}
 
-        public List<OZhClassification> LoadOZhClassif()
+        public List<OZhClassification> LoadOZhWithSumm(string year)
         {
             List<OZhClassification> OZhClassificationList = new List<OZhClassification>();
             try
             {
                 SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_LoadOZhClassification";
+                SqlCommand.CommandType = CommandType.Text;
+                SqlCommand.CommandText = $"select * from f_OZhComplaintSummByYear({year})";    //$"select * from f_ContentSummByYear({year}) order by [S] desc";   //"sp_LoadOZhClassification";
 
                 SqlConnect.Open();
 
@@ -277,7 +277,9 @@ namespace Complaints_WPF.Models
                         while (dataReader.Read())
                         {
                             OZhClassification oZh = new OZhClassification();
-                            oZh.OZhComplaint = dataReader.GetString(1);
+                            oZh.OZhComplaint = dataReader.GetString(0);
+                            oZh.SummOzh = dataReader.IsDBNull(1) ? 0 : dataReader.GetInt32(1);
+
                             OZhClassificationList.Add(oZh);
                         }
                     }
@@ -349,10 +351,10 @@ namespace Complaints_WPF.Models
                     {
                         while (dataReader.Read())
                         {
+                            ProsecutorsList.Add(dataReader.GetString(2));
                             //Prosecutor prosecutor = new Prosecutor();
                             //prosecutor.ProsecutorName = dataReader.GetString(2);
                             //ProsecutorsList.Add(prosecutor.ProsecutorName);
-                            ProsecutorsList.Add(dataReader.GetString(2));
                         }
                     }
                 }
@@ -387,10 +389,10 @@ namespace Complaints_WPF.Models
                     {
                         while (dataReader.Read())
                         {
+                            ChiefsList.Add(dataReader.GetString(1));
                             //Chief chief = new Chief();
                             //chief.ChiefName = dataReader.GetString(1);
                             //ChiefsList.Add(chief.ChiefName);
-                            ChiefsList.Add(dataReader.GetString(1));
                         }
                     }
                 }
@@ -425,10 +427,10 @@ namespace Complaints_WPF.Models
                     {
                         while (dataReader.Read())
                         {
+                            resultsList.Add(dataReader.GetString(1));
                             //Result result = new Result();
                             //result.Rezolution = dataReader.GetString(1);
                             //resultsList.Add(result.Rezolution);
-                            resultsList.Add(dataReader.GetString(1));
                         }
                     }
                 }

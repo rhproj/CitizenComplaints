@@ -107,7 +107,7 @@
                 </Button>
             </StackPanel>
         </Border>
-        <TextBox x:Name="tbYear" Grid.Row="4" Width="60" Background="Transparent" Text="{Binding Path=CurrentYear, Mode=TwoWay}"/>
+        <TextBox x:Name="tbYear" Grid.Row="4" Width="60" Background="Transparent" Text="{Binding Path=CurrentYear, Mode=TwoWay}"/> <!-- Path=CurrentYear not doing anything here? delete??-->
         <Label Grid.Row="4" Margin="75,0,0,2" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Content="г."/>
     </Grid>
 </Window>
