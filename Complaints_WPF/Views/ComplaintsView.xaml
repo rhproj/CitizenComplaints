@@ -53,7 +53,6 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-
         </Grid>-->
 
         <Grid Grid.Row="2" >
@@ -64,6 +63,7 @@
 
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
@@ -108,7 +108,7 @@
                         <Label x:Name="lblCitizenId" Grid.Column="3" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.Citizen.CitizenID}"/>-->
                         <!--, Converter={StaticResource zeroLabelConverter}-->
                     </Grid>
-                    <Grid  >
+                    <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -116,7 +116,7 @@
                         <Label Grid.Column="0" HorizontalAlignment="Right" FontSize="20"  FontWeight="SemiBold"  Content="Жалоба №:"/>
                         <TextBlock Grid.Column="1" Margin="0,1,0,0" VerticalAlignment="Center" FontSize="24" Foreground="LightYellow" FontWeight="Bold" FontStyle="Italic" Text="{Binding CurrentComplaint.Enumerator}"/>
                     </Grid>
-                    <Grid Margin="5,7,5,5">
+                    <Grid Margin="5,5,5,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
@@ -132,7 +132,7 @@
                             <Image Source="\Images\searchCitBtn.png"></Image>
                         </Button>
                     </Grid>
-                    <Grid Margin="5,10,10,15">
+                    <Grid Margin="5,5,10,6">
                         <!--<Grid.RowDefinitions>
                             <RowDefinition Height="60" />
                         </Grid.RowDefinitions>
@@ -157,24 +157,40 @@
                                       Text="{Binding CurrentComplaint.OZhComplaintText.OZhComplaint, Mode=TwoWay}"
                                       />
                     </Grid>
-                    <Grid Margin="5,5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="106"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Листов:" Grid.Column="1" HorizontalAlignment="Left" Height="22" Margin="0,0,5,0"/>
-                        <TextBox x:Name="tbPages" Grid.Column="2" Width="64" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.PageNum, Mode=TwoWay}"  />
-                        <TextBlock Grid.Column="3" Text="Приложений:" HorizontalAlignment="Left" Margin="5,0,2,0" Height="22" />
-                        <TextBox x:Name="tbApend" Grid.Column="4" Width="63" HorizontalAlignment="Left"  Text="{Binding CurrentComplaint.AppendNum, Mode=TwoWay}"    />
-                    </Grid>
+                    <Border Margin="5,1,9,1" BorderBrush="Navy" BorderThickness="2.5">
+                        <Grid Margin="5,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto" />
+                                <!--<ColumnDefinition Width="90"/>-->
+                                <!--<ColumnDefinition Width="auto"/>-->
+                                <!--<ColumnDefinition Width="auto"/>-->
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Листов:" Grid.Column="0" HorizontalAlignment="Left" Height="22" Margin="0,0,5,0"/>
+                            <TextBox Margin="0,0,20,0" Grid.Column="0" Width="80" HorizontalAlignment="Right" Text="{Binding CurrentComplaint.PageNum, Mode=TwoWay}"  />
+                            <TextBlock Grid.Column="1" Text="Приложений:" HorizontalAlignment="Left" Margin="5,0,2,0" Height="22" />
+                            <TextBox Margin="0,0,20,0" Grid.Column="1" Width="80" HorizontalAlignment="Right"  Text="{Binding CurrentComplaint.AppendNum, Mode=TwoWay}"    />
 
-                    <Grid Margin="5,5,10,15">
+                            <TextBlock Grid.Row="1" Text="Цифровые носители:" HorizontalAlignment="Left"  Height="22" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Margin="3,5,0,0" Width="232" Height="32" HorizontalAlignment="Left"  Text="{Binding CurrentComplaint.AppendNum, Mode=TwoWay}"    />
+                        </Grid>
+                    </Border>
+
+
+                    <!--<Grid Margin="5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Цифровые носители:" HorizontalAlignment="Left"  Height="22" />
+                        <TextBox Grid.Column="3" Width="247" Height="32" HorizontalAlignment="Center"  Text="{Binding CurrentComplaint.AppendNum, Mode=TwoWay}"    />
+                    </Grid>-->
+
+                    <Grid Margin="5,5,10,7">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
@@ -203,7 +219,7 @@
                         <!--<TextBox x:Name="tbResult" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.ComplaintText, Mode=TwoWay}"  />-->
                     </Grid>
 
-                    <Grid  Margin="5,5">
+                    <Grid  Margin="5,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="60"/>
                         </Grid.RowDefinitions>
@@ -296,27 +312,25 @@
                         <TextBlock Text="Mail/почта:" TextWrapping="Wrap" />
                         <TextBox x:Name="tb" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Citizen.Email, Mode=TwoWay}" />
                     </Grid>
-                    <Grid >
-                        <Button Height="55" Width="180" Margin="10" FontSize="20" VerticalAlignment="Center" Background="Navy" Foreground="LightYellow" Content="Зарегистрировать" Command="{Binding Path=RegisterCommand}">
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="15"/>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-                        <Button x:Name="btn_Constructor" Grid.Row="1" VerticalAlignment="Bottom"  HorizontalAlignment="Left" Width="45" Height="45" Click="Btn_Constructor_Click">
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="30"/>
-                                    <Setter Property="BorderThickness" Value="0"/>
-                                </Style>
-                            </Button.Resources>
-                            <Image Source="\Images\gear_c.png"/>
-                        </Button>
-
-                    </Grid>
-
                 </StackPanel>
+                <Grid Grid.Row="2">
+                    <Button Height="55" Width="180" Margin="10" FontSize="20" VerticalAlignment="Center" Background="Navy" Foreground="LightYellow" Content="Зарегистрировать" Command="{Binding Path=RegisterCommand}">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button x:Name="btn_Constructor" Grid.Row="1" VerticalAlignment="Center"  HorizontalAlignment="Left" Width="45" Height="45" Click="Btn_Constructor_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="30"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </Button.Resources>
+                        <Image Source="\Images\gear_c.png"/>
+                    </Button>
+                </Grid>
             </Grid>
 
             <Grid Grid.Column ="1">
