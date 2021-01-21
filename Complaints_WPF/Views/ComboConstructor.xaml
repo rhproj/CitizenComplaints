@@ -47,7 +47,6 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -80,7 +79,7 @@
         <Button Grid.Column="3" Grid.Row="5" Margin="5"  BorderThickness="0" Background="DarkBlue" Foreground="LightYellow" Content="-" IsEnabled="False"/>
 
 
-        <TextBlock Grid.Row="7" Grid.Column="1" Text="Руководитель:" TextWrapping="Wrap" HorizontalAlignment="Left" />
+        <TextBlock Grid.Row="7" Grid.Column="1" Text="Руководитель:" HorizontalAlignment="Left" />
         <ComboBox Grid.Column="1" Grid.Row="7" x:Name="comBoxСhief" Width="340" Height="42" HorizontalAlignment="Right"
                                   FontSize="20" FontWeight="Bold" Foreground="DarkBlue" 
                                   ItemsSource="{Binding ChiefsList}"
@@ -89,6 +88,7 @@
         <Button Grid.Column="2" Grid.Row="7" Margin="5"  BorderThickness="0" Background="DarkBlue" Foreground="LightYellow" Command="{Binding Path=AddChiefCommand}" Content="+" />
         <Button Grid.Column="3" Grid.Row="7" Margin="5"  BorderThickness="0" Background="PaleVioletRed" Foreground="LightYellow" Command="{Binding Path=DeleteChiefCommand}" Content="-" />
 
-        <Label Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Content="{Binding Message}" Foreground="Black"/>
+        <!--<Label Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Content="{Binding Message}" Foreground="Black"/>-->
+        <TextBlock  Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" TextWrapping="Wrap" FontSize="14" FontWeight="Normal" FontStyle="Italic" Text="{Binding Message}" />
     </Grid>
 </Window>

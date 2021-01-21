@@ -623,7 +623,7 @@ namespace Complaints_WPF.ViewModels
 
             try
             {
-                using (StreamWriter sw = new StreamWriter($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\ЖРЖ_({DateTime.Now.ToString("yyyy.MM.dd")}).csv", false, Encoding.Unicode))
+                using (StreamWriter sw = new StreamWriter($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\ЖРЖ ({DateTime.Now.ToString("yyyy.MM.dd")}).csv", false, Encoding.Unicode))
                 {
                     sw.WriteLine($"Журнал регистрации жалоб по состаянию на {YearToFilter} год");
                     sw.WriteLine("№;Дата/время;Имя заявителя;Жалоба;Примечание;Результат;Принял(а);Принимающий руководитель");
@@ -655,57 +655,6 @@ namespace Complaints_WPF.ViewModels
             }
         }
 
-        String Escape(String s)
-        {
-            StringBuilder sb = new StringBuilder();
-            bool needQuotes = false;
-
-            foreach (char c in s.ToArray())
-            {
-                switch (c)
-                {
-                    case '"': sb.Append("\\\""); needQuotes = true; break;
-                    case ' ': sb.Append(" "); needQuotes = true; break;
-                    case ',': sb.Append(","); needQuotes = true; break;
-                    //case '\t': sb.Append("\\t"); needQuotes = true; break;
-                    //case '\n': sb.Append("\\n"); needQuotes = true; break;
-                    default: sb.Append(c); break;
-                }
-            }
-            if (needQuotes)
-                return "\"" + sb.ToString() + "\"";
-            else
-                return sb.ToString();
-        }
-
-        public void SerializeAsCsv(Stream stream)
-        {
-            //complaint.Enumerator = dataReader.GetInt32(0);    //added new!
-            //complaint.ComplaintID = dataReader.GetInt32(1);
-            //complaint.ReceiptDate = dataReader.GetDateTime(2);
-            //complaint.Citizen.CitizenName = dataReader.GetString(3);
-            //complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(4);    //b4://complaint.ComplaintText = dataReader.GetString(3);
-
-            //if (!dataReader.IsDBNull(5)) { complaint.Comments = dataReader.GetString(5); }
-
-            //if (!dataReader.IsDBNull(6)) { complaint.Result.Rezolution = dataReader.GetString(6); }
-
-            ////Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
-            //if (!dataReader.IsDBNull(7)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(7); }
-            //if (!dataReader.IsDBNull(8)) { complaint.Chief.ChiefName = dataReader.GetString(8); }
-            //listOfComplaints.Add(complaint);
-
-            //stream.Write(Escape(CurrentComplaint.Enumerator.ToString()));
-
-            //stream.Write(",");
-            //stream.Write(Year.ToString());
-            //stream.Write(",");
-            //stream.Write(Escape(Model));
-            //stream.Write("\n");
-        }
-
-
-
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -715,3 +664,58 @@ namespace Complaints_WPF.ViewModels
         }
     }
 }
+
+
+
+
+
+#region ON WRITING to csv from in-net
+//String Escape(String s)
+//{
+//    StringBuilder sb = new StringBuilder();
+//    bool needQuotes = false;
+
+//    foreach (char c in s.ToArray())
+//    {
+//        switch (c)
+//        {
+//            case '"': sb.Append("\\\""); needQuotes = true; break;
+//            case ' ': sb.Append(" "); needQuotes = true; break;
+//            case ',': sb.Append(","); needQuotes = true; break;
+//            //case '\t': sb.Append("\\t"); needQuotes = true; break;
+//            //case '\n': sb.Append("\\n"); needQuotes = true; break;
+//            default: sb.Append(c); break;
+//        }
+//    }
+//    if (needQuotes)
+//        return "\"" + sb.ToString() + "\"";
+//    else
+//        return sb.ToString();
+//}
+
+//public void SerializeAsCsv(Stream stream)
+//{
+//    //complaint.Enumerator = dataReader.GetInt32(0);    //added new!
+//    //complaint.ComplaintID = dataReader.GetInt32(1);
+//    //complaint.ReceiptDate = dataReader.GetDateTime(2);
+//    //complaint.Citizen.CitizenName = dataReader.GetString(3);
+//    //complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(4);    //b4://complaint.ComplaintText = dataReader.GetString(3);
+
+//    //if (!dataReader.IsDBNull(5)) { complaint.Comments = dataReader.GetString(5); }
+
+//    //if (!dataReader.IsDBNull(6)) { complaint.Result.Rezolution = dataReader.GetString(6); }
+
+//    ////Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
+//    //if (!dataReader.IsDBNull(7)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(7); }
+//    //if (!dataReader.IsDBNull(8)) { complaint.Chief.ChiefName = dataReader.GetString(8); }
+//    //listOfComplaints.Add(complaint);
+
+//    //stream.Write(Escape(CurrentComplaint.Enumerator.ToString()));
+
+//    //stream.Write(",");
+//    //stream.Write(Year.ToString());
+//    //stream.Write(",");
+//    //stream.Write(Escape(Model));
+//    //stream.Write("\n");
+//} 
+#endregion
