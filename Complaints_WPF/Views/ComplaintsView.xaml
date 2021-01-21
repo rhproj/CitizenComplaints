@@ -92,7 +92,7 @@
                             <Image Source="\Images\calc0.png" Stretch="Fill"/>
                         </Button>
                         
-                        <Button Grid.Column="3" >
+                        <Button x:Name="btn_Save"  Grid.Column="3" Command="{Binding Path=SaveToCsvCommand}">
                             <Image Source="\Images\excel_c.png" Stretch="Fill"/>
                         </Button>
 

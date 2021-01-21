@@ -29,7 +29,7 @@ namespace Complaints_WPF.ViewModels
 
         public SummOZhViewModel()
         {
-            OZhClassif = new OZhClassification();
+            OZhClassif = new OZhClassification(); //see if it can be omitted or not
             complaintService = new ComplaintServiceADO();
 
             //LoadOzhClassification();

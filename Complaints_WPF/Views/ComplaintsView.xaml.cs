@@ -36,5 +36,10 @@ namespace Complaints_WPF.Views
             SummOZhView summOZhView = new SummOZhView();
             summOZhView.ShowDialog();
         }
+
+        //private void Btn_Save_Click(object sender, RoutedEventArgs e)  //trying to do it MVVM way
+        //{
+
+        //}
     }
 }
