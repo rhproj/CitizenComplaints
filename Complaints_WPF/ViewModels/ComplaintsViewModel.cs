@@ -625,7 +625,7 @@ namespace Complaints_WPF.ViewModels
             {
                 using (StreamWriter sw = new StreamWriter($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\ЖРЖ_({DateTime.Now.ToString("yyyy.MM.dd")}).csv", false, Encoding.Unicode))
                 {
-                    sw.WriteLine($"Журнал регистрации жалоб по состаянию на {DateTime.Now.ToString("dd.MM.yyyy")}");
+                    sw.WriteLine($"Журнал регистрации жалоб по состаянию на {YearToFilter} год");
                     sw.WriteLine("№;Дата/время;Имя заявителя;Жалоба;Примечание;Результат;Принял(а);Принимающий руководитель");
 
                     for (int i = ComplaintsList.Count-1; i >= 0; i--)
