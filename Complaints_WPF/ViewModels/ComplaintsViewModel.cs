@@ -72,7 +72,7 @@ namespace Complaints_WPF.ViewModels
             set { _chiefsList = value; OnPropertyChanged("ChiefsList"); }
         }
 
-        private int _currentNum; //13.01
+        private int _currentNum; //13.01 Used to summ up all complaints and show the current one
         public int CurrentNum
         {
             get { return _currentNum; }
@@ -293,6 +293,9 @@ namespace Complaints_WPF.ViewModels
             CurrentComplaint.Comments = null;//string.Empty;
             CurrentComplaint.PageNum = null;//string.Empty;
             CurrentComplaint.AppendNum = null;//string.Empty;
+
+            CurrentComplaint.DigitalStorage = null; //21.01
+
             CurrentComplaint.OZhComplaintText.OZhComplaint = null; //used to be this: //CurrentComplaint.ComplaintText = null;//string.Empty;
             CurrentComplaint.Result.Rezolution = null;//string.Empty;
             CurrentComplaint.Citizen.Occupation = null;//string.Empty;

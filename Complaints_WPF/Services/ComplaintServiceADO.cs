@@ -474,6 +474,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
                 SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName); // newComplaint.Prosecutor.ProsecutorName);
                 SqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName); //29.12
+                SqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage); //21.01
 
                 SqlConnect.Open();
                 isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false
@@ -515,6 +516,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
                 SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName); // newComplaint.Prosecutor.ProsecutorName);
                 SqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName);
+                SqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage); //21.01
 
                 SqlConnect.Open(); //is this where the actuall StoredP called?
                 isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false
@@ -556,6 +558,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@comments", complToUpdate.Comments);
                 SqlCommand.Parameters.AddWithValue("@result", complToUpdate.Result.Rezolution);
                 SqlCommand.Parameters.AddWithValue("@chiefName", complToUpdate.Chief.ChiefName);
+                SqlCommand.Parameters.AddWithValue("@digitalStorage", complToUpdate.DigitalStorage); //21.01
 
                 SqlConnect.Open();
                 isUpdated = SqlCommand.ExecuteNonQuery() > 0;
@@ -608,7 +611,8 @@ namespace Complaints_WPF.Models
                         selectedComplaint.Comments = dataReader.IsDBNull(12) ? null : dataReader.GetString(12);
                         selectedComplaint.Result.Rezolution = dataReader.IsDBNull(13) ? null : dataReader.GetString(13);
                         selectedComplaint.Chief.ChiefName = dataReader.IsDBNull(14) ? null : dataReader.GetString(14);
-                        selectedComplaint.Enumerator = dataReader.GetInt32(15);
+                        selectedComplaint.DigitalStorage = dataReader.IsDBNull(15) ? null : dataReader.GetString(15); //21.01
+                        selectedComplaint.Enumerator = dataReader.GetInt32(16);
                     }
                 }
             }

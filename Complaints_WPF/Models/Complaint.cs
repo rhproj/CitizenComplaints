@@ -59,6 +59,13 @@ namespace Complaints_WPF.Models
             set { _appendNum = value; OnPropertyChanged("AppendNum"); }
         }
 
+        private string _digitalStorage; //latest addition
+        public string DigitalStorage
+        {
+            get { return _digitalStorage; }
+            set { _digitalStorage = value; OnPropertyChanged("DigitalStorage"); }
+        }
+
         private string _comments;
         public string Comments
         {
