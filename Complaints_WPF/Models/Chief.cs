@@ -30,6 +30,11 @@ namespace Complaints_WPF.Models
         //    set { _chiefInfo = value; OnPropertyChanged("ChiefInfo"); }
         //}
 
+        public override string ToString()
+        {
+            return this.ChiefName;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propName)
         {

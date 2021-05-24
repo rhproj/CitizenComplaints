@@ -72,6 +72,7 @@
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Converter\ZeroConverter.cs" />
     <Compile Include="Models\Chief.cs" />
+    <Compile Include="Models\ComplaintText.cs" />
     <Compile Include="Models\OZhClassification.cs" />
     <Compile Include="Services\ComplaintServiceADO.cs" />
     <Compile Include="Services\EPPlusService.cs" />

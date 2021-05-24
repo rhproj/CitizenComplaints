@@ -22,7 +22,12 @@ namespace Complaints_WPF.Models
             get { return _summOZh; }
             set { _summOZh = value; OnPropertyChanged("SummOzh"); }
         }
-        
+
+        public override string ToString()
+        {
+            return this.OZhComplaint;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propName)
         {

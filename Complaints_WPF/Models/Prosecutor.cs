@@ -32,6 +32,11 @@ namespace Complaints_WPF.Models
 
         public string Password { get; set; } //not used yet
 
+        public override string ToString()
+        {
+            return this.ProsecutorName;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propName)
         {

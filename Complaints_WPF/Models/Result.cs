@@ -30,6 +30,11 @@ namespace Complaints_WPF.Models
         //    set { _note = value; OnPropertyChanged("Note"); }
         //}
 
+        public override string ToString()
+        {
+            return this.Rezolution;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propName)
         {

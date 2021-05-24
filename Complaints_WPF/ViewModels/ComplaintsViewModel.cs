@@ -658,25 +658,27 @@ namespace Complaints_WPF.ViewModels
 
                     ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
-                    var complaitsToExcel = new List<Complaint>();
+                    #region additional step
+                    //var complaitsToExcel = new List<Complaint>();
 
-                    for (int i = ComplaintsList.Count - 1; i >= 0; i--)
-                    {
-                        var compl = new Complaint
-                        {
-                            Enumerator = ComplaintsList[i].Enumerator,
-                            ReceiptDate = ComplaintsList[i].ReceiptDate,
-                            Citizen = new Citizen { CitizenName = ComplaintsList[i].Citizen.CitizenName },
-                            OZhComplaintText = new OZhClassification { OZhComplaint = ComplaintsList[i].OZhComplaintText.OZhComplaint },
-                            Comments = ComplaintsList[i].Comments,
-                            Result = new Result { Rezolution = ComplaintsList[i].Result.Rezolution },
-                            Prosecutor = new Prosecutor { ProsecutorName = ComplaintsList[i].Prosecutor.ProsecutorName },
-                            Chief = new Chief { ChiefName = ComplaintsList[i].Chief.ChiefName }
-                        };
+                    //for (int i = ComplaintsList.Count - 1; i >= 0; i--)
+                    //{
+                    //    var compl = new Complaint
+                    //    {
+                    //        Enumerator = ComplaintsList[i].Enumerator,
+                    //        ReceiptDate = ComplaintsList[i].ReceiptDate,
+                    //        Citizen = new Citizen { CitizenName = ComplaintsList[i].Citizen.CitizenName },
+                    //        OZhComplaintText = new OZhClassification { OZhComplaint = ComplaintsList[i].OZhComplaintText.OZhComplaint },
+                    //        Comments = ComplaintsList[i].Comments,
+                    //        Result = new Result { Rezolution = ComplaintsList[i].Result.Rezolution },
+                    //        Prosecutor = new Prosecutor { ProsecutorName = ComplaintsList[i].Prosecutor.ProsecutorName },
+                    //        Chief = new Chief { ChiefName = ComplaintsList[i].Chief.ChiefName }
+                    //    };
 
-                        complaitsToExcel.Add(compl);
-                    }       
-                    
+                    //    complaitsToExcel.Add(compl);
+                    //}      
+                    #endregion
+
                     using (ExcelPackage package = new ExcelPackage(file))
                     {
                         ExcelWorksheet ws = package.Workbook.Worksheets.Add("Обращения");
@@ -684,12 +686,12 @@ namespace Complaints_WPF.ViewModels
                         #region Header
                         ws.Cells[Address: "A1"].Value = $"Журнал регистрации обращений на {DateTime.Now.ToString("dd.MM.yyyy")}";
                         ws.Cells[Address: "A1:H1"].Merge = true;
-                        ws.Row(row: 1).Style.Font.Size = 18;
+                        ws.Row(row: 1).Style.Font.Size = 16;
                         //ws.Row(row: 1).Style.Font.Color.SetColor(Color.DarkGray);
                         ws.Row(row: 2).Style.Font.Bold = true;
                         #endregion
 
-                        ExcelRangeBase range = ws.Cells[Address: "A3"].LoadFromCollection(complaitsToExcel, PrintHeaders: true);  //ComplaintsList); //, PrintHeaders: true //LFC allows to pass INmbl<T> (in our case List<PM>),  PrintHeaders - will take prop names for headers  //"A2"-starting point
+                        ExcelRangeBase range = ws.Cells[Address: "A2"].LoadFromCollection(ComplaintsList, PrintHeaders: true); //, PrintHeaders: true //LFC allows to pass INmbl<T> (in our case List<PM>),  PrintHeaders - will take prop names for headers  //"A2"-starting point
                         range.AutoFitColumns(); //so we see everything
                         //ws.Column(col: 3).Width = 30;
 
