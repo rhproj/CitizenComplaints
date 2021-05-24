@@ -1,5 +1,9 @@
 ﻿using Complaints_WPF.Commands;
 using Complaints_WPF.Models;
+using Complaints_WPF.Services;
+using Microsoft.Win32;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -213,7 +217,7 @@ namespace Complaints_WPF.ViewModels
             get { return _deleteComplaintCommand; }
         }
 
-        public RelayCommand SaveToCsvCommand { get; }
+        public RelayCommand SaveSpreadSheetsCommand { get; }  // SaveToCsvCommand
 
         public RelayCommand FilterCommand { get; }
         public RelayCommand UnFilterCommand { get; }
@@ -245,8 +249,6 @@ namespace Complaints_WPF.ViewModels
             _editCommand = new RelayCommand(EditComplaint, null);
             _deleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
 
-            SaveToCsvCommand = new RelayCommand(SaveToCsv, null);
-
             FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);           
             UnFilterCommand = new RelayCommand(UnFilteromplaints, null);
 
@@ -261,6 +263,8 @@ namespace Complaints_WPF.ViewModels
             ChiefsList = new ObservableCollection<string>(complaintService.LoadChiefs()); 
 
             LoadData(YearToFilter);
+
+            SaveSpreadSheetsCommand = new RelayCommand(SaveSpreadSheets, null);  //used to be: SaveToCsv
         }
         #endregion
 
@@ -616,14 +620,6 @@ namespace Complaints_WPF.ViewModels
 
         private void SaveToCsv()
         {
-            //using (var textWriter = File.CreateText($@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\ЖРЖ_{DateTime.Now}.csv"))
-            //{
-            //    foreach (var line in ToCsv(oemResultsModels))
-            //    {
-            //        textWriter.WriteLine(line);
-            //    }
-            //}
-
             try
             {
                 using (StreamWriter sw = new StreamWriter($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\ЖРЖ ({DateTime.Now.ToString("yyyy.MM.dd")}).csv", false, Encoding.Unicode))
@@ -635,22 +631,73 @@ namespace Complaints_WPF.ViewModels
                     {
                         sw.WriteLine($"{ComplaintsList[i].Enumerator};{ComplaintsList[i].ReceiptDate};{ComplaintsList[i].Citizen.CitizenName};{ComplaintsList[i].OZhComplaintText.OZhComplaint};{ComplaintsList[i].Comments};{ComplaintsList[i].Result.Rezolution};{ComplaintsList[i].Prosecutor.ProsecutorName};{ComplaintsList[i].Chief.ChiefName}"); //,");
                     }
-
-                    //foreach (var c in ComplaintsList)
-                    //{
-                    //    sw.WriteLine($"{c.Enumerator};{c.ReceiptDate};{c.Citizen.CitizenName};{c.OZhComplaintText.OZhComplaint};{c.Comments};{c.Result.Rezolution};{c.Prosecutor.ProsecutorName};{c.Chief.ChiefName}"); //,");
-                    //}
-                    #region Full info (ain't functional, gotta do thru DB Q)
-                    //sw.WriteLine("№;Дата/время;ФИО заявителя;Жалоба;Листов;Приложений;Примечание;Результат;Принял(а);Принимающий руководитель;;Дата рождения;Адрес;Род занятий;Телефон;Почта");
-
-                    //for (int i = ComplaintsList.Count - 1; i >= 0; i--)
-                    //{
-                    //    sw.WriteLine($"{ComplaintsList[i].Enumerator};{ComplaintsList[i].ReceiptDate};{ComplaintsList[i].Citizen.CitizenName};{ComplaintsList[i].OZhComplaintText.OZhComplaint};{ComplaintsList[i].PageNum};{ComplaintsList[i].AppendNum};{ComplaintsList[i].Comments};{ComplaintsList[i].Result.Rezolution};{ComplaintsList[i].Prosecutor.ProsecutorName};{ComplaintsList[i].Chief.ChiefName};###;{ComplaintsList[i].Citizen.BirthDate};{ComplaintsList[i].Citizen.CitizenAdress};{ComplaintsList[i].Citizen.Occupation};{ComplaintsList[i].Citizen.PhoneNumber};{ComplaintsList[i].Citizen.Email}"); //,");
-                    //}
-                    #endregion
                 }
 
                 Message = "Таблица сохранена на Рабочем столе";
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+            }
+        }
+
+        private void SaveSpreadSheets()
+        {
+            try
+            {
+                //EPPlusService.SaveCollectionToExcel(ComplaintsList);
+
+                SaveFileDialog sfD = new SaveFileDialog();
+                sfD.DefaultExt = ".xlsx";
+                sfD.Filter = "Файл Excel (.xlsx)|*.xlsx";
+                sfD.FileName = $"ЖРЖ (на {DateTime.Now.ToString("dd.MM.yy")})";
+
+                if (sfD.ShowDialog() == true)
+                {
+                    var file = new FileInfo(sfD.FileName);
+
+                    ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+                    var complaitsToExcel = new List<Complaint>();
+
+                    for (int i = ComplaintsList.Count - 1; i >= 0; i--)
+                    {
+                        var compl = new Complaint
+                        {
+                            Enumerator = ComplaintsList[i].Enumerator,
+                            ReceiptDate = ComplaintsList[i].ReceiptDate,
+                            Citizen = new Citizen { CitizenName = ComplaintsList[i].Citizen.CitizenName },
+                            OZhComplaintText = new OZhClassification { OZhComplaint = ComplaintsList[i].OZhComplaintText.OZhComplaint },
+                            Comments = ComplaintsList[i].Comments,
+                            Result = new Result { Rezolution = ComplaintsList[i].Result.Rezolution },
+                            Prosecutor = new Prosecutor { ProsecutorName = ComplaintsList[i].Prosecutor.ProsecutorName },
+                            Chief = new Chief { ChiefName = ComplaintsList[i].Chief.ChiefName }
+                        };
+
+                        complaitsToExcel.Add(compl);
+                    }       
+                    
+                    using (ExcelPackage package = new ExcelPackage(file))
+                    {
+                        ExcelWorksheet ws = package.Workbook.Worksheets.Add("Обращения");
+
+                        #region Header
+                        ws.Cells[Address: "A1"].Value = $"Журнал регистрации обращений на {DateTime.Now.ToString("dd.MM.yyyy")}";
+                        ws.Cells[Address: "A1:H1"].Merge = true;
+                        ws.Row(row: 1).Style.Font.Size = 18;
+                        //ws.Row(row: 1).Style.Font.Color.SetColor(Color.DarkGray);
+                        ws.Row(row: 2).Style.Font.Bold = true;
+                        #endregion
+
+                        ExcelRangeBase range = ws.Cells[Address: "A3"].LoadFromCollection(complaitsToExcel, PrintHeaders: true);  //ComplaintsList); //, PrintHeaders: true //LFC allows to pass INmbl<T> (in our case List<PM>),  PrintHeaders - will take prop names for headers  //"A2"-starting point
+                        range.AutoFitColumns(); //so we see everything
+                        //ws.Column(col: 3).Width = 30;
+
+                        package.SaveAsync();
+
+                        //w/o using make sure to close excel: package.Dispose();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -667,58 +714,3 @@ namespace Complaints_WPF.ViewModels
         }
     }
 }
-
-
-
-
-
-#region ON WRITING to csv from in-net
-//String Escape(String s)
-//{
-//    StringBuilder sb = new StringBuilder();
-//    bool needQuotes = false;
-
-//    foreach (char c in s.ToArray())
-//    {
-//        switch (c)
-//        {
-//            case '"': sb.Append("\\\""); needQuotes = true; break;
-//            case ' ': sb.Append(" "); needQuotes = true; break;
-//            case ',': sb.Append(","); needQuotes = true; break;
-//            //case '\t': sb.Append("\\t"); needQuotes = true; break;
-//            //case '\n': sb.Append("\\n"); needQuotes = true; break;
-//            default: sb.Append(c); break;
-//        }
-//    }
-//    if (needQuotes)
-//        return "\"" + sb.ToString() + "\"";
-//    else
-//        return sb.ToString();
-//}
-
-//public void SerializeAsCsv(Stream stream)
-//{
-//    //complaint.Enumerator = dataReader.GetInt32(0);    //added new!
-//    //complaint.ComplaintID = dataReader.GetInt32(1);
-//    //complaint.ReceiptDate = dataReader.GetDateTime(2);
-//    //complaint.Citizen.CitizenName = dataReader.GetString(3);
-//    //complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(4);    //b4://complaint.ComplaintText = dataReader.GetString(3);
-
-//    //if (!dataReader.IsDBNull(5)) { complaint.Comments = dataReader.GetString(5); }
-
-//    //if (!dataReader.IsDBNull(6)) { complaint.Result.Rezolution = dataReader.GetString(6); }
-
-//    ////Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
-//    //if (!dataReader.IsDBNull(7)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(7); }
-//    //if (!dataReader.IsDBNull(8)) { complaint.Chief.ChiefName = dataReader.GetString(8); }
-//    //listOfComplaints.Add(complaint);
-
-//    //stream.Write(Escape(CurrentComplaint.Enumerator.ToString()));
-
-//    //stream.Write(",");
-//    //stream.Write(Year.ToString());
-//    //stream.Write(",");
-//    //stream.Write(Escape(Model));
-//    //stream.Write("\n");
-//} 
-#endregion
