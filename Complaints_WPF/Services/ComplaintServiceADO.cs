@@ -682,28 +682,10 @@ namespace Complaints_WPF.Models
             {
                 SqlCommand.Parameters.Clear();
                 SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_SelectPersonByName";
+                SqlCommand.CommandText = "sp_SelectPersonByNameLike";   //"sp_SelectPersonByName";
                 SqlCommand.Parameters.AddWithValue("@fullName", citizenName);
 
                 SqlConnect.Open();
-
-                #region w/o using
-                //var dataReader = SqlCommand.ExecuteReader();
-                //if (dataReader.HasRows)
-                //{
-                //    dataReader.Read();
-                //    citizen = new ComplaintDT();
-
-                //    citizen.CitizenID = dataReader.GetInt32(0);
-                //    //gotta do null check first on these, or nothing happens:
-                //    citizen.CitizenAdress = dataReader.IsDBNull(1) ? null : dataReader.GetString(1);                       //int ocupIndex = dataReader.GetOrdinal("Occupation");
-                //    citizen.Occupation = dataReader.IsDBNull(2) ? null : dataReader.GetString(2);
-                //    citizen.PhoneNumber = dataReader.IsDBNull(3) ? null : dataReader.GetString(3);
-                //    citizen.Email = dataReader.IsDBNull(4) ? null : dataReader.GetString(4);
-                //    citizen.BirthDate = dataReader.IsDBNull(5) ? null : dataReader.GetString(5);
-                //}
-                //dataReader.Close(); 
-                #endregion
 
                 using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
                 {
@@ -713,11 +695,12 @@ namespace Complaints_WPF.Models
                         citizen = new Complaint(); //exrtacting only citizen related things
                         citizen.Citizen.CitizenID = dataReader.GetInt32(0);
                         //gotta do null check first on these, or nothing happens:
-                        citizen.Citizen.CitizenAdress = dataReader.IsDBNull(1) ? null : dataReader.GetString(1);                       //int ocupIndex = dataReader.GetOrdinal("Occupation");
-                        citizen.Citizen.Occupation = dataReader.IsDBNull(2) ? null : dataReader.GetString(2);
-                        citizen.Citizen.PhoneNumber = dataReader.IsDBNull(3) ? null : dataReader.GetString(3);
-                        citizen.Citizen.Email = dataReader.IsDBNull(4) ? null : dataReader.GetString(4);
-                        citizen.Citizen.BirthDate = dataReader.IsDBNull(5) ? null : dataReader.GetString(5);
+                        citizen.Citizen.CitizenName = dataReader.GetString(1);  //added 21
+                        citizen.Citizen.CitizenAdress = dataReader.IsDBNull(2) ? null : dataReader.GetString(2);                       //int ocupIndex = dataReader.GetOrdinal("Occupation");
+                        citizen.Citizen.Occupation = dataReader.IsDBNull(3) ? null : dataReader.GetString(3);
+                        citizen.Citizen.PhoneNumber = dataReader.IsDBNull(4) ? null : dataReader.GetString(4);
+                        citizen.Citizen.Email = dataReader.IsDBNull(5) ? null : dataReader.GetString(5);
+                        citizen.Citizen.BirthDate = dataReader.IsDBNull(6) ? null : dataReader.GetString(6);
                     }
                 }
             }

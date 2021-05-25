@@ -368,6 +368,7 @@ namespace Complaints_WPF.ViewModels
                 if (citizen != null)
                 {
                     CurrentComplaint.Citizen.CitizenID = citizen.Citizen.CitizenID;
+                    CurrentComplaint.Citizen.CitizenName = citizen.Citizen.CitizenName;    //added
                     CurrentComplaint.Citizen.CitizenAdress = citizen.Citizen.CitizenAdress;
                     CurrentComplaint.Citizen.Occupation = citizen.Citizen.Occupation;
                     CurrentComplaint.Citizen.PhoneNumber = citizen.Citizen.PhoneNumber;
