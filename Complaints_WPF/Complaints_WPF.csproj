@@ -75,6 +75,7 @@
     <Compile Include="Models\OZhClassification.cs" />
     <Compile Include="Services\ComplaintServiceADO.cs" />
     <Compile Include="Services\EPPlusService.cs" />
+    <Compile Include="Services\ServerAccess.cs" />
     <Compile Include="ViewModels\ComplaintsViewModel.cs" />
     <Compile Include="ViewModels\SummOZhViewModel.cs" />
     <Compile Include="Views\ComboConstructor.xaml.cs">

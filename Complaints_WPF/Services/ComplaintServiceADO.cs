@@ -296,7 +296,7 @@ namespace Complaints_WPF.Models
             return OZhClassificationList;
         }
 
-        public List<string> LoadOZhClassification()
+        public List<string> LoadOZhClassification() //first to run
         {
             List<string> OZhClassificationList = new List<string>();
             try
