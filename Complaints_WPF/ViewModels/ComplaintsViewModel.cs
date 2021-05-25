@@ -293,18 +293,18 @@ namespace Complaints_WPF.ViewModels
 
             CurrentComplaint.Enumerator = CurrentNum + 1;//activate later with increment !
             CurrentComplaint.Citizen.BirthDate = null;//string.Empty;
-            CurrentComplaint.Citizen.CitizenAdress = null;//string.Empty;
-            CurrentComplaint.Comments = null;//string.Empty;
-            CurrentComplaint.PageNum = null;//string.Empty;
-            CurrentComplaint.AppendNum = null;//string.Empty;
+            CurrentComplaint.Citizen.CitizenAdress = null;
+            CurrentComplaint.Comments = null;
+            CurrentComplaint.PageNum = null;
+            CurrentComplaint.AppendNum = null;
 
             CurrentComplaint.DigitalStorage = null; //21.01
 
             CurrentComplaint.OZhComplaintText.OZhComplaint = null; //used to be this: //CurrentComplaint.ComplaintText = null;//string.Empty;
-            CurrentComplaint.Result.Rezolution = null;//string.Empty;
-            CurrentComplaint.Citizen.Occupation = null;//string.Empty;
-            CurrentComplaint.Citizen.PhoneNumber = null;//string.Empty;
-            CurrentComplaint.Citizen.Email = null;//string.Empty;
+            CurrentComplaint.Result.Rezolution = null;
+            CurrentComplaint.Citizen.Occupation = null;
+            CurrentComplaint.Citizen.PhoneNumber = null;
+            CurrentComplaint.Citizen.Email = null;
 
             CurrentComplaint.ComplaintID = 0;
             CurrentComplaint.Citizen.CitizenID = 0;
@@ -645,61 +645,64 @@ namespace Complaints_WPF.ViewModels
         {
             try
             {
-                //EPPlusService.SaveCollectionToExcel(ComplaintsList);
+                EPPlusService.SaveComplaintsToExcel(ComplaintsList);
 
-                SaveFileDialog sfD = new SaveFileDialog();
-                sfD.DefaultExt = ".xlsx";
-                sfD.Filter = "Файл Excel (.xlsx)|*.xlsx";
-                sfD.FileName = $"ЖРЖ (на {DateTime.Now.ToString("dd.MM.yy")})";
+                Message = "Таблица сохранена";
+                #region method
+                //SaveFileDialog sfD = new SaveFileDialog();
+                //sfD.DefaultExt = ".xlsx";
+                //sfD.Filter = "Файл Excel (.xlsx)|*.xlsx";
+                //sfD.FileName = $"ЖРЖ (на {DateTime.Now.ToString("dd.MM.yy")})";
 
-                if (sfD.ShowDialog() == true)
-                {
-                    var file = new FileInfo(sfD.FileName);
+                //if (sfD.ShowDialog() == true)
+                //{
+                //    var file = new FileInfo(sfD.FileName);
 
-                    ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+                //    ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
-                    #region additional step
-                    //var complaitsToExcel = new List<Complaint>();
+                //    #region additional step
+                //    //var complaitsToExcel = new List<Complaint>();
 
-                    //for (int i = ComplaintsList.Count - 1; i >= 0; i--)
-                    //{
-                    //    var compl = new Complaint
-                    //    {
-                    //        Enumerator = ComplaintsList[i].Enumerator,
-                    //        ReceiptDate = ComplaintsList[i].ReceiptDate,
-                    //        Citizen = new Citizen { CitizenName = ComplaintsList[i].Citizen.CitizenName },
-                    //        OZhComplaintText = new OZhClassification { OZhComplaint = ComplaintsList[i].OZhComplaintText.OZhComplaint },
-                    //        Comments = ComplaintsList[i].Comments,
-                    //        Result = new Result { Rezolution = ComplaintsList[i].Result.Rezolution },
-                    //        Prosecutor = new Prosecutor { ProsecutorName = ComplaintsList[i].Prosecutor.ProsecutorName },
-                    //        Chief = new Chief { ChiefName = ComplaintsList[i].Chief.ChiefName }
-                    //    };
+                //    //for (int i = ComplaintsList.Count - 1; i >= 0; i--)
+                //    //{
+                //    //    var compl = new Complaint
+                //    //    {
+                //    //        Enumerator = ComplaintsList[i].Enumerator,
+                //    //        ReceiptDate = ComplaintsList[i].ReceiptDate,
+                //    //        Citizen = new Citizen { CitizenName = ComplaintsList[i].Citizen.CitizenName },
+                //    //        OZhComplaintText = new OZhClassification { OZhComplaint = ComplaintsList[i].OZhComplaintText.OZhComplaint },
+                //    //        Comments = ComplaintsList[i].Comments,
+                //    //        Result = new Result { Rezolution = ComplaintsList[i].Result.Rezolution },
+                //    //        Prosecutor = new Prosecutor { ProsecutorName = ComplaintsList[i].Prosecutor.ProsecutorName },
+                //    //        Chief = new Chief { ChiefName = ComplaintsList[i].Chief.ChiefName }
+                //    //    };
 
-                    //    complaitsToExcel.Add(compl);
-                    //}      
-                    #endregion
+                //    //    complaitsToExcel.Add(compl);
+                //    //}      
+                //    #endregion
 
-                    using (ExcelPackage package = new ExcelPackage(file))
-                    {
-                        ExcelWorksheet ws = package.Workbook.Worksheets.Add("Обращения");
+                //    using (ExcelPackage package = new ExcelPackage(file))
+                //    {
+                //        ExcelWorksheet ws = package.Workbook.Worksheets.Add("Обращения");
 
-                        #region Header
-                        ws.Cells[Address: "A1"].Value = $"Журнал регистрации обращений на {DateTime.Now.ToString("dd.MM.yyyy")}";
-                        ws.Cells[Address: "A1:H1"].Merge = true;
-                        ws.Row(row: 1).Style.Font.Size = 16;
-                        //ws.Row(row: 1).Style.Font.Color.SetColor(Color.DarkGray);
-                        ws.Row(row: 2).Style.Font.Bold = true;
-                        #endregion
+                //        #region Header
+                //        ws.Cells[Address: "A1"].Value = $"Журнал регистрации обращений на {DateTime.Now.ToString("dd.MM.yyyy")}";
+                //        ws.Cells[Address: "A1:H1"].Merge = true;
+                //        ws.Row(row: 1).Style.Font.Size = 16;
+                //        //ws.Row(row: 1).Style.Font.Color.SetColor(Color.DarkGray);
+                //        ws.Row(row: 2).Style.Font.Bold = true;
+                //        #endregion
 
-                        ExcelRangeBase range = ws.Cells[Address: "A2"].LoadFromCollection(ComplaintsList, PrintHeaders: true); //, PrintHeaders: true //LFC allows to pass INmbl<T> (in our case List<PM>),  PrintHeaders - will take prop names for headers  //"A2"-starting point
-                        range.AutoFitColumns(); //so we see everything
-                        //ws.Column(col: 3).Width = 30;
+                //        ExcelRangeBase range = ws.Cells[Address: "A2"].LoadFromCollection(ComplaintsList, PrintHeaders: true); //, PrintHeaders: true //LFC allows to pass INmbl<T> (in our case List<PM>),  PrintHeaders - will take prop names for headers  //"A2"-starting point
+                //        range.AutoFitColumns(); //so we see everything
+                //        //ws.Column(col: 3).Width = 30;
 
-                        package.SaveAsync();
+                //        package.SaveAsync();
 
-                        //w/o using make sure to close excel: package.Dispose();
-                    }
-                }
+                //        //w/o using make sure to close excel: package.Dispose();
+                //    }
+                //} 
+                #endregion
             }
             catch (Exception ex)
             {
