@@ -30,12 +30,12 @@ namespace Complaints_WPF.Models
             set { _receiptDate = value; OnPropertyChanged("ReceiptDate"); }
         }
 
-        //private string _complaintText; //uncomment in case of absence of OzhClassification
-        //public string ComplaintText
-        //{
-        //    get { return _complaintText; }
-        //    set { _complaintText = value; OnPropertyChanged("ComplaintText"); }
-        //}
+        private Citizen _citizen;
+        public Citizen Citizen
+        {
+            get { return _citizen; }
+            set { _citizen = value; OnPropertyChanged("Citizen"); }
+        }
 
         private OZhClassification _oZhComplaintText;
         public OZhClassification OZhComplaintText
@@ -73,18 +73,17 @@ namespace Complaints_WPF.Models
             set { _comments = value; OnPropertyChanged("Comments"); }
         }
 
-        private Citizen _citizen;
-        public Citizen Citizen
-        {
-            get { return _citizen; }
-            set { _citizen = value; OnPropertyChanged("Citizen"); }
-        }
-
         private Prosecutor _prosecutor; //do i even need it here??
         public Prosecutor Prosecutor
         {
             get { return _prosecutor; }
             set { _prosecutor = value; OnPropertyChanged("Prosecutor"); }
+        }
+        private Result _result;
+        public Result Result
+        {
+            get { return _result; }
+            set { _result = value; OnPropertyChanged("Result"); }
         }
 
         private Chief _chief;
@@ -92,13 +91,6 @@ namespace Complaints_WPF.Models
         {
             get { return _chief; }
             set { _chief = value; OnPropertyChanged("Chief"); }
-        }
-
-        private Result _result;
-        public Result Result
-        {
-            get { return _result; }
-            set { _result = value; OnPropertyChanged("Result"); }
         }
 
         #region CTOR
@@ -110,14 +102,6 @@ namespace Complaints_WPF.Models
             Prosecutor = new Prosecutor(); //same problem forgot to init Prosec class here to get his property
             Chief = new Chief();
         }
-
-        //public ComplaintDT(int id, DateTime dateTime, string name, string complaintText)
-        //{
-        //    ComplaintID = id;
-        //    ComplaintDateTime = dateTime;
-        //    CitizenName = name;
-        //    ComplaintText = complaintText;
-        //} 
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
