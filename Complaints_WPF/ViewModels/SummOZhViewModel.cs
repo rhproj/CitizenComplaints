@@ -13,7 +13,7 @@ namespace Complaints_WPF.ViewModels
 {
     public class SummOZhViewModel : INotifyPropertyChanged
     {
-        ComplaintServiceADO complaintService;
+        IComplaintService complaintService;
 
         private OZhClassification _oZhClassif;
         public OZhClassification OZhClassif

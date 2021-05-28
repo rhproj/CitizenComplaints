@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Complaints_WPF.Models
 {
-    public class ComplaintServiceADO
+    public class ComplaintServiceADO : IComplaintService
     {
         SqlConnection SqlConnect;
         SqlCommand SqlCommand;
@@ -42,7 +42,7 @@ namespace Complaints_WPF.Models
 
                         while (dataReader.Read()) //what happens w/o while? it simply won't work
                         {
-                            count++;                            
+                            count++;
                             Complaint complaint = new Complaint();
 
                             complaint.Enumerator = count;
@@ -70,11 +70,11 @@ namespace Complaints_WPF.Models
                 SqlConnect.Close();
             }
             return listOfComplaints;
-        } 
+        }
 
         public List<Complaint> GetAllComplaintsByYear(string year)  //using view
         {
-            List<Complaint> listOfComplaints = new List<Complaint>(); 
+            List<Complaint> listOfComplaints = new List<Complaint>();
             try
             {
                 SqlCommand.Parameters.Clear();
@@ -103,7 +103,7 @@ namespace Complaints_WPF.Models
                             if (!dataReader.IsDBNull(5)) { complaint.Comments = dataReader.GetString(5); }
 
                             if (!dataReader.IsDBNull(6)) { complaint.Result.Rezolution = dataReader.GetString(6); }
-                            
+
                             //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
                             if (!dataReader.IsDBNull(7)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(7); }
                             if (!dataReader.IsDBNull(8)) { complaint.Chief.ChiefName = dataReader.GetString(8); }
@@ -129,7 +129,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure; 
+                SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = storedProc;
                 SqlCommand.Parameters.AddWithValue(sp_param, param);
 
@@ -214,7 +214,7 @@ namespace Complaints_WPF.Models
                         {
                             Complaint complaint = new Complaint();
 
-                            complaint.Enumerator = dataReader.GetInt32(0);    
+                            complaint.Enumerator = dataReader.GetInt32(0);
                             complaint.ComplaintID = dataReader.GetInt32(1);
                             complaint.ReceiptDate = dataReader.GetDateTime(2);
                             complaint.Citizen.CitizenName = dataReader.GetString(3);
@@ -445,7 +445,7 @@ namespace Complaints_WPF.Models
             }
 
             return resultsList;
-        } 
+        }
         #endregion
 
         #region New Complaint:
@@ -674,7 +674,7 @@ namespace Complaints_WPF.Models
             }
             return selectedComplaint;
         }
-        
+
         public Complaint SearchCitizen(string citizenName)
         {
             Complaint citizen = null;
@@ -752,7 +752,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_AddOZhClasiff";
                 SqlCommand.Parameters.AddWithValue("@oZhComplaint", ozhComplaint);
-                
+
                 SqlConnect.Open();
                 isAddel = SqlCommand.ExecuteNonQuery() > 0;
             }

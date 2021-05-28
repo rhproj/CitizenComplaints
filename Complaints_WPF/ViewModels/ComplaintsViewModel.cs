@@ -18,7 +18,7 @@ namespace Complaints_WPF.ViewModels
     public class ComplaintsViewModel : INotifyPropertyChanged
     {
         #region Prop
-        ComplaintServiceADO complaintService; // = new ComplaintService(); принято это делать в CTOR-е
+        IComplaintService complaintService; // = new ComplaintService(); принято это делать в CTOR-е
 
         //private Prosecutor _prosecutorU;
         //public Prosecutor ProsecutorU
@@ -234,11 +234,11 @@ namespace Complaints_WPF.ViewModels
         #region CTOR
         public ComplaintsViewModel()
         {
-            if (ServerAccess.TestConnection("10.40.133.12") == false)
-            {
-                MessageBox.Show("Отсутствует связь с dbtat01");
-                Environment.Exit(0);
-            }
+            //if (ServerAccess.TestConnection("10.40.133.12") == false)
+            //{
+            //    MessageBox.Show("Отсутствует связь с dbtat01");
+            //    Environment.Exit(0);
+            //}
 
             complaintService = new ComplaintServiceADO(); //using ADO.Net
             CurrentComplaint = new Complaint(); //? why do we need this? see if it can be omitted //NO cuz its thru this all fields are filled and passed to methods           
