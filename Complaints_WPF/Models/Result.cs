@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Complaints_WPF.Models
 {
@@ -22,13 +17,6 @@ namespace Complaints_WPF.Models
             get { return _rezolution; }
             set { _rezolution = value; OnPropertyChanged("Rezolution"); }
         }
-
-        //private string _note;
-        //public string Note
-        //{
-        //    get { return _note; }
-        //    set { _note = value; OnPropertyChanged("Note"); }
-        //}
 
         public override string ToString()
         {

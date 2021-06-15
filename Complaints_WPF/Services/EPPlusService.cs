@@ -50,7 +50,6 @@ namespace Complaints_WPF.Services
                 ws.Cells[Address: "L2"].Value = "Руководитель";
 
                 ws.Column(col: 2).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                //ws.Column(col: 3).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
                 ws.Row(row: 1).Height = 30;
                 ws.Row(row: 2).Height = 22;
 
@@ -100,10 +99,5 @@ namespace Complaints_WPF.Services
                 package.Save();
             }
         }
-
-        //public static void Task WriteReportExcelFile(IEnumerable<object> collection, FileInfo file, string header)
-        //{
-
-        //}
     }
 }

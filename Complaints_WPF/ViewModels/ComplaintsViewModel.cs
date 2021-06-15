@@ -14,11 +14,13 @@ using System.Text;
 using System.Windows;
 
 namespace Complaints_WPF.ViewModels
-{
+{/// <summary>
+/// Main view model
+/// </summary>
     public class ComplaintsViewModel : INotifyPropertyChanged
     {
         #region Prop
-        IComplaintService complaintService; // = new ComplaintService(); принято это делать в CTOR-е
+        IComplaintService complaintService;
 
         //private Prosecutor _prosecutorU;
         //public Prosecutor ProsecutorU
@@ -55,28 +57,28 @@ namespace Complaints_WPF.ViewModels
             set { _oZhClassificationList = value; OnPropertyChanged("OZhClassificationList"); }
         }
 
-        private ObservableCollection<string> _resultsList; //25.11.20
+        private ObservableCollection<string> _resultsList;
         public ObservableCollection<string> ResultsList
         {
             get { return _resultsList; }
             set { _resultsList = value; OnPropertyChanged("ResultsList"); }
         }
 
-        private ObservableCollection<string> _prosecutorsList; //25.11.20
+        private ObservableCollection<string> _prosecutorsList;
         public ObservableCollection<string> ProsecutorsList
         {
             get { return _prosecutorsList; }
             set { _prosecutorsList = value; OnPropertyChanged("ProsecutorsList"); }
         }
 
-        private ObservableCollection<string> _chiefsList; //29.11.20
+        private ObservableCollection<string> _chiefsList;
         public ObservableCollection<string> ChiefsList
         {
             get { return _chiefsList; }
             set { _chiefsList = value; OnPropertyChanged("ChiefsList"); }
         }
 
-        private int _currentNum; //13.01 Used to summ up all complaints and show the current one
+        private int _currentNum;
         public int CurrentNum
         {
             get { return _currentNum; }
@@ -175,6 +177,8 @@ namespace Complaints_WPF.ViewModels
         //    get { return _loginName; }
         //    set { _loginName = ProsecutorLogin; OnPropertyChanged("LoginName"); }
         //}
+
+        private string _server = "10.40.133.12";
         #endregion
 
         //07-10.Commands:
@@ -186,35 +190,15 @@ namespace Complaints_WPF.ViewModels
         //    get { return _searchCommand; } //btnz probably don't need {set} most of the time
         //}
 
-        private RelayCommand _newEntryCommand;
-        public RelayCommand NewEntryCommand
-        {
-            get { return _newEntryCommand; }
-        }
+        public RelayCommand NewEntryCommand { get; }
 
-        private RelayCommand _registerCommand;
-        public RelayCommand RegisterCommand  //right now it's null, in order to create its instance we need to pass a meth that matches Action delegate signature
-        {
-            get { return _registerCommand; } //no set, cuz binds only one way
-        }
+        public RelayCommand RegisterCommand { get;  }  //right now it's null, in order to create its instance we need to pass a meth that matches Action delegate signature
 
-        private RelayCommand _findCitizenCommand;
-        public RelayCommand FindCitizenCommand
-        {
-            get { return _findCitizenCommand; }
-        }
+        public RelayCommand FindCitizenCommand { get; }
 
-        private RelayCommand _editCommand;
-        public RelayCommand EditCommand
-        {
-            get { return _editCommand; }
-        }
+        public RelayCommand EditCommand { get; }
 
-        private RelayCommand _deleteComplaintCommand;
-        public RelayCommand DeleteComplaintCommand //{ get; }
-        {
-            get { return _deleteComplaintCommand; }
-        }
+        public RelayCommand DeleteComplaintCommand { get; }
 
         public RelayCommand SaveSpreadSheetsCommand { get; }  // SaveToCsvCommand
 
@@ -225,7 +209,7 @@ namespace Complaints_WPF.ViewModels
         public RelayCommand AddOzhCommand { get; }
         public RelayCommand AddChiefCommand { get; }
         public RelayCommand DeleteChiefCommand { get; }
-        //public RelayCommand DeleteOzhCommand { get; set; }
+        //public RelayCommand DeleteOzhCommand { get; }
         #endregion
 
         #endregion
@@ -234,9 +218,9 @@ namespace Complaints_WPF.ViewModels
         #region CTOR
         public ComplaintsViewModel()
         {
-            //if (ServerAccess.TestConnection("10.40.133.12") == false)
+            //if (ServerAccess.TestConnection(_server) == false)
             //{
-            //    MessageBox.Show("Отсутствует связь с dbtat01");
+            //    MessageBox.Show($"Отсутствует связь с {_server}");
             //    Environment.Exit(0);
             //}
 
@@ -244,15 +228,14 @@ namespace Complaints_WPF.ViewModels
             CurrentComplaint = new Complaint(); //? why do we need this? see if it can be omitted //NO cuz its thru this all fields are filled and passed to methods           
 
             YearToFilter = DateTime.Now.Year.ToString();
-            
-            _newEntryCommand = new RelayCommand(NewEntry, null);
-            _registerCommand = new RelayCommand(RegisterComplaint, RegisterComplaint_CanExecute); //b/f not prop, cuz it's read-only (no set) And that's why no set! - we set it here!
 
+            NewEntryCommand = new RelayCommand(NewEntry, null);
+            RegisterCommand = new RelayCommand(RegisterComplaint, RegisterComplaint_CanExecute); //b/f not prop, cuz it's read-only (no set) And that's why no set! - we set it here!
             //                                                                                      //its  prop will {get} its value from it and we'll bind it with UI Command={Binding RegisterCommand}
-            _findCitizenCommand = new RelayCommand(FindCitizen, null);
+            FindCitizenCommand = new RelayCommand(FindCitizen, null);
 
-            _editCommand = new RelayCommand(EditComplaint, null);
-            _deleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
+            EditCommand = new RelayCommand(EditComplaint, null);
+            DeleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
 
             FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);           
             UnFilterCommand = new RelayCommand(UnFilteromplaints, null);
@@ -269,7 +252,7 @@ namespace Complaints_WPF.ViewModels
 
             LoadData(YearToFilter);
 
-            SaveSpreadSheetsCommand = new RelayCommand(SaveSpreadSheets, null);  //used to be: SaveToCsv
+            SaveSpreadSheetsCommand = new RelayCommand(SaveSpreadSheets, null);
         }
         #endregion
 
@@ -277,7 +260,7 @@ namespace Complaints_WPF.ViewModels
 
         private void LoadData(string year) //we repeating our GetAll method, why not have it somewhere once and use it? NO, cuz it's easier to feed it to ObsColl this way
         {
-            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(year)); //GetAllComplaints()); //
+            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(year)); //GetAllComplaints());
             CurrentNum = ComplaintsList.Count;
         }
 
@@ -285,7 +268,7 @@ namespace Complaints_WPF.ViewModels
         {
             if (withName)
             {
-                CurrentComplaint.Citizen.CitizenName = null;//string.Empty;
+                CurrentComplaint.Citizen.CitizenName = null;
             }
             if (withChief)
             {
@@ -297,15 +280,15 @@ namespace Complaints_WPF.ViewModels
             }
 
             CurrentComplaint.Enumerator = CurrentNum + 1;//activate later with increment !
-            CurrentComplaint.Citizen.BirthDate = null;//string.Empty;
+            CurrentComplaint.Citizen.BirthDate = null;
             CurrentComplaint.Citizen.CitizenAdress = null;
             CurrentComplaint.Comments = null;
             CurrentComplaint.PageNum = null;
             CurrentComplaint.AppendNum = null;
 
-            CurrentComplaint.DigitalStorage = null; //21.01
+            CurrentComplaint.DigitalStorage = null;
 
-            CurrentComplaint.OZhComplaintText.OZhComplaint = null; //used to be this: //CurrentComplaint.ComplaintText = null;//string.Empty;
+            CurrentComplaint.OZhComplaintText.OZhComplaint = null;
             CurrentComplaint.Result.Rezolution = null;
             CurrentComplaint.Citizen.Occupation = null;
             CurrentComplaint.Citizen.PhoneNumber = null;
@@ -320,25 +303,23 @@ namespace Complaints_WPF.ViewModels
             ClearEntryFields(true, true, true);
         }
 
-        //07.Commands: now we create method = Action signature, and inside meth we call our EmpServise to actually save data
         public void RegisterComplaint()
         {
             try
-            { //calling EmpService(which already has data in it's ctor) by passing current Employee
+            {
                 bool isSaved = false;
 
-                //isSaved = complaintService.AddToComplaintList(CurrentComplaint);
                 if (CurrentComplaint.Citizen.CitizenID == 0)
                 {
                     isSaved = complaintService.AddToComplaintList(CurrentComplaint, ProsecutorLogin);
                 }
-                else if (CurrentComplaint.ComplaintID == 0) //Гражданин сущ-ет в базе
+                else if (CurrentComplaint.ComplaintID == 0) //existing citizen makes anover complaint
                 {
-                    isSaved = complaintService.AddToComplaintListUpd(CurrentComplaint, ProsecutorLogin); //
+                    isSaved = complaintService.AddToComplaintListUpd(CurrentComplaint, ProsecutorLogin);
                 }
                 else
                 {
-                    isSaved = complaintService.UpdateComplaint(CurrentComplaint); //корректировка всего Заявления с инфой по гр-ну
+                    isSaved = complaintService.UpdateComplaint(CurrentComplaint);
                 }
 
                 if (isSaved)
@@ -347,18 +328,18 @@ namespace Complaints_WPF.ViewModels
                     Message = "Не удалось сохранить заявление";
 
                 LoadData(YearToFilter); //refreshes
-                //try later: //Message = isSaved? "Employee saved": "RegisterCommand failed";
+                //try: //Message = isSaved? "Employee saved": "RegisterCommand failed";
 
                 ClearEntryFields(true, false, false);
             }
-            catch (Exception ex) ///########///
+            catch (Exception ex)
             {
                 Message = ex.Message;
             }
         }
         private bool RegisterComplaint_CanExecute()
         {
-            if (string.IsNullOrWhiteSpace(CurrentComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(CurrentComplaint.OZhComplaintText.OZhComplaint)) //b4: //string.IsNullOrWhiteSpace(CurrentComplaint.ComplaintText))
+            if (string.IsNullOrWhiteSpace(CurrentComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(CurrentComplaint.OZhComplaintText.OZhComplaint))
                 return false;
             else
                 return true;
@@ -374,7 +355,7 @@ namespace Complaints_WPF.ViewModels
                 if (citizen != null)
                 {
                     CurrentComplaint.Citizen.CitizenID = citizen.Citizen.CitizenID;
-                    CurrentComplaint.Citizen.CitizenName = citizen.Citizen.CitizenName;    //added
+                    CurrentComplaint.Citizen.CitizenName = citizen.Citizen.CitizenName;
                     CurrentComplaint.Citizen.CitizenAdress = citizen.Citizen.CitizenAdress;
                     CurrentComplaint.Citizen.Occupation = citizen.Citizen.Occupation;
                     CurrentComplaint.Citizen.PhoneNumber = citizen.Citizen.PhoneNumber;
@@ -396,7 +377,7 @@ namespace Complaints_WPF.ViewModels
         {
             try
             {
-                //im thinking Clear Fields not req-ed since we asigning every field anyway
+                //Clear Fields is not required since we assigning every field anyway
                 CurrentComplaint = complaintService.SelectComplaint(YearToFilter, SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);  //SelectComplaintFun("2021", SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);    //
             }
             catch (Exception ex)
@@ -453,23 +434,23 @@ namespace Complaints_WPF.ViewModels
                 }
                 else if (!string.IsNullOrWhiteSpace(DateToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterByDate, "[ReceiptDate]", DateToFilter, YearToFilter)); //FilterComplaints("sp_FilterComplaintsByDate", "@receiptDate", DateToFilter)); //
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterByDate, "[ReceiptDate]", DateToFilter, YearToFilter));
                 }
                 else if (!string.IsNullOrWhiteSpace(NameToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterLike, "[FullName]", NameToFilter, YearToFilter));  //FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));  //
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterLike, "[FullName]", NameToFilter, YearToFilter));
                 }
-                else if (!string.IsNullOrWhiteSpace(OZhComplaintToFilter))    //b4: //ContentToFilter))
+                else if (!string.IsNullOrWhiteSpace(OZhComplaintToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[Content]", OZhComplaintToFilter, YearToFilter));  //FilterComplaints("sp_FilterComplaintsByСontent", "@content", OZhComplaintToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[Content]", OZhComplaintToFilter, YearToFilter));
                 }
                 else if (!string.IsNullOrWhiteSpace(CommentsToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterLike, "[Comments]", CommentsToFilter, YearToFilter));  //FilterComplaints("sp_FilterComplaintsByName", "@fullName", NameToFilter));  //
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterLike, "[Comments]", CommentsToFilter, YearToFilter));
                 }
                 else if (!string.IsNullOrWhiteSpace(ProsecutorToFilter))
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ProsecutorName]", ProsecutorToFilter, YearToFilter)); //FilterComplaints("sp_FilterComplaintsByProsecutor", "@prosecutor", ProsecutorToFilter));
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ProsecutorName]", ProsecutorToFilter, YearToFilter));
                 }
                 else if (!string.IsNullOrWhiteSpace(ChiefToFilter))
                 {
@@ -477,7 +458,7 @@ namespace Complaints_WPF.ViewModels
                 }
                 else
                 {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(YearToFilter)); //GetAllComplaints());
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(YearToFilter));
                 }
             }
             catch (Exception ex)
@@ -490,7 +471,7 @@ namespace Complaints_WPF.ViewModels
         {
             LoadData(YearToFilter);
 
-            NumberToFilter = DateToFilter = NameToFilter = OZhComplaintToFilter = CommentsToFilter = ProsecutorToFilter = ChiefToFilter = null;     //ive replased ContentTo.. with oZh
+            NumberToFilter = DateToFilter = NameToFilter = OZhComplaintToFilter = CommentsToFilter = ProsecutorToFilter = ChiefToFilter = null;
         }
 
         #region Editing
@@ -512,7 +493,7 @@ namespace Complaints_WPF.ViewModels
 
                 if (isAdded)
                 {
-                    Message = "Запись добавлеа, чтоб отобразить изменения перезапустите программу";
+                    Message = "Запись добавлена, чтобы отобразить изменения перезапустите программу";
                 }
                 else
                 {
@@ -564,7 +545,7 @@ namespace Complaints_WPF.ViewModels
         private void AddToChiefsCombobox()
         {
             try
-            { //calling EmpService(which already has data in it's ctor) by passing current Employee
+            {
                 bool isAdded = false;
 
                 isAdded = complaintService.AddToChiefsList(AddValueToCombobox);
@@ -574,7 +555,7 @@ namespace Complaints_WPF.ViewModels
                 else
                     Message = "Не удалось добавить руководителя";
             }
-            catch (Exception ex) ///########///
+            catch (Exception ex)
             {
                 Message = ex.Message;
             }
@@ -624,7 +605,7 @@ namespace Complaints_WPF.ViewModels
         #endregion
 
 
-        private void SaveToCsv()
+        private void SaveToCsv() //deprecated,been changed to EPPlus method
         {
             try
             {
@@ -635,7 +616,7 @@ namespace Complaints_WPF.ViewModels
 
                     for (int i = ComplaintsList.Count-1; i >= 0; i--)
                     {
-                        sw.WriteLine($"{ComplaintsList[i].Enumerator};{ComplaintsList[i].ReceiptDate};{ComplaintsList[i].Citizen.CitizenName};{ComplaintsList[i].OZhComplaintText.OZhComplaint};{ComplaintsList[i].Comments};{ComplaintsList[i].Result.Rezolution};{ComplaintsList[i].Prosecutor.ProsecutorName};{ComplaintsList[i].Chief.ChiefName}"); //,");
+                        sw.WriteLine($"{ComplaintsList[i].Enumerator};{ComplaintsList[i].ReceiptDate};{ComplaintsList[i].Citizen.CitizenName};{ComplaintsList[i].OZhComplaintText.OZhComplaint};{ComplaintsList[i].Comments};{ComplaintsList[i].Result.Rezolution};{ComplaintsList[i].Prosecutor.ProsecutorName};{ComplaintsList[i].Chief.ChiefName}");
                     }
                 }
 

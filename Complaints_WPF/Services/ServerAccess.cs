@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Complaints_WPF.Services
-{
+{/// <summary>
+/// Checks DB accessibility 
+/// </summary>
     internal static class ServerAccess
     {
         public static bool TestConnection(string ip)

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Complaints_WPF.Models
 {
@@ -42,7 +37,6 @@ namespace Complaints_WPF.Models
             set { _citizenAdress = value; OnPropertyChanged("CitizenAdress"); }
         }
 
-        //added later
         private string _occupation;
         public string Occupation
         {

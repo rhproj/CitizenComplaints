@@ -31,7 +31,7 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
-                SqlCommand.CommandText = "sp_SelectAllComplaints"; //used to be sp_SelectAllComplaints01, without prosecs
+                SqlCommand.CommandText = "sp_SelectAllComplaints";
 
                 SqlConnect.Open();
                 using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
@@ -40,7 +40,7 @@ namespace Complaints_WPF.Models
                     {
                         int count = 0;
 
-                        while (dataReader.Read()) //what happens w/o while? it simply won't work
+                        while (dataReader.Read())
                         {
                             count++;
                             Complaint complaint = new Complaint();
@@ -49,7 +49,7 @@ namespace Complaints_WPF.Models
                             complaint.ComplaintID = dataReader.GetInt32(0);
                             complaint.ReceiptDate = dataReader.GetDateTime(1);
                             complaint.Citizen.CitizenName = dataReader.GetString(2);
-                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(3);    //b4://complaint.ComplaintText = dataReader.GetString(3);
+                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(3);
                             if (!dataReader.IsDBNull(4)) { complaint.Result.Rezolution = dataReader.GetString(4); }
                             //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
 
@@ -79,32 +79,28 @@ namespace Complaints_WPF.Models
             {
                 SqlCommand.Parameters.Clear();
                 SqlCommand.CommandType = CommandType.Text;
-                SqlCommand.CommandText = $"select * from f_GetComplaintsByYear ({year}) order by [N] desc"; //used to be sp_SelectAllComplaints01, without prosecs
+                SqlCommand.CommandText = $"select * from f_GetComplaintsByYear ({year}) order by [N] desc";
 
                 SqlConnect.Open();
                 using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
-                        //int count = 0;
-
-                        while (dataReader.Read()) //what happens w/o while? it simply won't work
+                        while (dataReader.Read()) 
                         {
-                            //count++;
                             Complaint complaint = new Complaint();
 
-                            //complaint.Enumerator = count;
-                            complaint.Enumerator = dataReader.GetInt32(0);    //added new!
+                            complaint.Enumerator = dataReader.GetInt32(0);
                             complaint.ComplaintID = dataReader.GetInt32(1);
                             complaint.ReceiptDate = dataReader.GetDateTime(2);
                             complaint.Citizen.CitizenName = dataReader.GetString(3);
-                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(4);    //b4://complaint.ComplaintText = dataReader.GetString(3);
+                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(4);
 
                             if (!dataReader.IsDBNull(5)) { complaint.Comments = dataReader.GetString(5); }
 
                             if (!dataReader.IsDBNull(6)) { complaint.Result.Rezolution = dataReader.GetString(6); }
-
                             //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
+
                             if (!dataReader.IsDBNull(7)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(7); }
                             if (!dataReader.IsDBNull(8)) { complaint.Chief.ChiefName = dataReader.GetString(8); }
                             listOfComplaints.Add(complaint);
@@ -123,7 +119,7 @@ namespace Complaints_WPF.Models
             return listOfComplaints;
         }
 
-        public List<Complaint> FilterComplaints(string storedProc, string sp_param, string param) // string receiptDate, string name, string content
+        public List<Complaint> FilterComplaints(string storedProc, string sp_param, string param)
         {
             List<Complaint> listOfComplaints = new List<Complaint>();
             try
@@ -190,12 +186,6 @@ namespace Complaints_WPF.Models
             return $"select * from f_GetComplaintsByYear({year}) where {sqlParam} like '%'+ '{param}' +'%' order by [N] desc";
         }
 
-        //public string SqlCommandFilterByContent(string sqlParam, string param, string year)
-        //{
-        //    return $"select * from f_GetComplaintsByYear({year}) where {sqlParam} = '{param}'";
-        //}
-
-
         public List<Complaint> FilterComplaintsFun(FilterComplaintDel filterComplaintDel, string sqlParam, string param, string year) // string receiptDate, string name, string content
         {
             List<Complaint> listOfComplaints = new List<Complaint>();
@@ -243,22 +233,6 @@ namespace Complaints_WPF.Models
         #endregion
 
         #region Load/Populate Lists form DB
-
-        //public List<OZhClassification> LoadOzh()
-        //{
-
-        //    List<OZhClassification> OzhList = new List<OZhClassification>();
-        //    for (int i = 0; i < 6; i++)
-        //    {
-        //        OZhClassification oZh = new OZhClassification();
-        //        oZh.OZhComplaint =  $"Some classification item # {i}";
-
-        //        OzhList.Add(oZh);
-        //    }
-
-        //    return OzhList;
-        //}
-
         public List<OZhClassification> LoadOZhWithSumm(string year)
         {
             List<OZhClassification> OZhClassificationList = new List<OZhClassification>();
@@ -266,7 +240,7 @@ namespace Complaints_WPF.Models
             {
                 SqlCommand.Parameters.Clear();
                 SqlCommand.CommandType = CommandType.Text;
-                SqlCommand.CommandText = $"select * from f_OZhComplaintSummByYear({year})";    //$"select * from f_ContentSummByYear({year}) order by [S] desc";   //"sp_LoadOZhClassification";
+                SqlCommand.CommandText = $"select * from f_OZhComplaintSummByYear({year})";
 
                 SqlConnect.Open();
 
@@ -314,9 +288,6 @@ namespace Complaints_WPF.Models
                         while (dataReader.Read())
                         {
                             OZhClassificationList.Add(dataReader.GetString(1));
-                            //OZhClassification oZh = new OZhClassification();
-                            //oZh.OZhComplaint = dataReader.GetString(1);
-                            //OZhClassificationList.Add(oZh.OZhComplaint);
                         }
                     }
                 }
@@ -352,9 +323,6 @@ namespace Complaints_WPF.Models
                         while (dataReader.Read())
                         {
                             ProsecutorsList.Add(dataReader.GetString(2));
-                            //Prosecutor prosecutor = new Prosecutor();
-                            //prosecutor.ProsecutorName = dataReader.GetString(2);
-                            //ProsecutorsList.Add(prosecutor.ProsecutorName);
                         }
                     }
                 }
@@ -371,7 +339,7 @@ namespace Complaints_WPF.Models
             return ProsecutorsList;
         }
 
-        public List<string> LoadChiefs() //29.12
+        public List<string> LoadChiefs()
         {
             List<string> ChiefsList = new List<string>();
 
@@ -390,9 +358,6 @@ namespace Complaints_WPF.Models
                         while (dataReader.Read())
                         {
                             ChiefsList.Add(dataReader.GetString(1));
-                            //Chief chief = new Chief();
-                            //chief.ChiefName = dataReader.GetString(1);
-                            //ChiefsList.Add(chief.ChiefName);
                         }
                     }
                 }
@@ -452,14 +417,14 @@ namespace Complaints_WPF.Models
         public bool AddToComplaintList(Complaint newComplaint, string prosName)
         {
             bool isAdded = false;
-            if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.OZhComplaintText.OZhComplaint))       //b4: //string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
+            if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.OZhComplaintText.OZhComplaint))
                 throw new ArgumentException("Поля имя и текст жалобы болжны быть заполнены");
 
             try
             {
                 SqlCommand.Parameters.Clear();
                 SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_InsertComplaint"; //think of the way to create if/switch with another SP_ where Citizen already exists
+                SqlCommand.CommandText = "sp_InsertComplaint";
 
                 SqlCommand.Parameters.AddWithValue("@fullName", newComplaint.Citizen.CitizenName);
                 SqlCommand.Parameters.AddWithValue("@birthDate", newComplaint.Citizen.BirthDate);
@@ -467,14 +432,14 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@occupation", newComplaint.Citizen.Occupation);
                 SqlCommand.Parameters.AddWithValue("@phoneNumber", newComplaint.Citizen.PhoneNumber);
                 SqlCommand.Parameters.AddWithValue("@email", newComplaint.Citizen.Email);
-                SqlCommand.Parameters.AddWithValue("@content", newComplaint.OZhComplaintText.OZhComplaint);  //b4: //newComplaint.ComplaintText);
+                SqlCommand.Parameters.AddWithValue("@content", newComplaint.OZhComplaintText.OZhComplaint);
                 SqlCommand.Parameters.AddWithValue("@pageNum", newComplaint.PageNum);
                 SqlCommand.Parameters.AddWithValue("@appendNum", newComplaint.AppendNum);
                 SqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
                 SqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
-                SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName); // newComplaint.Prosecutor.ProsecutorName);
-                SqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName); //29.12
-                SqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage); //21.01
+                SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName);
+                SqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName);
+                SqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage);
 
                 SqlConnect.Open();
                 isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false
@@ -494,7 +459,7 @@ namespace Complaints_WPF.Models
         public bool AddToComplaintListUpd(Complaint newComplaint, string prosName)
         {
             bool isAdded = false;
-            if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.OZhComplaintText.OZhComplaint))  //b4: //string.IsNullOrWhiteSpace(newComplaint.ComplaintText))
+            if (string.IsNullOrWhiteSpace(newComplaint.Citizen.CitizenName) || string.IsNullOrWhiteSpace(newComplaint.OZhComplaintText.OZhComplaint))
                 throw new ArgumentException("Поля имя и текст жалобы болжны быть заполнены");
 
             try
@@ -509,17 +474,17 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@occupation", newComplaint.Citizen.Occupation);
                 SqlCommand.Parameters.AddWithValue("@phoneNumber", newComplaint.Citizen.PhoneNumber);
                 SqlCommand.Parameters.AddWithValue("@email", newComplaint.Citizen.Email);
-                SqlCommand.Parameters.AddWithValue("@content", newComplaint.OZhComplaintText.OZhComplaint);   //b4: // newComplaint.ComplaintText);
+                SqlCommand.Parameters.AddWithValue("@content", newComplaint.OZhComplaintText.OZhComplaint);
                 SqlCommand.Parameters.AddWithValue("@pageNum", newComplaint.PageNum);
                 SqlCommand.Parameters.AddWithValue("@appendNum", newComplaint.AppendNum);
                 SqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
                 SqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
-                SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName); // newComplaint.Prosecutor.ProsecutorName);
+                SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName);
                 SqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName);
-                SqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage); //21.01
+                SqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage);
 
-                SqlConnect.Open(); //is this where the actuall StoredP called?
-                isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false
+                SqlConnect.Open();
+                isAdded = SqlCommand.ExecuteNonQuery() > 0;
             }
             catch (SqlException ex)
             {
@@ -538,7 +503,6 @@ namespace Complaints_WPF.Models
             bool isUpdated = false;
             try
             {
-                //may be: if currentC != selectedC ... //to ovoid overwriting //NO! only in sp it could be done.?. i think
                 SqlCommand.Parameters.Clear();
                 SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_UpdateComplaint";
@@ -552,13 +516,13 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@email", complToUpdate.Citizen.Email);
 
                 SqlCommand.Parameters.AddWithValue("@dateTime", complToUpdate.ReceiptDate);
-                SqlCommand.Parameters.AddWithValue("@content", complToUpdate.OZhComplaintText.OZhComplaint);   //b4: // complToUpdate.ComplaintText);
+                SqlCommand.Parameters.AddWithValue("@content", complToUpdate.OZhComplaintText.OZhComplaint);
                 SqlCommand.Parameters.AddWithValue("@pageNum", complToUpdate.PageNum);
                 SqlCommand.Parameters.AddWithValue("@appendNum", complToUpdate.AppendNum);
                 SqlCommand.Parameters.AddWithValue("@comments", complToUpdate.Comments);
                 SqlCommand.Parameters.AddWithValue("@result", complToUpdate.Result.Rezolution);
                 SqlCommand.Parameters.AddWithValue("@chiefName", complToUpdate.Chief.ChiefName);
-                SqlCommand.Parameters.AddWithValue("@digitalStorage", complToUpdate.DigitalStorage); //21.01
+                SqlCommand.Parameters.AddWithValue("@digitalStorage", complToUpdate.DigitalStorage);
 
                 SqlConnect.Open();
                 isUpdated = SqlCommand.ExecuteNonQuery() > 0;
@@ -582,7 +546,7 @@ namespace Complaints_WPF.Models
             {
                 SqlCommand.Parameters.Clear();
                 SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_EditComplaintFromFunction";//"sp_EditComplaint";
+                SqlCommand.CommandText = "sp_EditComplaintFromFunction";
                 SqlCommand.Parameters.AddWithValue("@year", year);
                 SqlCommand.Parameters.AddWithValue("@fullName", citizenName);
                 SqlCommand.Parameters.AddWithValue("@dateTime", dateTime);
@@ -605,13 +569,13 @@ namespace Complaints_WPF.Models
 
                         selectedComplaint.ComplaintID = dataReader.GetInt32(7);
                         selectedComplaint.ReceiptDate = dataReader.GetDateTime(8);
-                        selectedComplaint.OZhComplaintText.OZhComplaint = dataReader.GetString(9);        //b4: //selectedComplaint.ComplaintText = dataReader.GetString(9);
+                        selectedComplaint.OZhComplaintText.OZhComplaint = dataReader.GetString(9);
                         selectedComplaint.PageNum = dataReader.IsDBNull(10) ? null : dataReader.GetString(10);
                         selectedComplaint.AppendNum = dataReader.IsDBNull(11) ? null : dataReader.GetString(11);
                         selectedComplaint.Comments = dataReader.IsDBNull(12) ? null : dataReader.GetString(12);
                         selectedComplaint.Result.Rezolution = dataReader.IsDBNull(13) ? null : dataReader.GetString(13);
                         selectedComplaint.Chief.ChiefName = dataReader.IsDBNull(14) ? null : dataReader.GetString(14);
-                        selectedComplaint.DigitalStorage = dataReader.IsDBNull(15) ? null : dataReader.GetString(15); //21.01
+                        selectedComplaint.DigitalStorage = dataReader.IsDBNull(15) ? null : dataReader.GetString(15);
                         selectedComplaint.Enumerator = dataReader.GetInt32(16);
                     }
                 }
@@ -654,7 +618,7 @@ namespace Complaints_WPF.Models
 
                         selectedComplaint.ComplaintID = dataReader.GetInt32(7);
                         selectedComplaint.ReceiptDate = dataReader.GetDateTime(8);
-                        selectedComplaint.OZhComplaintText.OZhComplaint = dataReader.GetString(9);        //b4: //selectedComplaint.ComplaintText = dataReader.GetString(9);
+                        selectedComplaint.OZhComplaintText.OZhComplaint = dataReader.GetString(9);
                         selectedComplaint.PageNum = dataReader.IsDBNull(10) ? null : dataReader.GetString(10);
                         selectedComplaint.AppendNum = dataReader.IsDBNull(11) ? null : dataReader.GetString(11);
                         selectedComplaint.Comments = dataReader.IsDBNull(12) ? null : dataReader.GetString(12);
@@ -696,7 +660,7 @@ namespace Complaints_WPF.Models
                         citizen.Citizen.CitizenID = dataReader.GetInt32(0);
                         //gotta do null check first on these, or nothing happens:
                         citizen.Citizen.CitizenName = dataReader.GetString(1);  //added 21
-                        citizen.Citizen.CitizenAdress = dataReader.IsDBNull(2) ? null : dataReader.GetString(2);                       //int ocupIndex = dataReader.GetOrdinal("Occupation");
+                        citizen.Citizen.CitizenAdress = dataReader.IsDBNull(2) ? null : dataReader.GetString(2);
                         citizen.Citizen.Occupation = dataReader.IsDBNull(3) ? null : dataReader.GetString(3);
                         citizen.Citizen.PhoneNumber = dataReader.IsDBNull(4) ? null : dataReader.GetString(4);
                         citizen.Citizen.Email = dataReader.IsDBNull(5) ? null : dataReader.GetString(5);
@@ -715,7 +679,7 @@ namespace Complaints_WPF.Models
             return citizen;
         }
 
-        public bool DeleteComplaint(int id) //, DateTime dateTime
+        public bool DeleteComplaint(int id)
         {
             bool isDeleted = false;
 
@@ -801,10 +765,10 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.Clear();
                 SqlCommand.CommandType = CommandType.StoredProcedure;
                 SqlCommand.CommandText = "sp_AddChief";
-                SqlCommand.Parameters.AddWithValue("@chiefName", chiefName); //29.12
+                SqlCommand.Parameters.AddWithValue("@chiefName", chiefName);
 
                 SqlConnect.Open();
-                isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false
+                isAdded = SqlCommand.ExecuteNonQuery() > 0;
             }
             catch (SqlException ex)
             {

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Complaints_WPF.Commands
@@ -18,7 +14,7 @@ namespace Complaints_WPF.Commands
             canExecuteEvaluator = evaluator;
         }
 
-        public event EventHandler CanExecuteChanged //add/remove needed to enable/disable buttons (CanExecute uses it) //more: stackoverflow.com/questions/30002300/how-to-use-the-canexecute-method-from-icommand-on-wpf
+        public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
@@ -26,7 +22,6 @@ namespace Complaints_WPF.Commands
 
         public bool CanExecute(object parameter)
         {
-            //return true;
             if (canExecuteEvaluator == null)
             {
                 return true;
@@ -34,13 +29,13 @@ namespace Complaints_WPF.Commands
             else
             {
                 bool result = canExecuteEvaluator.Invoke();
-                return result; //better just: return canExecuteEvaluator(); //<-- try it later
+                return result; //shorter: just return canExecuteEvaluator();
             }
         }
 
         public void Execute(object parameter)
         {
-            methodToExecute(); //method will be run from here //methodToExecute.Invoke();
+            methodToExecute();
         }
     }
 }

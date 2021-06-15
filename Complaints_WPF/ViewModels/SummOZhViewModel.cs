@@ -40,19 +40,14 @@ namespace Complaints_WPF.ViewModels
 
         public SummOZhViewModel()
         {
-            OZhClassif = new OZhClassification(); //see if it can be omitted or not
+            OZhClassif = new OZhClassification();
             complaintService = new ComplaintServiceADO();
 
             ToCsvCommand = new RelayCommand(SaveToCsv, null);
 
-            //LoadOzhClassification();
             OZhClassificationList = new ObservableCollection<OZhClassification>(complaintService.LoadOZhWithSumm(ComplaintsViewModel.YearToFilter)); //LoadOZhClassif()); //
         }
 
-        //private void LoadOzhClassification()
-        //{
-        //    OZhClassificationList = new ObservableCollection<OZhClassification>(complaintService.LoadOZhClassif()); //LoadOZhClassification());
-        //}
 
         private void SaveToCsv()
         {

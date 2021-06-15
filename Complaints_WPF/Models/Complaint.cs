@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Complaints_WPF.Models
 {
@@ -44,7 +40,6 @@ namespace Complaints_WPF.Models
             set { _oZhComplaintText = value; OnPropertyChanged("OZhComplaintText"); }
         }
 
-        //added later
         private string _pageNum;
         public string PageNum
         {
@@ -59,7 +54,7 @@ namespace Complaints_WPF.Models
             set { _appendNum = value; OnPropertyChanged("AppendNum"); }
         }
 
-        private string _digitalStorage; //latest addition
+        private string _digitalStorage;
         public string DigitalStorage
         {
             get { return _digitalStorage; }
@@ -73,7 +68,7 @@ namespace Complaints_WPF.Models
             set { _comments = value; OnPropertyChanged("Comments"); }
         }
 
-        private Prosecutor _prosecutor; //do i even need it here??
+        private Prosecutor _prosecutor;
         public Prosecutor Prosecutor
         {
             get { return _prosecutor; }
@@ -99,7 +94,7 @@ namespace Complaints_WPF.Models
             Citizen = new Citizen();
             OZhComplaintText = new OZhClassification();
             Result = new Result();
-            Prosecutor = new Prosecutor(); //same problem forgot to init Prosec class here to get his property
+            Prosecutor = new Prosecutor();
             Chief = new Chief();
         }
         #endregion

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Complaints_WPF.Models
 {
@@ -30,7 +25,7 @@ namespace Complaints_WPF.Models
             set { _prosecutorName = value; OnPropertyChanged("ProsecutorName"); }
         }
 
-        public string Password { get; set; } //not used yet
+        public string Password { get; set; }
 
         public override string ToString()
         {

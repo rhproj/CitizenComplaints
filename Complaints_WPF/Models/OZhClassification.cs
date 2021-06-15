@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Complaints_WPF.Models
 {
@@ -13,7 +8,7 @@ namespace Complaints_WPF.Models
         public string OZhComplaint
         {
             get { return  _oZhComplaint; }
-            set {  _oZhComplaint = value; OnPropertyChanged("OZhComplaint"); } //could be bcz of this it didn't clear the Ozh Combobox
+            set {  _oZhComplaint = value; OnPropertyChanged("OZhComplaint"); }
         }
 
         private int _summOZh;
