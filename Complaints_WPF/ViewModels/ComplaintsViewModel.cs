@@ -240,7 +240,7 @@ namespace Complaints_WPF.ViewModels
             FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);           
             UnFilterCommand = new RelayCommand(UnFilteromplaints, null);
 
-            AddOzhCommand = new RelayCommand(AddToOzhCombobox, AddToCombobox_CanExecute); //ComboConstructor
+            AddOzhCommand = new RelayCommand(AddToOzhCombobox, AddToCombobox_CanExecute); //ComboEditView
             AddChiefCommand = new RelayCommand(AddToChiefsCombobox, AddToCombobox_CanExecute);
             DeleteChiefCommand = new RelayCommand(DeleteChief, DeleteChief_CanExecute);
             //DeleteOzhCommand = new RelayCommand(DeleteOzh, DeleteOzh_CanExecute);

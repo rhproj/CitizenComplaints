@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Complaints_WPF.Views
 {
     /// <summary>
-    /// Interaction logic for ComboConstructor.xaml
+    /// Interaction logic for ComboEditView.xaml
     /// </summary>
-    public partial class ComboConstructor : Window
+    public partial class ComboEditView : Window
     {
-        public ComboConstructor()
+        public ComboEditView()
         {
             InitializeComponent();
             btnClose.Click += (s, e) => Close();

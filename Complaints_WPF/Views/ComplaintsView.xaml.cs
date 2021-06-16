@@ -27,19 +27,8 @@ namespace Complaints_WPF.Views
 
         private void Btn_Constructor_Click(object sender, RoutedEventArgs e)
         {
-            ComboConstructor comboConstr = new ComboConstructor();
+            ComboEditView comboConstr = new ComboEditView();
             comboConstr.ShowDialog();
         }
-
-        private void Btn_SummOZh_Click(object sender, RoutedEventArgs e)
-        {
-            SummOZhView summOZhView = new SummOZhView();
-            summOZhView.ShowDialog();
-        }
-
-        //private void Btn_Save_Click(object sender, RoutedEventArgs e)  //trying to do it MVVM way
-        //{
-
-        //}
     }
 }
