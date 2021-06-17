@@ -1,4 +1,5 @@
-﻿using ComplaintsAdmin.Model;
+﻿using ComplaintsAdmin.Commands;
+using ComplaintsAdmin.Model;
 using ComplaintsAdmin.Services;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,13 @@ namespace ComplaintsAdmin.ViewModels
 
         AccessServiceADO accessService = new AccessServiceADO();
 
+        public RelayCommand MyProperty { get; set; }
+
+
         private void LoadData()
         {
             AdminList = new ObservableCollection<string>(accessService.GetAdmins());
         }
-
 
         public LoginViewModel()
         {

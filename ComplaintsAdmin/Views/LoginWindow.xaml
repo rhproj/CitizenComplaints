@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ComplaintsAdmin.Views"
         mc:Ignorable="d"
         xmlns:vm="clr-namespace:ComplaintsAdmin.ViewModels"
-        Title="LoginWindow" Height="580" Width="450"
+        xmlns:cmd="clr-namespace:ComplaintsAdmin.Commands"
+        Height="580" Width="450"
         WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:LoginViewModel/>
@@ -94,13 +95,19 @@
                 />
                 <Label Content="Пароль:" Margin="15,20,0,0"/>
                 <PasswordBox Name="tbPassword" Height="40" IsEnabled="False" />
-                <Button Name="btnSubmit" Content="Войти" Margin="90,30" Padding="0,3,3,0" Height="50" Command="{Binding Path=AuthorizationCommand}" CommandParameter="{Binding ElementName=authorizationWindow}">
+                <Button Name="btnEnter" Content="Войти" Margin="90,30" Padding="0,3,3,0" Height="50">
                     <!--  CloseWindowCommand-->
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="15" />
                         </Style>
                     </Button.Resources>
+                    <Button.Command>
+                        <cmd:EditUsersOpenCommand/>
+                    </Button.Command>
+                    <Button.CommandParameter>
+                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=Window}"/>
+                    </Button.CommandParameter>
                 </Button>
             </StackPanel>
         </Border>
