@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1259
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Complaints_WPF", "Complaints_WPF\Complaints_WPF.csproj", "{2B2A887D-928C-4AC0-98D4-AF7D2A0628D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplaintsAdmin", "ComplaintsAdmin\ComplaintsAdmin.csproj", "{A3919572-F674-4AF9-A8A8-5F5C34BFEEC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2B2A887D-928C-4AC0-98D4-AF7D2A0628D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B2A887D-928C-4AC0-98D4-AF7D2A0628D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B2A887D-928C-4AC0-98D4-AF7D2A0628D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3919572-F674-4AF9-A8A8-5F5C34BFEEC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3919572-F674-4AF9-A8A8-5F5C34BFEEC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3919572-F674-4AF9-A8A8-5F5C34BFEEC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3919572-F674-4AF9-A8A8-5F5C34BFEEC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

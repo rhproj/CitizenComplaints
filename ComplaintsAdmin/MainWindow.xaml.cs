@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Complaints_WPF
+namespace ComplaintsAdmin
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,10 +23,6 @@ namespace Complaints_WPF
         public MainWindow()
         {
             InitializeComponent();
-
-            btnMin.Click += (s, e) => WindowState = WindowState.Minimized;
-            btnMax.Click += (s, e) => WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-            btnClose.Click += (s, e) => Close();
         }
     }
 }
