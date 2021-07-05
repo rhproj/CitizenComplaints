@@ -36,7 +36,6 @@ namespace ComplaintsAdmin.Commands
             #endregion
         }
 
-
         public event EventHandler CanExecuteChanged;
     }
 }

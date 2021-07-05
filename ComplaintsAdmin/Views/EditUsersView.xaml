@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComplaintsAdmin.Views"
+        xmlns:vm="clr-namespace:ComplaintsAdmin.ViewModels"
         mc:Ignorable="d"
         Title="EditUsersView" Height="550" Width="500" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:EditUsersViewModel />
+    </Window.DataContext>
     <Window.Resources>
         <SolidColorBrush x:Key="WindowBackground" 
                         Color="White"
@@ -22,8 +26,12 @@
             <Setter Property="Foreground" Value="Black" />
             <Setter Property="FontSize" Value="22"/>
         </Style>-->
-        <!--<Style TargetType="TextBox" BasedOn="{StaticResource tBoxStyle}"/>
-        <Style TargetType="DataGrid" BasedOn="{StaticResource dataGridStyle}" />-->
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="FontSize" Value="25"/>
+        </Style>
+        <!--<Style TargetType="DataGrid" BasedOn="{StaticResource dataGridStyle}" />-->
         <Style TargetType="Label" >
             <Setter Property="FontSize" Value="26"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -34,10 +42,10 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="35" />
     </WindowChrome.WindowChrome>
-    <Border BorderThickness="4" BorderBrush="Navy" CornerRadius="7">
+    <Border BorderThickness="4" BorderBrush="Navy" CornerRadius="4">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="55"/>
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
@@ -55,8 +63,8 @@
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image Source="\Images\gear_c.png" Width="35" Height="35" Margin="0,0,10,0"/>
-                <Label Content="Редактор" FontWeight="SemiBold" FontSize="28" Foreground="Navy"/>
+                <Image Source="\Images\gear_c.png" Width="35" Height="35" Margin="0,0,5,0"/>
+                <Label Content="Редактор пользователей" Margin="0,0,15,0" FontWeight="SemiBold" FontSize="28" Foreground="Navy"/>
             </StackPanel>
             <Button x:Name="btnClose" Grid.Column="3" Content="x" Margin="0,0,8,0" Padding="0,-2,0,0" FontSize="20" Width="25" Height="25" HorizontalAlignment="Right" WindowChrome.IsHitTestVisibleInChrome="True">
                 <Button.Resources>
@@ -69,16 +77,16 @@
             <!--<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="85" VerticalAlignment="Bottom" Text="{Binding Path=AddValueToCombobox, UpdateSourceTrigger=PropertyChanged}"/>-->
 
             <Label Grid.Row="2" Grid.Column="1" Content="Логин:" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="2" Grid.Column="2"/>
+            <TextBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NewUser.Login}"/>
             <!--<TextBlock Grid.Row="2" Grid.Column="1" Text="Имя пользователя:" HorizontalAlignment="Left" />-->
             <Label Grid.Row="3" Grid.Column="1" Content="Фамилия И.О.:" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="3" Grid.Column="2"/>
+            <TextBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NewUser.ProsecutorName}"/>
             <Label Grid.Row="4" Grid.Column="1" Content="Пароль:" VerticalAlignment="Center"/>
-            <PasswordBox Grid.Row="4" Grid.Column="2"/>
+            <PasswordBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,10,0" IsEnabled="False"/>
 
-            <Button Grid.Row="6" Grid.ColumnSpan="4" Width="150" Margin="5"  BorderThickness="0" Background="DarkBlue" Foreground="LightYellow" Command="{Binding Path=AddChiefCommand}" Content="Добавить" />
+            <Button Grid.Row="6" Grid.ColumnSpan="4" Width="150" Margin="5"  BorderThickness="0" Background="DarkBlue" Foreground="LightYellow" Command="{Binding Path=AddUserCommand}" Content="Добавить" />
 
-            <DataGrid  Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,10,0">
+            <DataGrid  Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,10,0" ItemsSource="{Binding ProsecutorsList}">
                 
             </DataGrid>
             

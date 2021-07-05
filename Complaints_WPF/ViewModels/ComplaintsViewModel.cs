@@ -256,7 +256,7 @@ namespace Complaints_WPF.ViewModels
         }
         #endregion
 
-        #region METHODS (Mirrors whats in Services, but there we can use differend data base techniques)
+        #region METHODS
 
         private void LoadData(string year) //we repeating our GetAll method, why not have it somewhere once and use it? NO, cuz it's easier to feed it to ObsColl this way
         {

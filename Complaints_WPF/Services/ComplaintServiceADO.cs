@@ -25,7 +25,7 @@ namespace Complaints_WPF.Models
         #endregion
 
         #region METH
-        public List<Complaint> GetAllComplaints()  //old one, uses SP
+        public List<Complaint> GetAllComplaints()
         {
             List<Complaint> listOfComplaints = new List<Complaint>();  //list that will be fed by StoredP
             try

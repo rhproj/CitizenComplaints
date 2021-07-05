@@ -23,7 +23,7 @@ namespace ComplaintsAdmin.ViewModels
 
         AccessServiceADO accessService = new AccessServiceADO();
 
-        public RelayCommand MyProperty { get; set; }
+        //public RelayCommand MyProperty { get; set; }
 
 
         private void LoadData()

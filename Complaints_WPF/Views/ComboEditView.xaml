@@ -68,7 +68,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="85" VerticalAlignment="Bottom" TextWrapping="Wrap" Text="{Binding Path=AddValueToCombobox, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,10,0" Height="85" VerticalAlignment="Bottom" TextWrapping="Wrap" Text="{Binding Path=AddValueToCombobox, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Row="2" Grid.Column="1" Text="Содержание Обращения:"/>
             <ComboBox Grid.Row="3" Grid.Column="1" Height="45"
                   ItemsSource="{Binding Path=OZhClassificationList, Mode=TwoWay}"
