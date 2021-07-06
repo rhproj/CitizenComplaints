@@ -60,35 +60,6 @@ namespace ComplaintsAdmin.Services
         {
             List<Prosecutor> ProsecutorsList = new List<Prosecutor>();
 
-            #region delete
-            //using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
-            //{
-            //    if (dataReader.HasRows)
-            //    {
-            //        int count = 0;
-
-            //        while (dataReader.Read())
-            //        {
-            //            count++;
-            //            Complaint complaint = new Complaint();
-
-            //            complaint.Enumerator = count;
-            //            complaint.ComplaintID = dataReader.GetInt32(0);
-            //            complaint.ReceiptDate = dataReader.GetDateTime(1);
-            //            complaint.Citizen.CitizenName = dataReader.GetString(2);
-            //            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(3);
-            //            if (!dataReader.IsDBNull(4)) { complaint.Result.Rezolution = dataReader.GetString(4); }
-            //            //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
-
-            //            if (!dataReader.IsDBNull(5)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(5); }
-
-            //            if (!dataReader.IsDBNull(6)) { complaint.Chief.ChiefName = dataReader.GetString(6); }
-            //            listOfComplaints.Add(complaint);
-            //        }
-            //    }
-            //} 
-            #endregion
-
             try
             {
                 SqlCommand.Parameters.Clear();
@@ -126,6 +97,28 @@ namespace ComplaintsAdmin.Services
             return ProsecutorsList;
         }
 
+        internal void DeleteFromUsersList(Prosecutor prosecutorToDelete)
+        {
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
+                SqlCommand.CommandText = "sp_DeleteProsecutor";
+
+                SqlCommand.Parameters.AddWithValue("@prosecutorId", prosecutorToDelete.ProsecutorID);
+
+                SqlConnect.Open();
+                SqlCommand.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+        }
 
         public void AddToUsersList(Prosecutor prosecutorToAdd)
         {

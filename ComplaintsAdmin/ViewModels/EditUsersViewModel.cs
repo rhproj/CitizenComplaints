@@ -15,8 +15,14 @@ namespace ComplaintsAdmin.ViewModels
 {
     class EditUsersViewModel : INotifyPropertyChanged
     {
-        public Prosecutor NewUser { get; set; }
+        private Prosecutor _newUser;
+        public Prosecutor NewUser 
+        {
+            get { return _newUser; }
+            set { _newUser = value; OnPropertyChanged(); } 
+        }
 
+        public Prosecutor SelectedUser { get; set; }
 
         private ObservableCollection<Prosecutor> _prosecutorsList;
         public ObservableCollection<Prosecutor> ProsecutorsList
@@ -26,6 +32,7 @@ namespace ComplaintsAdmin.ViewModels
         }
 
         public RelayCommand AddUserCommand { get;}
+        public RelayCommand DeleteUserCommand { get; }
 
         AccessServiceADO accessService;
 
@@ -42,13 +49,35 @@ namespace ComplaintsAdmin.ViewModels
 
             LoadData();
 
-            AddUserCommand = new RelayCommand(AddUser,null);
+            AddUserCommand = new RelayCommand(AddUser, CanAddUser);
+            DeleteUserCommand = new RelayCommand(DeleteUser, CanDeleteUser);
         }
 
+        private bool CanDeleteUser()
+        {
+            if (SelectedUser != null)
+                return true;
+            else
+                return false;
+        }
+        private void DeleteUser()
+        {
+            accessService.DeleteFromUsersList(SelectedUser);
+            LoadData();
+        }
+
+        private bool CanAddUser()
+        {
+            if (string.IsNullOrWhiteSpace(NewUser.Login) || string.IsNullOrWhiteSpace(NewUser.ProsecutorName))
+                return false;
+            else
+                return true;
+        }
         private void AddUser()
         {
             accessService.AddToUsersList(NewUser);
             LoadData();
+            NewUser = new Prosecutor();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -50,7 +50,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="10"/>
+                <RowDefinition Height="20"/>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="*"/>
@@ -77,16 +77,21 @@
             <!--<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="85" VerticalAlignment="Bottom" Text="{Binding Path=AddValueToCombobox, UpdateSourceTrigger=PropertyChanged}"/>-->
 
             <Label Grid.Row="2" Grid.Column="1" Content="Логин:" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NewUser.Login}"/>
+            <TextBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NewUser.Login, UpdateSourceTrigger=PropertyChanged}"/>
             <!--<TextBlock Grid.Row="2" Grid.Column="1" Text="Имя пользователя:" HorizontalAlignment="Left" />-->
             <Label Grid.Row="3" Grid.Column="1" Content="Фамилия И.О.:" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NewUser.ProsecutorName}"/>
+            <TextBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NewUser.ProsecutorName, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Grid.Row="4" Grid.Column="1" Content="Пароль:" VerticalAlignment="Center"/>
             <PasswordBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,10,0" IsEnabled="False"/>
 
-            <Button Grid.Row="6" Grid.ColumnSpan="4" Width="150" Margin="5"  BorderThickness="0" Background="DarkBlue" Foreground="LightYellow" Command="{Binding Path=AddUserCommand}" Content="Добавить" />
+            <StackPanel  Grid.Row="6" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button  Width="135" Height="50" Margin="5"  BorderThickness="0" Background="DarkBlue" Foreground="LightYellow" Command="{Binding Path=AddUserCommand}" Content="Добавить" />
+                <Button  Width="135" Height="50" Margin="5" BorderThickness="0" Background="Red" Foreground="LightYellow" Command="{Binding Path=DeleteUserCommand}" Content="Удалить" />
+            </StackPanel>
 
-            <DataGrid  Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,10,0" ItemsSource="{Binding ProsecutorsList}">
+            <DataGrid  Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,10,0" 
+                       ItemsSource="{Binding ProsecutorsList}"
+                       SelectedItem="{Binding SelectedUser}">
                 
             </DataGrid>
             
