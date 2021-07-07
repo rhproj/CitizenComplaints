@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ComplaintsAdmin.Views"
         mc:Ignorable="d"
         xmlns:vm="clr-namespace:ComplaintsAdmin.ViewModels"
-        xmlns:cmd="clr-namespace:ComplaintsAdmin.Commands"
+        xmlns:cmd="clr-namespace:ComplaintsAdmin.Commands" 
+        xmlns:components="clr-namespace:ComplaintsAdmin.Components"
         Height="580" Width="450"
         WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
@@ -88,22 +89,18 @@
                 <Label Content="пользователями" FontSize="25" HorizontalAlignment="Center" />
                 <Separator Margin="18,5,18,5"/>
                 <Label  Content="Логин:" />
-                <!--Content="Имя"-->
-                <ComboBox x:Name="comBoxProsecutor" Width="275" Height="40"
-                ItemsSource="{Binding Path=AdminList}"
-                FontSize="20" FontWeight="Bold" Foreground="Navy" VerticalContentAlignment="Center"
-                />
-                <Label Content="Пароль:" Margin="15,20,0,0"/>
-                <PasswordBox Name="tbPassword" Height="40" IsEnabled="False" />
-                <Button Name="btnEnter" Content="Войти" Margin="90,30" Padding="0,3,3,0" Height="50">
-                    <!--  CloseWindowCommand-->
+                <TextBox Width="275" Height="40" Text="{Binding AdminUser.Login, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Content="Пароль:" Margin="15,15,0,0"/>
+                <components:BindablePasswordBox Height="50"
+                    Password="{Binding AdminUser.Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <Button Content="Войти" Margin="90,30" Padding="0,3,3,0" Height="50">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="15" />
                         </Style>
                     </Button.Resources>
                     <Button.Command>
-                        <cmd:EditUsersOpenCommand/>
+                        <Binding Path="LoginCommand"/>
                     </Button.Command>
                     <Button.CommandParameter>
                         <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=Window}"/>

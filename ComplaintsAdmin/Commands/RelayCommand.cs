@@ -7,40 +7,25 @@ using System.Windows.Input;
 
 namespace ComplaintsAdmin.Commands
 {
-    public class RelayCommand //: ICommand  //Delete
+    internal class RelayCommand : ICommand
     {
-        //private Action methodToExecute;
-        //private Func<bool> canExecuteEvaluator;
+        private readonly Action<object> _Execute;
+        private readonly Func<object, bool> _CanExecute;
 
-        //public RelayCommand(Action method, Func<bool> evaluator)
-        //{
-        //    methodToExecute = method;
-        //    canExecuteEvaluator = evaluator;
-        //}
+        public RelayCommand(Action<object> Execute, Func<object, bool> CanExecute = null)
+        {
+            _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
+            _CanExecute = CanExecute;
+        }
 
-        //public event EventHandler CanExecuteChanged
-        //{
-        //    add { CommandManager.RequerySuggested += value; }
-        //    remove { CommandManager.RequerySuggested -= value; }
-        //}
+        public bool CanExecute(object parameter) => _CanExecute?.Invoke(parameter) ?? true;
 
-        //public bool CanExecute(object parameter)
-        //{
-        //    if (canExecuteEvaluator == null)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        bool result = canExecuteEvaluator.Invoke();
-        //        return result; //shorter: just return canExecuteEvaluator();
-        //    }
-        //}
+        public void Execute(object parameter) => _Execute(parameter);
 
-        //public void Execute(object parameter)
-        //{
-        //    methodToExecute();
-        //}
-
+        public event EventHandler CanExecuteChanged
+        {
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
+        }
     }
 }

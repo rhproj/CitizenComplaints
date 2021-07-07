@@ -1,6 +1,7 @@
 ﻿using ComplaintsAdmin.Commands;
 using ComplaintsAdmin.Model;
 using ComplaintsAdmin.Services;
+using ComplaintsAdmin.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,31 +10,53 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace ComplaintsAdmin.ViewModels
 {
     class LoginViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<string> _adminList;
-        public ObservableCollection<string> AdminList
+        private AdminUser _adminUser;
+        public AdminUser AdminUser 
         {
-            get { return _adminList; }
-            set { _adminList = value; OnPropertyChanged("AdminList"); }
+            get { return _adminUser; }
+            set { _adminUser = value; OnPropertyChanged(); } 
         }
 
-        AccessServiceADO accessService = new AccessServiceADO();
-
-        //public RelayCommand MyProperty { get; set; }
-
-
-        private void LoadData()
+        public ICommand LoginCommand { get; }
+        private bool CanLoginCommandExecute(object p) 
         {
-            AdminList = new ObservableCollection<string>(accessService.GetAdmins());
+            if (string.IsNullOrWhiteSpace(AdminUser.Login))
+                return false;
+            else
+                return true;
         }
+
+        private void OnLoginCommandExecuted(object p)
+        {
+            if (!accessService.Authenticate(AdminUser.Login, AdminUser.Password))
+            {
+                MessageBox.Show("Неверное имя пользователя\n или пароль!");
+                return;
+            }
+            else
+            {
+                var window = new EditUsersView(); //owner?
+                window.Show(); //not ShowDialog or mother W won't be closed!
+
+                (p as System.Windows.Window).Close();
+            }
+        }
+
+        AccessServiceADO accessService;
 
         public LoginViewModel()
         {
-            LoadData();
+            this.AdminUser = new AdminUser();
+            accessService = new AccessServiceADO();
+
+            LoginCommand = new RelayCommand(OnLoginCommandExecuted, CanLoginCommandExecute);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

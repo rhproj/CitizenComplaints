@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace ComplaintsAdmin.Commands
 {
-    class EditUsersOpenCommand : ICommand
+    class EditUsersOpenCommand : ICommand  //drop this one
     {
         private EditUsersView _editUsersView;
 

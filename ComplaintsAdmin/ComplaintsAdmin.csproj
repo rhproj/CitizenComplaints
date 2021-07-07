@@ -58,7 +58,10 @@
     </ApplicationDefinition>
     <Compile Include="Commands\EditUsersOpenCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Model\Users.cs" />
+    <Compile Include="Components\BindablePasswordBox.xaml.cs">
+      <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AdminUser.cs" />
     <Compile Include="Services\AccessServiceADO.cs" />
     <Compile Include="ViewModels\EditUsersViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -68,6 +71,10 @@
     <Compile Include="Views\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Components\BindablePasswordBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

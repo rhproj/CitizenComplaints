@@ -23,9 +23,41 @@ namespace ComplaintsAdmin.Services
             SqlCommand.Connection = SqlConnect;
         }
 
-        public List<string> GetAdmins()
+        public bool Authenticate(string userName, string password)
         {
-            List<string> usersList = new List<string>();
+            bool isSucceeded = false;
+
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.Text;
+                SqlCommand.CommandText = $"select * from [dbo].[Admin] where [UserName] = '{userName}' and [Password] = '{password}'";
+
+                SqlConnect.Open();
+
+                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                {
+                    if (dataReader.Read())
+                    {
+                        isSucceeded = true;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+
+            return isSucceeded;
+        }
+
+        public List<AdminUser> GetAdmins()
+        {
+            List<AdminUser> usersList = new List<AdminUser>();
             try
             {
                 SqlCommand.Parameters.Clear();
@@ -39,10 +71,43 @@ namespace ComplaintsAdmin.Services
                     {
                         while (dataReader.Read())
                         {
-                            usersList.Add(dataReader.GetString(1));
+                            AdminUser adminUser = new AdminUser();
+
+                            adminUser.Login =  dataReader.GetString(1);
+                            adminUser.Password = dataReader.IsDBNull(2)? null : dataReader.GetString(2);
+
+                            usersList.Add(adminUser);
                         }
                     }
                 }
+
+                #region delete
+                //using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                //{
+                //    if (dataReader.HasRows)
+                //    {
+                //        int count = 0;
+
+                //        while (dataReader.Read())
+                //        {
+                //            count++;
+                //            Complaint complaint = new Complaint();
+
+                //            complaint.Enumerator = count;
+                //            complaint.ComplaintID = dataReader.GetInt32(0);
+                //            complaint.ReceiptDate = dataReader.GetDateTime(1);
+                //            complaint.Citizen.CitizenName = dataReader.GetString(2);
+                //            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(3);
+                //            if (!dataReader.IsDBNull(4)) { complaint.Result.Rezolution = dataReader.GetString(4); }
+                //            //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
+
+                //            if (!dataReader.IsDBNull(5)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(5); }
+
+                //            if (!dataReader.IsDBNull(6)) { complaint.Chief.ChiefName = dataReader.GetString(6); }
+                //            listOfComplaints.Add(complaint);
+                //        }
+                //    } 
+                #endregion
             }
             catch (SqlException ex)
             {
