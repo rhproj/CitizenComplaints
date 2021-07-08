@@ -89,10 +89,16 @@
                 <Button  Width="135" Height="50" Margin="5" BorderThickness="0" Background="Red" Foreground="LightYellow" Command="{Binding Path=DeleteUserCommand}" Content="Удалить" />
             </StackPanel>
 
-            <DataGrid  Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,10,0" 
+            <DataGrid  Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,10,0" FontSize="15"
                        ItemsSource="{Binding ProsecutorsList}"
-                       SelectedItem="{Binding SelectedUser}">
-                
+                       SelectedItem="{Binding SelectedUser}" 
+                       AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding ProsecutorID}"/>
+                    <DataGridTextColumn Header="Логин" Binding="{Binding Login}"/>
+                    <DataGridTextColumn Header="Ф.И.О." Binding="{Binding ProsecutorName}" />
+                    <DataGridTextColumn Header="Пароль" Binding="{Binding Password}" />
+                </DataGrid.Columns>
             </DataGrid>
             
             <!--<Button Grid.Column="3" Grid.Row="7" Margin="5"  BorderThickness="0" Background="PaleVioletRed" Foreground="LightYellow" Command="{Binding Path=DeleteChiefCommand}" Content="-" />-->
