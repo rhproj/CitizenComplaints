@@ -25,6 +25,8 @@ namespace Complaints_WPF.Models
             set { _prosecutorName = value; OnPropertyChanged("ProsecutorName"); }
         }
 
+        public bool LimitedStatus{ get; set; }
+
         public string Password { get; set; }
 
         public override string ToString()

@@ -94,10 +94,11 @@
                        SelectedItem="{Binding SelectedUser}" 
                        AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id" Binding="{Binding ProsecutorID}"/>
-                    <DataGridTextColumn Header="Логин" Binding="{Binding Login}"/>
-                    <DataGridTextColumn Header="Ф.И.О." Binding="{Binding ProsecutorName}" />
-                    <DataGridTextColumn Header="Пароль" Binding="{Binding Password}" />
+                    <DataGridTextColumn Header="Id" Binding="{Binding ProsecutorID}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Логин" Binding="{Binding Login}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Ф.И.О." Binding="{Binding ProsecutorName}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Статус" Binding="{Binding LimitedStatus}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Пароль" Binding="{Binding Password}" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
             
