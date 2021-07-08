@@ -400,6 +400,7 @@
                           SelectedItem="{Binding Path=SelectedComplaint}"
                           Background="Transparent" RowBackground="Transparent" AlternatingRowBackground="#f2f6ff"                          
                           BorderBrush="Navy"
+                          HorizontalGridLinesBrush="DarkGray" VerticalGridLinesBrush="DarkGray"
                           HeadersVisibility="Column" Grid.ColumnSpan="2"
                           >
                     <!--#e0eaff-->

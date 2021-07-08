@@ -92,13 +92,14 @@
             <DataGrid  Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,10,0" FontSize="15"
                        ItemsSource="{Binding ProsecutorsList}"
                        SelectedItem="{Binding SelectedUser}" 
-                       AutoGenerateColumns="False">
+                       AutoGenerateColumns="False"
+                       HorizontalGridLinesBrush="DarkGray" VerticalGridLinesBrush="DarkGray">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" Binding="{Binding ProsecutorID}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Логин" Binding="{Binding Login}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Ф.И.О." Binding="{Binding ProsecutorName}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Статус" Binding="{Binding LimitedStatus}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Пароль" Binding="{Binding Password}" IsReadOnly="True"/>
+                    <DataGridCheckBoxColumn Header="Статус ограничен" Binding="{Binding LimitedStatus}" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
             
