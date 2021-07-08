@@ -10,8 +10,10 @@ namespace Complaints_WPF.Services
 {/// <summary>
 /// Checks DB accessibility 
 /// </summary>
-    internal static class ServerAccess
+    public static class ServerAccess
     {
+        public static string _address = "10.40.133.12";
+
         public static bool TestConnection(string ip)
         {
             Ping x = new Ping();

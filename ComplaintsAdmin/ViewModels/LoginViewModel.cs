@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Complaints_WPF.Services;
 
 namespace ComplaintsAdmin.ViewModels
 {
@@ -53,6 +54,12 @@ namespace ComplaintsAdmin.ViewModels
 
         public LoginViewModel()
         {
+            //if (ServerAccess.TestConnection(ServerAccess._address) == false)
+            //{
+            //    MessageBox.Show($"Отсутствует связь с {ServerAccess._address}");
+            //    Environment.Exit(0);
+            //}
+
             this.AdminUser = new AdminUser();
             accessService = new AccessServiceADO();
 

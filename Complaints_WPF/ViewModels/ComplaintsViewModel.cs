@@ -17,17 +17,10 @@ namespace Complaints_WPF.ViewModels
 {/// <summary>
 /// Main view model
 /// </summary>
-    public class ComplaintsViewModel : INotifyPropertyChanged
+    class ComplaintsViewModel : INotifyPropertyChanged
     {
         #region Prop
         IComplaintService complaintService;
-
-        //private Prosecutor _prosecutorU;
-        //public Prosecutor ProsecutorU
-        //{
-        //    get { return _prosecutorU; }
-        //    set { _prosecutorU = value; OnPropertyChanged("ProsecutorU"); } //see if i need OnPropertyChanged() here 
-        //}
 
         private Complaint _currentComplaint;
         public Complaint CurrentComplaint
@@ -160,25 +153,7 @@ namespace Complaints_WPF.ViewModels
         #region AUTHORIZATION
         public static string ProsecutorLogin { get; set; } //workaround for ProsName to be passed
 
-        //public static string CurrentYear { get; set; }
-        //private string _currentYear;
-        //public string CurrentYear
-        //{
-        //    get { return _currentYear; }
-        //    set { _currentYear = value; OnPropertyChanged("CurrentYear"); }
-        //}
-
         public static string YearToFilter { get; set; }
-
-        //public static string СhiefProsecutor { get; set; } //when Chiefs were upfront
-        //private string _loginName;
-        //public string LoginName
-        //{
-        //    get { return _loginName; }
-        //    set { _loginName = ProsecutorLogin; OnPropertyChanged("LoginName"); }
-        //}
-
-        private string _server = "10.40.133.12";
         #endregion
 
         //07-10.Commands:
@@ -218,9 +193,9 @@ namespace Complaints_WPF.ViewModels
         #region CTOR
         public ComplaintsViewModel()
         {
-            //if (ServerAccess.TestConnection(_server) == false)
+            //if (ServerAccess.TestConnection(ServerAccess._address) == false)
             //{
-            //    MessageBox.Show($"Отсутствует связь с {_server}");
+            //    MessageBox.Show($"Отсутствует связь с {ServerAccess._address}");
             //    Environment.Exit(0);
             //}
 

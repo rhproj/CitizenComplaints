@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Complaints_WPF.ViewModels
 {
-    public class SummOZhViewModel : INotifyPropertyChanged
+    class SummOZhViewModel : INotifyPropertyChanged
     {
         IComplaintService complaintService;
 
