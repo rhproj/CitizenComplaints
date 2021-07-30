@@ -193,11 +193,11 @@ namespace Complaints_WPF.ViewModels
         #region CTOR
         public ComplaintsViewModel()
         {
-            //if (ServerAccess.TestConnection(ServerAccess._address) == false)
-            //{
-            //    MessageBox.Show($"Отсутствует связь с {ServerAccess._address}");
-            //    Environment.Exit(0);
-            //}
+            if (ServerAccess.TestConnection(ServerAccess._address) == false)
+            {
+                MessageBox.Show($"Отсутствует связь с {ServerAccess._address}");
+                Environment.Exit(0);
+            }
 
             complaintService = new ComplaintServiceADO(); //using ADO.Net
             CurrentComplaint = new Complaint(); //? why do we need this? see if it can be omitted //NO cuz its thru this all fields are filled and passed to methods           

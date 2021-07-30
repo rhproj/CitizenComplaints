@@ -54,11 +54,11 @@ namespace ComplaintsAdmin.ViewModels
 
         public LoginViewModel()
         {
-            //if (ServerAccess.TestConnection(ServerAccess._address) == false)
-            //{
-            //    MessageBox.Show($"Отсутствует связь с {ServerAccess._address}");
-            //    Environment.Exit(0);
-            //}
+            if (ServerAccess.TestConnection(ServerAccess._address) == false)
+            {
+                MessageBox.Show($"Отсутствует связь с {ServerAccess._address}");
+                Environment.Exit(0);
+            }
 
             this.AdminUser = new AdminUser();
             accessService = new AccessServiceADO();
