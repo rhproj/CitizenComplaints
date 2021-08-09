@@ -1,9 +1,5 @@
 ﻿using Complaints_WPF.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -22,16 +18,23 @@ namespace Complaints_WPF.Commands
 
         public void Execute(object parameter)
         {
-            var window = new ComboEditView
+            try
             {
-                Owner = Application.Current.MainWindow
-            };
+                var window = new ComboEditView
+                {
+                    //Owner = Application.Current.MainWindow
+                };
 
-            _comboEditView = window;
+                _comboEditView = window;
 
-            window.Closed += OnWindowClosed;
+                window.Closed += OnWindowClosed;
 
-            window.ShowDialog();
+                window.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void OnWindowClosed(object sender, EventArgs e)

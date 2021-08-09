@@ -1,9 +1,5 @@
 ﻿using Complaints_WPF.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -22,7 +18,7 @@ namespace Complaints_WPF.Commands
         {
             var window = new SummOZhView
             {
-                Owner = Application.Current.MainWindow
+                //Owner = Application.Current.MainWindow
             };
 
             _summOZhView = window;

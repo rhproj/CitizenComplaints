@@ -78,7 +78,7 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <Image Grid.Row="1" Source="\Images\CoA_small.png" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60,0"/>
+        <Image Grid.Row="0" Grid.RowSpan="3" Source="\Images\LogoFade.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <TextBlock Grid.Row="1" TextAlignment="Center" VerticalAlignment="Top">
             Прокуратура <LineBreak/> Республики Татарстан
         </TextBlock>
