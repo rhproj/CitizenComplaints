@@ -18,7 +18,6 @@ namespace Complaints_WPF.Models
             set
             {
                 _citizenName = value;
-                //Validate();
                 OnPropertyChanged("CitizenName");
             }
         }

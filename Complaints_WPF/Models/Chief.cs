@@ -18,13 +18,6 @@ namespace Complaints_WPF.Models
             set { _chiefName = value; OnPropertyChanged("ChiefName"); }
         }
 
-        //private string _chiefInfo;
-        //public string ChiefInfo
-        //{
-        //    get { return _chiefInfo; }
-        //    set { _chiefInfo = value; OnPropertyChanged("ChiefInfo"); }
-        //}
-
         public override string ToString()
         {
             return this.ChiefName;

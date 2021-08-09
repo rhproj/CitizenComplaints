@@ -146,7 +146,7 @@ namespace Complaints_WPF.ViewModels
 
         #endregion
         #region AUTHORIZATION
-        public static string ProsecutorLogin { get; set; } //workaround for ProsName to be passed
+        public static string ProsecutorLogin { get; set; }
 
         public static string YearToFilter { get; set; }
         #endregion
@@ -154,15 +154,9 @@ namespace Complaints_WPF.ViewModels
         //07-10.Commands:
         #region COMMAND props
 
-        //private RelayCommand _searchCommand;
-        //public RelayCommand SearchCommand
-        //{
-        //    get { return _searchCommand; } //btnz probably don't need {set} most of the time
-        //}
-
         public RelayCommand NewEntryCommand { get; }
 
-        public RelayCommand RegisterCommand { get;  }  //right now it's null, in order to create its instance we need to pass a meth that matches Action delegate signature
+        public RelayCommand RegisterCommand { get;  } 
 
         public RelayCommand FindCitizenCommand { get; }
 
@@ -195,19 +189,19 @@ namespace Complaints_WPF.ViewModels
             }
 
             complaintService = new ComplaintServiceADO(); //using ADO.Net
-            CurrentComplaint = new Complaint(); //? why do we need this? see if it can be omitted //NO cuz its thru this all fields are filled and passed to methods           
+            CurrentComplaint = new Complaint(); 
 
             YearToFilter = DateTime.Now.Year.ToString();
 
             NewEntryCommand = new RelayCommand(NewEntry, null);
-            RegisterCommand = new RelayCommand(RegisterComplaint, RegisterComplaint_CanExecute); //b/f not prop, cuz it's read-only (no set) And that's why no set! - we set it here!
-            //                                                                                      //its  prop will {get} its value from it and we'll bind it with UI Command={Binding RegisterCommand}
+            RegisterCommand = new RelayCommand(RegisterComplaint, RegisterComplaint_CanExecute); 
+
             FindCitizenCommand = new RelayCommand(FindCitizen, null);
 
             EditCommand = new RelayCommand(EditComplaint, null);
             DeleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
 
-            FilterCommand = new RelayCommand(FilterComplaints, null);   //_filterCommand = new RelayCommand(FilterComplaints, null);           
+            FilterCommand = new RelayCommand(FilterComplaints, null);   
             UnFilterCommand = new RelayCommand(UnFilteromplaints, null);
 
             AddOzhCommand = new RelayCommand(AddToOzhCombobox, AddToCombobox_CanExecute); //ComboEditView
@@ -228,7 +222,7 @@ namespace Complaints_WPF.ViewModels
 
         #region METHODS
 
-        private void LoadData(string year) //we repeating our GetAll method, why not have it somewhere once and use it? NO, cuz it's easier to feed it to ObsColl this way
+        private void LoadData(string year) 
         {
             ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(year)); //GetAllComplaints());
             CurrentNum = ComplaintsList.Count;
@@ -249,7 +243,7 @@ namespace Complaints_WPF.ViewModels
                 Message = null;
             }
 
-            CurrentComplaint.Enumerator = CurrentNum + 1;//activate later with increment !
+            CurrentComplaint.Enumerator = CurrentNum + 1;
             CurrentComplaint.Citizen.BirthDate = null;
             CurrentComplaint.Citizen.CitizenAdress = null;
             CurrentComplaint.Comments = null;
@@ -298,7 +292,6 @@ namespace Complaints_WPF.ViewModels
                     Message = "Не удалось сохранить заявление";
 
                 LoadData(YearToFilter); //refreshes
-                //try: //Message = isSaved? "Employee saved": "RegisterCommand failed";
 
                 ClearEntryFields(true, false, false);
             }
@@ -317,7 +310,6 @@ namespace Complaints_WPF.ViewModels
 
         public void FindCitizen()
         {
-            //CurrentComplaint.CitizenID = 0; //better:
             ClearEntryFields(false, false, true);
             try
             {

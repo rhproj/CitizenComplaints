@@ -29,7 +29,7 @@ namespace Complaints_WPF.Commands
             else
             {
                 bool result = canExecuteEvaluator.Invoke();
-                return result; //shorter: just return canExecuteEvaluator();
+                return result;
             }
         }
 

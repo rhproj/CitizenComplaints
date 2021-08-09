@@ -48,7 +48,6 @@ namespace Complaints_WPF.Models
                             complaint.Citizen.CitizenName = dataReader.GetString(2);
                             complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(3);
                             if (!dataReader.IsDBNull(4)) { complaint.Result.Rezolution = dataReader.GetString(4); }
-                            //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
 
                             if (!dataReader.IsDBNull(5)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(5); }
 
@@ -69,7 +68,7 @@ namespace Complaints_WPF.Models
             return listOfComplaints;
         }
 
-        public List<Complaint> GetAllComplaintsByYear(string year)  //using view
+        public List<Complaint> GetAllComplaintsByYear(string year)
         {
             List<Complaint> listOfComplaints = new List<Complaint>();
             try
@@ -94,10 +93,7 @@ namespace Complaints_WPF.Models
                             complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(4);
 
                             if (!dataReader.IsDBNull(5)) { complaint.Comments = dataReader.GetString(5); }
-
                             if (!dataReader.IsDBNull(6)) { complaint.Result.Rezolution = dataReader.GetString(6); }
-                            //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
-
                             if (!dataReader.IsDBNull(7)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(7); }
                             if (!dataReader.IsDBNull(8)) { complaint.Chief.ChiefName = dataReader.GetString(8); }
                             listOfComplaints.Add(complaint);
@@ -135,14 +131,13 @@ namespace Complaints_WPF.Models
                         while (dataReader.Read())
                         {
                             count++;
-                            //Complaint Complaint = new Complaint(dataReader.GetInt32(0), dataReader.GetDateTime(1), dataReader.GetString(2), dataReader.GetString(3));
                             Complaint complaint = new Complaint();
 
                             complaint.Enumerator = count;
                             complaint.ComplaintID = dataReader.GetInt32(0);
                             complaint.ReceiptDate = dataReader.GetDateTime(1);
                             complaint.Citizen.CitizenName = dataReader.GetString(2);
-                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(3);    //b4://complaint.ComplaintText = dataReader.GetString(3);
+                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(3);    
                             if (!dataReader.IsDBNull(4)) { complaint.Result.Rezolution = dataReader.GetString(4); }
 
                             if (!dataReader.IsDBNull(5)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(5); }
@@ -439,7 +434,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage);
 
                 SqlConnect.Open();
-                isAdded = SqlCommand.ExecuteNonQuery() > 0; //true or false
+                isAdded = SqlCommand.ExecuteNonQuery() > 0;
             }
             catch (SqlException ex)
             {
@@ -594,7 +589,6 @@ namespace Complaints_WPF.Models
             try
             {
                 SqlCommand.Parameters.Clear();
-                //SqlCommand.CommandType = CommandType.Text;
                 SqlCommand.CommandText = $"select * from f_PickAComplaint({year}) where [FullName] = '{citizenName}' and [ReceiptDate] = '{dateTime}'";
 
                 SqlConnect.Open();
@@ -621,7 +615,6 @@ namespace Complaints_WPF.Models
                         selectedComplaint.Comments = dataReader.IsDBNull(12) ? null : dataReader.GetString(12);
                         selectedComplaint.Result.Rezolution = dataReader.IsDBNull(13) ? null : dataReader.GetString(13);
                         selectedComplaint.Chief.ChiefName = dataReader.IsDBNull(14) ? null : dataReader.GetString(14);
-                        //selectedComplaint.Enumerator = dataReader.GetInt32(15);
                     }
                 }
             }

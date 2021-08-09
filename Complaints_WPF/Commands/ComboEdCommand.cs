@@ -20,10 +20,7 @@ namespace Complaints_WPF.Commands
         {
             try
             {
-                var window = new ComboEditView
-                {
-                    //Owner = Application.Current.MainWindow
-                };
+                var window = new ComboEditView();
 
                 _comboEditView = window;
 

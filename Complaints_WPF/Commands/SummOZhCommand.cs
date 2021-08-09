@@ -16,10 +16,7 @@ namespace Complaints_WPF.Commands
 
         public void Execute(object parameter)
         {
-            var window = new SummOZhView
-            {
-                //Owner = Application.Current.MainWindow
-            };
+            var window = new SummOZhView();
 
             _summOZhView = window;
 
