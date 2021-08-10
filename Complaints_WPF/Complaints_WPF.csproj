@@ -51,7 +51,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>LogoLbl.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>3D15BAEB49ABC893EA8A707BF765AD5FA07E075B</ManifestCertificateThumbprint>
@@ -190,9 +191,6 @@
     <Resource Include="Images\searchCitBtn.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ComplaintsLogo.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Logo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -200,9 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\LogoLbl.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="LogoLbl.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\new_c.png" />
