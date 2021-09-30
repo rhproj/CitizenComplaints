@@ -13,8 +13,8 @@ namespace ComplaintsAdmin.ViewModels
 {
     class LoginViewModel : INotifyPropertyChanged
     {
-        private AdminUser _adminUser;
-        public AdminUser AdminUser 
+        private IAdminUser _adminUser;
+        public IAdminUser AdminUser 
         {
             get { return _adminUser; }
             set { _adminUser = value; OnPropertyChanged(); } 
