@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Complaints_WPF.Models;
+using System;
 using System.Collections.Generic;
 
-namespace Complaints_WPF.Models
+namespace Complaints_WPF.Services
 {
     public interface IComplaintService
     {

@@ -1,5 +1,6 @@
 ﻿using Complaints_WPF.Commands;
 using Complaints_WPF.Models;
+using Complaints_WPF.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
