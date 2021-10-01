@@ -68,7 +68,10 @@ namespace Complaints_WPF.Models
             }
             return listOfComplaints;
         }
-
+        /// <summary>
+        /// Initial Complaints load 
+        /// </summary>
+        /// <param name="year">current year by default</param>
         public List<Complaint> GetAllComplaintsByYear(string year)
         {
             List<Complaint> listOfComplaints = new List<Complaint>();
@@ -162,8 +165,6 @@ namespace Complaints_WPF.Models
         }
 
         #region Filtering
-        public delegate string FilterComplaintDel(string sqlParam, string param, string year);
-
         public string SqlCommandFilterEquals(string sqlParam, string param, string year)
         {
             return $"select * from f_GetComplaintsByYear({year}) where {sqlParam} = '{param}' order by [N] desc";
@@ -179,7 +180,8 @@ namespace Complaints_WPF.Models
             return $"select * from f_GetComplaintsByYear({year}) where {sqlParam} like '%'+ '{param}' +'%' order by [N] desc";
         }
 
-        public List<Complaint> FilterComplaintsFun(FilterComplaintDel filterComplaintDel, string sqlParam, string param, string year) // string receiptDate, string name, string content
+        public List<Complaint> FilterComplaintsFun(Func<string, string, string, string> filterComplaintDel, 
+                                                        string sqlParam, string param, string year)
         {
             List<Complaint> listOfComplaints = new List<Complaint>();
             try

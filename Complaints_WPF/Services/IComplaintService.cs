@@ -14,7 +14,7 @@ namespace Complaints_WPF.Services
         bool DeleteFromChiefsList(string chiefName);
         bool DeleteFromOZhClassification(string ozhComplaint);
         List<Complaint> FilterComplaints(string storedProc, string sp_param, string param);
-        List<Complaint> FilterComplaintsFun(ComplaintServiceADO.FilterComplaintDel filterComplaintDel, string sqlParam, string param, string year);
+        List<Complaint> FilterComplaintsFun(Func<string, string, string, string> filterComplaintDel, string sqlParam, string param, string year);
         List<Complaint> GetAllComplaints();
         List<Complaint> GetAllComplaintsByYear(string year);
         List<string> LoadChiefs();
