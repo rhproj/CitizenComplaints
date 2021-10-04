@@ -9,6 +9,8 @@ namespace ComplaintsAdmin.ViewModels
 {
     class EditUsersViewModel : INotifyPropertyChanged
     {
+        AccessService accessService;
+
         private Prosecutor _newUser;
         public Prosecutor NewUser 
         {
@@ -28,7 +30,7 @@ namespace ComplaintsAdmin.ViewModels
         public RelayCommand AddUserCommand { get;}
         public RelayCommand DeleteUserCommand { get; }
 
-        AccessServiceADO accessService;
+
 
         private void LoadData()
         {

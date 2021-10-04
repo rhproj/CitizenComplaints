@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="Model\AdminUser.cs" />
     <Compile Include="Model\IAdminUser.cs" />
+    <Compile Include="Services\AccessService.cs" />
     <Compile Include="Services\AccessServiceADO.cs" />
     <Compile Include="ViewModels\EditUsersViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />

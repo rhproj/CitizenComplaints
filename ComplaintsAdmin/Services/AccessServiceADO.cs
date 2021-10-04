@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace ComplaintsAdmin.Services
 {
-    public class AccessServiceADO
+    public class AccessServiceADO : AccessService
     {
         SqlConnection SqlConnect;
         SqlCommand SqlCommand;
@@ -19,7 +19,7 @@ namespace ComplaintsAdmin.Services
             SqlCommand.Connection = SqlConnect;
         }
 
-        public bool Authenticate(string userName, string password)
+        internal override bool Authenticate(string userName, string password)
         {
             bool isSucceeded = false;
 
@@ -51,7 +51,7 @@ namespace ComplaintsAdmin.Services
             return isSucceeded;
         }
 
-        public List<AdminUser> GetAdmins()
+        internal override IList<AdminUser> GetAdmins()
         {
             List<AdminUser> usersList = new List<AdminUser>();
             try
@@ -69,41 +69,13 @@ namespace ComplaintsAdmin.Services
                         {
                             AdminUser adminUser = new AdminUser();
 
-                            adminUser.Login =  dataReader.GetString(1);
-                            adminUser.Password = dataReader.IsDBNull(2)? null : dataReader.GetString(2);
+                            adminUser.Login = dataReader.GetString(1);
+                            adminUser.Password = dataReader.IsDBNull(2) ? null : dataReader.GetString(2);
 
                             usersList.Add(adminUser);
                         }
                     }
                 }
-
-                #region delete
-                //using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
-                //{
-                //    if (dataReader.HasRows)
-                //    {
-                //        int count = 0;
-
-                //        while (dataReader.Read())
-                //        {
-                //            count++;
-                //            Complaint complaint = new Complaint();
-
-                //            complaint.Enumerator = count;
-                //            complaint.ComplaintID = dataReader.GetInt32(0);
-                //            complaint.ReceiptDate = dataReader.GetDateTime(1);
-                //            complaint.Citizen.CitizenName = dataReader.GetString(2);
-                //            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(3);
-                //            if (!dataReader.IsDBNull(4)) { complaint.Result.Rezolution = dataReader.GetString(4); }
-                //            //Complaint.Result = dataReader.IsDBNull(4)? null : dataReader.GetString(4);
-
-                //            if (!dataReader.IsDBNull(5)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(5); }
-
-                //            if (!dataReader.IsDBNull(6)) { complaint.Chief.ChiefName = dataReader.GetString(6); }
-                //            listOfComplaints.Add(complaint);
-                //        }
-                //    } 
-                #endregion
             }
             catch (SqlException ex)
             {
@@ -117,7 +89,7 @@ namespace ComplaintsAdmin.Services
             return usersList;
         }
 
-        public List<Prosecutor> LoadProsecutorsInfo()
+        internal override IList<Prosecutor> LoadProsecutorsInfo()
         {
             List<Prosecutor> ProsecutorsList = new List<Prosecutor>();
 
@@ -158,7 +130,7 @@ namespace ComplaintsAdmin.Services
             return ProsecutorsList;
         }
 
-        internal void DeleteFromUsersList(Prosecutor prosecutorToDelete)
+        internal override void DeleteFromUsersList(Prosecutor prosecutorToDelete)
         {
             try
             {
@@ -181,7 +153,7 @@ namespace ComplaintsAdmin.Services
             }
         }
 
-        public void AddToUsersList(Prosecutor prosecutorToAdd)
+        internal override void AddToUsersList(Prosecutor prosecutorToAdd)
         {
             //bool isAdded = false;
 
@@ -209,31 +181,5 @@ namespace ComplaintsAdmin.Services
             }
             //return isAdded;
         }
-
-        //public bool DeleteFromChiefsList(string chiefName)
-        //{
-        //    bool isDeleted = false;
-
-        //    try
-        //    {
-        //        SqlCommand.Parameters.Clear();
-        //        SqlCommand.CommandType = CommandType.StoredProcedure;
-        //        SqlCommand.CommandText = "sp_DeleteChief";
-        //        SqlCommand.Parameters.AddWithValue("@chiefName", chiefName);
-
-        //        SqlConnect.Open();
-        //        isDeleted = SqlCommand.ExecuteNonQuery() > 0;
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    finally
-        //    {
-        //        SqlConnect.Close();
-        //    }
-
-        //    return isDeleted;
-        //}
     }
 }

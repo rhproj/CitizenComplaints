@@ -21,6 +21,9 @@ namespace ComplaintsAdmin.ViewModels
         }
 
         public ICommand LoginCommand { get; }
+
+        AccessService accessService;
+
         private bool CanLoginCommandExecute(object p) 
         {
             if (string.IsNullOrWhiteSpace(AdminUser.Login))
@@ -45,8 +48,6 @@ namespace ComplaintsAdmin.ViewModels
             }
         }
 
-        AccessServiceADO accessService;
-
         public LoginViewModel()
         {
             //if (ServerAccess.TestConnection(ServerAccess._address) == false)
@@ -55,7 +56,7 @@ namespace ComplaintsAdmin.ViewModels
             //    Environment.Exit(0);
             //}
 
-            this.AdminUser = new AdminUser();
+            AdminUser = new AdminUser();
             accessService = new AccessServiceADO();
 
             LoginCommand = new RelayCommand(OnLoginCommandExecuted, CanLoginCommandExecute);

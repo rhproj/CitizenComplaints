@@ -23,7 +23,7 @@ namespace Complaints_WPF.Models
         #endregion
 
         #region METH
-        public List<Complaint> GetAllComplaints()
+        public IList<Complaint> GetAllComplaints()
         {
             List<Complaint> listOfComplaints = new List<Complaint>();  //list that will be fed by StoredP
             try
@@ -72,7 +72,7 @@ namespace Complaints_WPF.Models
         /// Initial Complaints load 
         /// </summary>
         /// <param name="year">current year by default</param>
-        public List<Complaint> GetAllComplaintsByYear(string year)
+        public IList<Complaint> GetAllComplaintsByYear(string year)
         {
             List<Complaint> listOfComplaints = new List<Complaint>();
             try
@@ -116,7 +116,7 @@ namespace Complaints_WPF.Models
             return listOfComplaints;
         }
 
-        public List<Complaint> FilterComplaints(string storedProc, string sp_param, string param)
+        public IList<Complaint> FilterComplaints(string storedProc, string sp_param, string param)
         {
             List<Complaint> listOfComplaints = new List<Complaint>();
             try
@@ -180,7 +180,7 @@ namespace Complaints_WPF.Models
             return $"select * from f_GetComplaintsByYear({year}) where {sqlParam} like '%'+ '{param}' +'%' order by [N] desc";
         }
 
-        public List<Complaint> FilterComplaintsFun(Func<string, string, string, string> filterComplaintDel, 
+        public IList<Complaint> FilterComplaintsFun(Func<string, string, string, string> filterComplaintDel, 
                                                         string sqlParam, string param, string year)
         {
             List<Complaint> listOfComplaints = new List<Complaint>();
@@ -228,7 +228,7 @@ namespace Complaints_WPF.Models
         #endregion
 
         #region Load/Populate Lists form DB
-        public List<OZhClassification> LoadOZhWithSumm(string year)
+        public IList<OZhClassification> LoadOZhWithSumm(string year)
         {
             List<OZhClassification> OZhClassificationList = new List<OZhClassification>();
             try
@@ -265,7 +265,7 @@ namespace Complaints_WPF.Models
             return OZhClassificationList;
         }
 
-        public List<string> LoadOZhClassification() //first to run
+        public IList<string> LoadOZhClassification() //first to run
         {
             List<string> OZhClassificationList = new List<string>();
             try
@@ -299,7 +299,7 @@ namespace Complaints_WPF.Models
             return OZhClassificationList;
         }
 
-        public List<string> LoadProsecutors()
+        public IList<string> LoadProsecutors()
         {
             List<string> ProsecutorsList = new List<string>();
 
@@ -334,7 +334,7 @@ namespace Complaints_WPF.Models
             return ProsecutorsList;
         }
 
-        public List<string> LoadChiefs()
+        public IList<string> LoadChiefs()
         {
             List<string> ChiefsList = new List<string>();
 
@@ -369,7 +369,7 @@ namespace Complaints_WPF.Models
             return ChiefsList;
         }
 
-        public List<string> LoadResults()
+        public IList<string> LoadResults()
         {
             List<string> resultsList = new List<string>();
 
