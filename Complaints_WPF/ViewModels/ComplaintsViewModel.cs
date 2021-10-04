@@ -4,6 +4,7 @@ using Complaints_WPF.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -182,13 +183,9 @@ namespace Complaints_WPF.ViewModels
         #region CTOR
         public ComplaintsViewModel()
         {
-            //if (ServerAccess.TestConnection(ServerAccess._address) == false)
-            //{
-            //    MessageBox.Show($"Отсутствует связь с {ServerAccess._address}");
-            //    Environment.Exit(0);
-            //}
+            TestServerAccess();
 
-            complaintService = new ComplaintServiceADO(); //using ADO.Net
+            complaintService = new ComplaintServiceADO();
             CurrentComplaint = new Complaint(); 
 
             YearToFilter = DateTime.Now.Year.ToString();
@@ -221,6 +218,15 @@ namespace Complaints_WPF.ViewModels
         #endregion
 
         #region METHODS
+        private static void TestServerAccess()
+        {
+            string adress = ConfigurationManager.AppSettings["address"];
+            if (ServerAccess.TestConnection(adress) == false)
+            {
+                MessageBox.Show($"Отсутствует связь с {adress}");
+                Environment.Exit(0);
+            }
+        }
 
         private void LoadData(string year) 
         {

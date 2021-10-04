@@ -5,6 +5,7 @@ using ComplaintsAdmin.Services;
 using ComplaintsAdmin.Views;
 using System;
 using System.ComponentModel;
+using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -50,16 +51,22 @@ namespace ComplaintsAdmin.ViewModels
 
         public LoginViewModel()
         {
-            //if (ServerAccess.TestConnection(ServerAccess._address) == false)
-            //{
-            //    MessageBox.Show($"Отсутствует связь с {ServerAccess._address}");
-            //    Environment.Exit(0);
-            //}
+            TestServerAccess();
 
             AdminUser = new AdminUser();
             accessService = new AccessServiceADO();
 
             LoginCommand = new RelayCommand(OnLoginCommandExecuted, CanLoginCommandExecute);
+        }
+
+        private static void TestServerAccess()
+        {
+            string adress = ConfigurationManager.AppSettings["address"];
+            if (ServerAccess.TestConnection(adress) == false)
+            {
+                MessageBox.Show($"Отсутствует связь с {adress}");
+                Environment.Exit(0);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
