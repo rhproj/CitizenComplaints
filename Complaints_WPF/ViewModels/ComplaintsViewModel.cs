@@ -183,7 +183,7 @@ namespace Complaints_WPF.ViewModels
         #region CTOR
         public ComplaintsViewModel()
         {
-            TestServerAccess();
+            //TestServerAccess();
 
             complaintService = new ComplaintServiceADO();
             CurrentComplaint = new Complaint(); 

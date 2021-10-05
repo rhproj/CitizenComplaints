@@ -14,8 +14,10 @@ namespace ComplaintsAdmin.ViewModels
 {
     class LoginViewModel : INotifyPropertyChanged
     {
-        private IAdminUser _adminUser;
-        public IAdminUser AdminUser 
+        AccessService accessService;
+        
+        private AdminUser _adminUser;
+        public AdminUser AdminUser 
         {
             get { return _adminUser; }
             set { _adminUser = value; OnPropertyChanged(); } 
@@ -23,7 +25,6 @@ namespace ComplaintsAdmin.ViewModels
 
         public ICommand LoginCommand { get; }
 
-        AccessService accessService;
 
         private bool CanLoginCommandExecute(object p) 
         {

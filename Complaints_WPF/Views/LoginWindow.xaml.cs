@@ -26,7 +26,7 @@ namespace Complaints_WPF.Views
         {
             InitializeComponent();
             
-            tbYear.Text = DateTime.Now.Year.ToString();  //some day you'll need to do it mvvm way
+            tbYear.Text = DateTime.Now.Year.ToString();
 
             btnClose.Click += (s, e) => Close();
         }

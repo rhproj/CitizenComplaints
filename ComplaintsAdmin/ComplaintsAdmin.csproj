@@ -62,7 +62,6 @@
       <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\AdminUser.cs" />
-    <Compile Include="Model\IAdminUser.cs" />
     <Compile Include="Services\AccessService.cs" />
     <Compile Include="Services\AccessServiceADO.cs" />
     <Compile Include="ViewModels\EditUsersViewModel.cs" />
@@ -125,9 +124,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Complaints_WPF\Complaints_WPF.csproj">
+    <ProjectReference Include="..\Complaints_WPF\Complaints_Main.csproj">
       <Project>{2b2a887d-928c-4ac0-98d4-af7d2a0628d7}</Project>
-      <Name>Complaints_WPF</Name>
+      <Name>Complaints_Main</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
