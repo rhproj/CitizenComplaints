@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComplaintsAdmin.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,10 @@ namespace ComplaintsAdmin.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public LoginWindow()
+        public LoginWindow(LoginViewModel loginVM)
         {
             InitializeComponent();
+            DataContext = loginVM;
             btnClose.Click += (s, e) => Close();
         }
     }

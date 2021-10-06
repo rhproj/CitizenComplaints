@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace ComplaintsAdmin.ViewModels
 {
-    class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : INotifyPropertyChanged
     {
         AccessService accessService;
         
@@ -50,12 +50,12 @@ namespace ComplaintsAdmin.ViewModels
             }
         }
 
-        public LoginViewModel()
+        public LoginViewModel(AccessService dbService)
         {
-            TestServerAccess();
+            //TestServerAccess();
 
+            accessService = dbService;
             AdminUser = new AdminUser();
-            accessService = new AccessServiceADO();
 
             LoginCommand = new RelayCommand(OnLoginCommandExecuted, CanLoginCommandExecute);
         }
