@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Complaints_WPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,11 @@ namespace Complaints_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(ComplaintsViewModel viewModel)
         {
             InitializeComponent();
+
+            DataContext = viewModel;
 
             btnMin.Click += (s, e) => WindowState = WindowState.Minimized;
             btnMax.Click += (s, e) => WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;

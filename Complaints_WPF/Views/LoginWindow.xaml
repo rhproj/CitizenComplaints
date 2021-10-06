@@ -6,12 +6,13 @@
         xmlns:local="clr-namespace:Complaints_WPF.Views"
         xmlns:vm="clr-namespace:Complaints_WPF.ViewModels"
         x:Name="authorizationWindow"
-        mc:Ignorable="d"
+        mc:Ignorable="d"    
+        
         Title="LoginWindow" Height="580" Width="450"
         WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <vm:ComplaintsViewModel />
-    </Window.DataContext>
+    </Window.DataContext>-->
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="35" />
     </WindowChrome.WindowChrome>
@@ -88,26 +89,33 @@
                 <Separator Margin="18,10,18,20"/>
                 <Label  Content="Логин:" />
                 <!--Content="Имя"-->
-                <ComboBox x:Name="comBoxProsecutor" Width="275" Height="40"
-                ItemsSource="{Binding Path=ProsecutorsList}"
-                FontSize="20" FontWeight="Bold" Foreground="Navy" VerticalContentAlignment="Center"
+                <ComboBox x:Name="comBoxProsecutor" Width="275" Height="40" SelectedItem="{Binding Path=ProsecutorLogin}"
+                        ItemsSource="{Binding Path=ProsecutorsList}"
+                        FontSize="20" FontWeight="Bold" Foreground="Navy" VerticalContentAlignment="Center"
                 />
                 <!--Text="{Binding CurrentComplaint.Prosecutor.ProsecutorName}"-->
                 <!--<TextBox Name="tbUserName" Text="{Binding ProsecutorU.Login, Mode=TwoWay}" />-->
                 
                 <Label Content="Пароль:" Margin="15,20,0,0"/>
                 <PasswordBox Name="tbPassword" Height="40" IsEnabled="False" />
-                <Button Name="btnSubmit" Content="Войти" Margin="90,30" Padding="0,3,3,0" Height="50" Command="{Binding Path=AuthorizationCommand}" CommandParameter="{Binding ElementName=authorizationWindow}" Click="BtnSubmit_Click">
-                    <!--  CloseWindowCommand-->
+                <Button Name="btnSubmit" Content="Войти" Margin="90,30" Padding="0,3,3,0" Height="50">
+                    <!--   Click="BtnSubmit_Click"-->
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="15" />
                         </Style>
                     </Button.Resources>
+                    <Button.Command>
+                        <Binding Path="EnterCommand"/>
+                    </Button.Command>
+                    <Button.CommandParameter>
+                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=Window}"/>
+                    </Button.CommandParameter>
+                    
                 </Button>
             </StackPanel>
         </Border>
-        <TextBox x:Name="tbYear" Grid.Row="4" Width="60" Background="Transparent" Text="{Binding Path=CurrentYear, Mode=TwoWay}"/> <!-- Path=CurrentYear not doing anything here? delete??-->
+        <TextBox x:Name="tbYear" Grid.Row="4" Width="60" Background="Transparent" Text="{Binding Path=YearToFilter, Mode=TwoWay}"/>
         <Label Grid.Row="4" Margin="75,0,0,2" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Content="г."/>
     </Grid>
 </Window>

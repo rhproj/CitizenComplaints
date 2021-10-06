@@ -21,47 +21,21 @@ namespace Complaints_WPF.Views
     public partial class LoginWindow : Window
     {
         //public string ProsNamo { get; set; }
+        ComplaintsViewModel complaintsVM;
 
-        public LoginWindow()
+        public LoginWindow(ComplaintsViewModel viewModel)
         {
             InitializeComponent();
             
-            tbYear.Text = DateTime.Now.Year.ToString();
+            //tbYear.Text = DateTime.Now.Year.ToString();
+
+            complaintsVM = viewModel; 
+            DataContext = complaintsVM;
+
+            if (complaintsVM.CloseAction == null)
+                complaintsVM.CloseAction = new Action(this.Close);
 
             btnClose.Click += (s, e) => Close();
-        }
-
-        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
-        {
-            if (comBoxProsecutor.SelectedItem != null)
-            {
-                //ComplaintsViewModel.CurrentYear = tbYear.Text;
-                
-                MainWindow mw = new MainWindow();
-                mw.lblProsecutor.Content = comBoxProsecutor.SelectedItem;
-                //mw.lblChief.Content = comBoxСhief.SelectedItem;
-
-                ComplaintsViewModel.YearToFilter = tbYear.Text; //!!## walkaround the date problem, i'm passing it here!
-                ComplaintsViewModel.ProsecutorLogin = comBoxProsecutor.SelectedItem.ToString(); //passing selected pros to VM, so it could be written to dataGridTable in Insert method
-                
-                //if (comBoxСhief.SelectedItem != null)
-                //{
-                //    ComplaintsViewModel.СhiefProsecutor = comBoxСhief.SelectedItem.ToString(); //29.12
-                //}
-                //else
-                //{
-                //    mw.lblByChief.Content = string.Empty;
-                //}
-
-                mw.Show();
-                //this.Hide();
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Не выбран пользователь");
-            }
-
         }
     }
 }

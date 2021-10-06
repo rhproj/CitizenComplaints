@@ -13,7 +13,7 @@ namespace Complaints_WPF.ViewModels
 {/// <summary>
 /// Main view model
 /// </summary>
-    class ComplaintsViewModel : INotifyPropertyChanged
+    public class ComplaintsViewModel : INotifyPropertyChanged
     {
         #region Prop
         IComplaintService complaintService;
@@ -147,12 +147,43 @@ namespace Complaints_WPF.ViewModels
 
         #endregion
         #region AUTHORIZATION
-        public static string ProsecutorLogin { get; set; }
+        //public static string ProsecutorLogin { get; set; }
+        //public static string YearToFilter { get; set; }
+        private string _prosecutorLogin;
+        public string ProsecutorLogin 
+        {
+            get { return _prosecutorLogin; }
+            set { _prosecutorLogin = value; OnPropertyChanged("ProsecutorLogin"); }
+        }
+        private string _yearToFilter;
+        public string YearToFilter
+        {
+            get { return _yearToFilter; }
+            set { _yearToFilter = value; OnPropertyChanged("YearToFilter"); }
+        }
 
-        public static string YearToFilter { get; set; }
+        public RelayCommand EnterCommand { get; }
+
+        private bool Enter_CanExecute()
+        {
+            if (String.IsNullOrWhiteSpace(YearToFilter) || (String.IsNullOrWhiteSpace(ProsecutorLogin)))
+                return false;
+            else
+                return true;
+        }
+
+        public Action CloseAction { get; set; }
+
+        private void Enter()
+        {
+            var window = new MainWindow(this); //owner?
+            window.lblProsecutor.Content = ProsecutorLogin;
+            window.Show();
+
+            CloseAction();
+        }
         #endregion
 
-        //07-10.Commands:
         #region COMMAND props
 
         public RelayCommand NewEntryCommand { get; }
@@ -170,7 +201,7 @@ namespace Complaints_WPF.ViewModels
         public RelayCommand FilterCommand { get; }
         public RelayCommand UnFilterCommand { get; }
 
-        #region ComboConstruct // K !
+        #region ComboConstruct
         public RelayCommand AddOzhCommand { get; }
         public RelayCommand AddChiefCommand { get; }
         public RelayCommand DeleteChiefCommand { get; }
@@ -184,11 +215,12 @@ namespace Complaints_WPF.ViewModels
         public ComplaintsViewModel()
         {
             //TestServerAccess();
+            YearToFilter = DateTime.Now.Year.ToString();
 
             complaintService = new ComplaintServiceADO();
             CurrentComplaint = new Complaint(); 
 
-            YearToFilter = DateTime.Now.Year.ToString();
+            EnterCommand = new RelayCommand(Enter, Enter_CanExecute); //////////
 
             NewEntryCommand = new RelayCommand(NewEntry, null);
             RegisterCommand = new RelayCommand(RegisterComplaint, RegisterComplaint_CanExecute); 
