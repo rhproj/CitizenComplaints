@@ -1,4 +1,5 @@
-﻿using Complaints_WPF.ViewModels;
+﻿using Complaints_WPF.Models;
+using Complaints_WPF.ViewModels;
 using Complaints_WPF.Views;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,8 @@ namespace Complaints_WPF
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
-
-            var viewModel = new ComplaintsViewModel();
+            var dbService = new ComplaintServiceADO();
+            var viewModel = new ComplaintsViewModel(dbService);
             Application.Current.MainWindow = new LoginWindow(viewModel);
             Application.Current.MainWindow.Show();
         }

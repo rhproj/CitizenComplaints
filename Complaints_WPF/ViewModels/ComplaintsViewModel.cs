@@ -212,15 +212,15 @@ namespace Complaints_WPF.ViewModels
         #endregion
 
         #region CTOR
-        public ComplaintsViewModel()
+        public ComplaintsViewModel(IComplaintService dbService)
         {
             //TestServerAccess();
             YearToFilter = DateTime.Now.Year.ToString();
 
-            complaintService = new ComplaintServiceADO();
+            complaintService = dbService;
             CurrentComplaint = new Complaint(); 
 
-            EnterCommand = new RelayCommand(Enter, Enter_CanExecute); //////////
+            EnterCommand = new RelayCommand(Enter, Enter_CanExecute); //
 
             NewEntryCommand = new RelayCommand(NewEntry, null);
             RegisterCommand = new RelayCommand(RegisterComplaint, RegisterComplaint_CanExecute); 

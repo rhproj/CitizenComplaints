@@ -25,10 +25,8 @@ namespace Complaints_WPF.Views
 
         public LoginWindow(ComplaintsViewModel viewModel)
         {
-            InitializeComponent();
-            
+            InitializeComponent();            
             //tbYear.Text = DateTime.Now.Year.ToString();
-
             complaintsVM = viewModel; 
             DataContext = complaintsVM;
 
