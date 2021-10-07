@@ -10,7 +10,6 @@ namespace ComplaintsAdmin.Views
         public EditUsersView()
         {
             InitializeComponent();
-
             btnClose.Click += (s, e) => Close();
         }
     }

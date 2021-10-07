@@ -31,16 +31,14 @@ namespace ComplaintsAdmin.ViewModels
         public RelayCommand DeleteUserCommand { get; }
 
 
-
         private void LoadData()
         {
             ProsecutorsList = new ObservableCollection<Prosecutor>(accessService.LoadProsecutorsInfo());
-
         }
 
         public EditUsersViewModel()
         {
-            accessService = new AccessServiceADO();
+            accessService = App.DbService; //new AccessServiceADO();
             NewUser = new Prosecutor();
 
             LoadData();

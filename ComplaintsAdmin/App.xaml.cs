@@ -1,5 +1,4 @@
 ﻿using ComplaintsAdmin.Services;
-using ComplaintsAdmin.ViewModels;
 using ComplaintsAdmin.Views;
 using System.Windows;
 
@@ -10,12 +9,13 @@ namespace ComplaintsAdmin
     /// </summary>
     public partial class App : Application
     {
+        internal static AccessService DbService;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var dbService = new AccessServiceADO();
-            var viewModel = new LoginViewModel(dbService);
-            Application.Current.MainWindow = new LoginWindow(viewModel);
+            DbService = new AccessServiceADO();
+            Application.Current.MainWindow = new LoginWindow();
             Application.Current.MainWindow.Show();
         }
     }

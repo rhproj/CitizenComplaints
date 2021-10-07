@@ -43,18 +43,18 @@ namespace ComplaintsAdmin.ViewModels
             }
             else
             {
-                var window = new EditUsersView(); //owner?
-                window.Show(); //not ShowDialog or mother W won't be closed!
+                var window = new EditUsersView();
+                window.Show();
 
                 (p as System.Windows.Window).Close();
             }
         }
 
-        public LoginViewModel(AccessService dbService)
+        public LoginViewModel()
         {
             //TestServerAccess();
 
-            accessService = dbService;
+            accessService = App.DbService;
             AdminUser = new AdminUser();
 
             LoginCommand = new RelayCommand(OnLoginCommandExecuted, CanLoginCommandExecute);

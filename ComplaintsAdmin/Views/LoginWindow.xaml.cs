@@ -1,5 +1,4 @@
-﻿using ComplaintsAdmin.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 
 namespace ComplaintsAdmin.Views
 {
@@ -8,10 +7,9 @@ namespace ComplaintsAdmin.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public LoginWindow(LoginViewModel loginVM)
+        public LoginWindow()
         {
             InitializeComponent();
-            DataContext = loginVM;
             btnClose.Click += (s, e) => Close();
         }
     }
