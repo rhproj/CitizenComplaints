@@ -66,8 +66,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
@@ -80,9 +80,12 @@
         </Button>
         <Image Grid.Row="0" Grid.RowSpan="3" Source="\Images\LogoFade.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <TextBlock Grid.Row="1" TextAlignment="Center" VerticalAlignment="Top">
-            Прокуратура <LineBreak/> Республики Татарстан
+            Прокуратура Республики Татарстан
         </TextBlock>
-        <Label Grid.Row="2" Content="Регистрация Жалоб" Foreground="Navy" FontSize="37" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="2" TextAlignment="Center" FontSize="35" VerticalAlignment="Top">
+            Книга регистрации<LineBreak/> приема посетителей
+        </TextBlock>
+        <!--<Label Grid.Row="2" Content="Книга регистрации приема посетителей" Foreground="Navy" FontSize="37" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
         <Border Grid.Row="3" CornerRadius="20" Margin="60,10,60,0" Background="Navy">
             <StackPanel Margin="10,20,10,0">
                 <Label Content="Вход" FontSize="25" HorizontalAlignment="Center" />
