@@ -227,7 +227,7 @@ namespace Complaints_WPF.Models
         }
         #endregion
 
-        #region Load/Populate Lists form DB
+        #region Load/Populate Lists
         public IList<OZhClassification> LoadOZhWithSumm(string year)
         {
             List<OZhClassification> OZhClassificationList = new List<OZhClassification>();
@@ -405,6 +405,41 @@ namespace Complaints_WPF.Models
             }
 
             return resultsList;
+        }
+
+        public IList<string> LoadCategories()
+        {
+            List<string> CategoryList = new List<string>();
+
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
+                SqlCommand.CommandText = "sp_LoadCategories";
+
+                SqlConnect.Open();
+
+                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            CategoryList.Add(dataReader.GetString(1));
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+
+            return CategoryList;
         }
         #endregion
 

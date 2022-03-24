@@ -67,6 +67,13 @@ namespace Complaints_WPF.ViewModels
             set { _chiefsList = value; OnPropertyChanged("ChiefsList"); }
         }
 
+        private ObservableCollection<string> _categoryList;
+        public ObservableCollection<string> CategoryList
+        {
+            get { return _categoryList; }
+            set { _categoryList = value; OnPropertyChanged("CategoryList"); }
+        }
+
         private int _currentNum;
         public int CurrentNum
         {
@@ -241,7 +248,8 @@ namespace Complaints_WPF.ViewModels
             OZhClassificationList = new ObservableCollection<string>(complaintService.LoadOZhClassification());
             ResultsList = new ObservableCollection<string>(complaintService.LoadResults());     //moved this 2 from Load() so they don't have to reload every entry         
             ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors()); //for login window only
-            ChiefsList = new ObservableCollection<string>(complaintService.LoadChiefs()); 
+            ChiefsList = new ObservableCollection<string>(complaintService.LoadChiefs());
+            CategoryList = new ObservableCollection<string>(complaintService.LoadCategories());
 
             LoadData(YearToFilter);
 

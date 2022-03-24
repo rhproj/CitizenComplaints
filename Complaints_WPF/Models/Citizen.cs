@@ -36,6 +36,13 @@ namespace Complaints_WPF.Models
             set { _citizenAdress = value; OnPropertyChanged("CitizenAdress"); }
         }
 
+        private string _category;
+        public string Category
+        {
+            get { return _category; }
+            set { _category = value; OnPropertyChanged("Category"); }
+        }
+
         private string _occupation;
         public string Occupation
         {

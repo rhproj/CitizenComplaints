@@ -196,13 +196,13 @@
 
                     <Grid Margin="5,5,10,7">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="70" />
+                            <RowDefinition Height="95" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="115"/>
+                            <ColumnDefinition Width="65"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Примечание:"/>
+                        <TextBlock>Приме-<LineBreak/>чание:</TextBlock>
                         <TextBox x:Name="tbComment" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding CurrentComplaint.Comments, Mode=TwoWay}"    />
                     </Grid>
                     <Grid Margin="5,5">
@@ -273,21 +273,34 @@
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="70" />
+                            <RowDefinition Height="55" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="85"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Адрес:" TextWrapping="Wrap" />
                         <TextBox x:Name="tbAdress" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding CurrentComplaint.Citizen.CitizenAdress, Mode=TwoWay}"    />
                     </Grid>
+                    <!-- Категория -->
+                    <Grid Margin="5,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="125"/>
+                            <ColumnDefinition Width="298"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Категория:"/>
+                        <ComboBox x:Name="comBoxCategory" Grid.Column="1" Height="40"
+                                      ItemsSource="{Binding Path=CategoryList, Mode=TwoWay}"
+                                      Text="{Binding CurrentComplaint.Citizen.Category, Mode=TwoWay}"
+                                      />
+                    </Grid>
+                    
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="70" />
+                            <RowDefinition Height="55" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="85"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Род занятий:" TextWrapping="Wrap" />
@@ -299,7 +312,7 @@
                             <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="85"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Телефон:" />
@@ -310,10 +323,10 @@
                             <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="85"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Mail/почта:" TextWrapping="Wrap" />
+                        <TextBlock Text="Эл/почта:" TextWrapping="Wrap" />
                         <TextBox x:Name="tb" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.Citizen.Email, Mode=TwoWay}" />
                     </Grid>
                 </StackPanel>
@@ -408,7 +421,7 @@
                         <Style TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="Background" Value="Navy" />
                             <Setter Property="BorderBrush" Value="Azure"/>
-                            <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                            <Setter Property="BorderThickness" Value="0,0,1,0"/>
                             <Setter Property="Foreground" Value="LightYellow" />
                             <Setter Property="FontWeight" Value="SemiBold" />
                             <Setter Property="Height" Value="25"/>
@@ -437,10 +450,12 @@
                                                 Binding="{Binding Path=ReceiptDate, StringFormat='{}{0:dd.MM.yy, HH:mm}'}"/>
                         <DataGridTextColumn Header="Имя" Width="200" 
                                                 Binding="{Binding Path=Citizen.CitizenName}"/>
-                        <DataGridTextColumn Header="Жалоба" Width="*" 
+                        <DataGridTextColumn Header="Категория" Width="100" 
+                                                Binding="{Binding Path=Citizen.Category}"/>
+                        <DataGridTextColumn Header="Жалоба" Width="2*" 
                                                 Binding="{Binding Path=OZhComplaintText.OZhComplaint}" />
 
-                        <DataGridTextColumn Header="Примечание" Width="70" 
+                        <DataGridTextColumn Header="Примечание" Width="*" 
                                                 Binding="{Binding Path=Comments}"/>
 
                         <DataGridTextColumn Header="Результат" Width="70" 

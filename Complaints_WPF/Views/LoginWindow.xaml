@@ -66,7 +66,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
@@ -79,7 +79,7 @@
             </Button.Resources>
         </Button>
         <Image Grid.Row="0" Grid.RowSpan="3" Source="\Images\LogoFade.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <TextBlock Grid.Row="1" TextAlignment="Center" VerticalAlignment="Top">
+        <TextBlock Grid.Row="1" TextAlignment="Center" Foreground="Black" VerticalAlignment="Top">
             Прокуратура Республики Татарстан
         </TextBlock>
         <TextBlock Grid.Row="2" TextAlignment="Center" FontSize="35" VerticalAlignment="Top">

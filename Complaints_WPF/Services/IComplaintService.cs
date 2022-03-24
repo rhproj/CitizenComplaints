@@ -22,6 +22,7 @@ namespace Complaints_WPF.Services
         IList<OZhClassification> LoadOZhWithSumm(string year);
         IList<string> LoadProsecutors();
         IList<string> LoadResults();
+        IList<string> LoadCategories();
         Complaint SearchCitizen(string citizenName);
         Complaint SelectComplaint(string year, string citizenName, DateTime dateTime);
         Complaint SelectComplaintFun(string year, string citizenName, DateTime dateTime);
