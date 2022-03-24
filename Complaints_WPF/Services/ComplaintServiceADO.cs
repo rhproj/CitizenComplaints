@@ -100,6 +100,7 @@ namespace Complaints_WPF.Models
                             if (!dataReader.IsDBNull(6)) { complaint.Result.Rezolution = dataReader.GetString(6); }
                             if (!dataReader.IsDBNull(7)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(7); }
                             if (!dataReader.IsDBNull(8)) { complaint.Chief.ChiefName = dataReader.GetString(8); }
+                            if (!dataReader.IsDBNull(9)) { complaint.Citizen.Category = dataReader.GetString(9); }
                             listOfComplaints.Add(complaint);
                         }
                     }
@@ -470,6 +471,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName);
                 SqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName);
                 SqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage);
+                SqlCommand.Parameters.AddWithValue("@category", newComplaint.Citizen.Category);
 
                 SqlConnect.Open();
                 isAdded = SqlCommand.ExecuteNonQuery() > 0;
@@ -504,6 +506,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@occupation", newComplaint.Citizen.Occupation);
                 SqlCommand.Parameters.AddWithValue("@phoneNumber", newComplaint.Citizen.PhoneNumber);
                 SqlCommand.Parameters.AddWithValue("@email", newComplaint.Citizen.Email);
+                
                 SqlCommand.Parameters.AddWithValue("@content", newComplaint.OZhComplaintText.OZhComplaint);
                 SqlCommand.Parameters.AddWithValue("@pageNum", newComplaint.PageNum);
                 SqlCommand.Parameters.AddWithValue("@appendNum", newComplaint.AppendNum);
@@ -512,6 +515,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName);
                 SqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName);
                 SqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage);
+                SqlCommand.Parameters.AddWithValue("@category", newComplaint.Citizen.Category);
 
                 SqlConnect.Open();
                 isAdded = SqlCommand.ExecuteNonQuery() > 0;
@@ -553,6 +557,7 @@ namespace Complaints_WPF.Models
                 SqlCommand.Parameters.AddWithValue("@result", complToUpdate.Result.Rezolution);
                 SqlCommand.Parameters.AddWithValue("@chiefName", complToUpdate.Chief.ChiefName);
                 SqlCommand.Parameters.AddWithValue("@digitalStorage", complToUpdate.DigitalStorage);
+                SqlCommand.Parameters.AddWithValue("@category", complToUpdate.Citizen.Category);
 
                 SqlConnect.Open();
                 isUpdated = SqlCommand.ExecuteNonQuery() > 0;
@@ -607,6 +612,8 @@ namespace Complaints_WPF.Models
                         selectedComplaint.Chief.ChiefName = dataReader.IsDBNull(14) ? null : dataReader.GetString(14);
                         selectedComplaint.DigitalStorage = dataReader.IsDBNull(15) ? null : dataReader.GetString(15);
                         selectedComplaint.Enumerator = dataReader.GetInt32(16);
+                        selectedComplaint.Citizen.Category = dataReader.IsDBNull(17)? null : dataReader.GetString(17);
+
                     }
                 }
             }
@@ -693,6 +700,7 @@ namespace Complaints_WPF.Models
                         citizen.Citizen.PhoneNumber = dataReader.IsDBNull(4) ? null : dataReader.GetString(4);
                         citizen.Citizen.Email = dataReader.IsDBNull(5) ? null : dataReader.GetString(5);
                         citizen.Citizen.BirthDate = dataReader.IsDBNull(6) ? null : dataReader.GetString(6);
+                        citizen.Citizen.Category = dataReader.IsDBNull(7) ? null : dataReader.GetString(7);
                     }
                 }
             }

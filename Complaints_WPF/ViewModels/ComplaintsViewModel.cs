@@ -306,6 +306,7 @@ namespace Complaints_WPF.ViewModels
 
             CurrentComplaint.ComplaintID = 0;
             CurrentComplaint.Citizen.CitizenID = 0;
+            CurrentComplaint.Citizen.Category = null;
         }
 
         public void NewEntry()
@@ -369,6 +370,7 @@ namespace Complaints_WPF.ViewModels
                     CurrentComplaint.Citizen.PhoneNumber = citizen.Citizen.PhoneNumber;
                     CurrentComplaint.Citizen.Email = citizen.Citizen.Email;
                     CurrentComplaint.Citizen.BirthDate = citizen.Citizen.BirthDate;
+                    CurrentComplaint.Citizen.Category = citizen.Citizen.Category;
                 }
                 else
                 {
