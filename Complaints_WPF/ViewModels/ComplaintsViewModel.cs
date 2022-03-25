@@ -445,30 +445,42 @@ namespace Complaints_WPF.ViewModels
                 else if (!string.IsNullOrWhiteSpace(DateToFilter))
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterByDate, "[ReceiptDate]", DateToFilter, YearToFilter));
+                    CurrentNum = ComplaintsList.Count;
                 }
                 else if (!string.IsNullOrWhiteSpace(NameToFilter))
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterLike, "[FullName]", NameToFilter, YearToFilter));
+                    CurrentNum = ComplaintsList.Count;
                 }
                 else if (!string.IsNullOrWhiteSpace(OZhComplaintToFilter))
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[Content]", OZhComplaintToFilter, YearToFilter));
+                    CurrentNum = ComplaintsList.Count;
                 }
                 else if (!string.IsNullOrWhiteSpace(CommentsToFilter))
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterLike, "[Comments]", CommentsToFilter, YearToFilter));
+                    CurrentNum = ComplaintsList.Count;
                 }
                 else if (!string.IsNullOrWhiteSpace(ProsecutorToFilter))
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ProsecutorName]", ProsecutorToFilter, YearToFilter));
+                    CurrentNum = ComplaintsList.Count;
                 }
                 else if (!string.IsNullOrWhiteSpace(ChiefToFilter))
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ChiefName]", ChiefToFilter, YearToFilter));  //FilterComplaints("sp_FilterComplaintsByChief", "@chiefName", ChiefToFilter));
+                    CurrentNum = ComplaintsList.Count;
+                }
+                else if (!string.IsNullOrWhiteSpace(CategoryToFilter))
+                {
+                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[Category]", CategoryToFilter, YearToFilter));  //FilterComplaints("sp_FilterComplaintsByChief", "@chiefName", ChiefToFilter));
+                    CurrentNum = ComplaintsList.Count;
                 }
                 else
                 {
                     ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(YearToFilter));
+                    CurrentNum = ComplaintsList.Count;
                 }
             }
             catch (Exception ex)
@@ -481,7 +493,7 @@ namespace Complaints_WPF.ViewModels
         {
             LoadData(YearToFilter);
 
-            NumberToFilter = DateToFilter = NameToFilter = OZhComplaintToFilter = CommentsToFilter = ProsecutorToFilter = ChiefToFilter = null;
+            NumberToFilter = DateToFilter = NameToFilter = OZhComplaintToFilter = CommentsToFilter = ProsecutorToFilter = ChiefToFilter = CategoryToFilter = null;
         }
 
         #region Editing

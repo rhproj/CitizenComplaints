@@ -163,7 +163,7 @@ namespace Complaints_WPF.Models
                 SqlConnect.Close();
             }
             return listOfComplaints;
-        }
+        }   //depricated
 
         #region Filtering
         public string SqlCommandFilterEquals(string sqlParam, string param, string year)
@@ -211,6 +211,7 @@ namespace Complaints_WPF.Models
                             if (!dataReader.IsDBNull(6)) { complaint.Result.Rezolution = dataReader.GetString(6); }
                             if (!dataReader.IsDBNull(7)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(7); }
                             if (!dataReader.IsDBNull(8)) { complaint.Chief.ChiefName = dataReader.GetString(8); }
+                            if (!dataReader.IsDBNull(9)) { complaint.Citizen.Category = dataReader.GetString(9); }
                             listOfComplaints.Add(complaint);
                         }
                     }
