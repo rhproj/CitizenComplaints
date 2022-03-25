@@ -15,7 +15,7 @@ namespace Complaints_WPF.Services
             SaveFileDialog sfD = new SaveFileDialog();
             sfD.DefaultExt = ".xlsx";
             sfD.Filter = "Файл Excel (.xlsx)|*.xlsx";
-            sfD.FileName = $"ЖРЖ (на {DateTime.Now.ToString("dd.MM.yy")})";
+            sfD.FileName = $"Книга приема посетителей (на {DateTime.Now.ToString("dd.MM.yy")})";
 
             if (sfD.ShowDialog() == true)
             {
@@ -76,7 +76,7 @@ namespace Complaints_WPF.Services
                 ws.Column(col: 12).Width = 14;
 
                 #region Header style
-                ws.Cells[Address: "A1"].Value = $"Журнал регистрации жалоб на {DateTime.Now.ToString("dd.MM.yyyy")}";
+                ws.Cells[Address: "A1"].Value = $"Книга регистрации приема посетителей на {DateTime.Now.ToString("dd.MM.yyyy")}";
                 ws.Cells[Address: "A1:L1"].Merge = true;
 
                 ws.Row(row: 1).Style.Font.Name = "Times New Roman";

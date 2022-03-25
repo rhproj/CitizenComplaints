@@ -110,13 +110,13 @@ namespace Complaints_WPF.ViewModels
             set { _nameToFilter = value; OnPropertyChanged("NameToFilter"); }
         }
 
-        //private string _contentToFilter; //before it became Combobox
-        //public string ContentToFilter
-        //{
-        //    get { return _contentToFilter; }
-        //    set { _contentToFilter = value; OnPropertyChanged("ContentToFilter"); }
-        //}
-        
+        private string _categoryToFilter;
+        public string CategoryToFilter
+        {
+            get { return _categoryToFilter; }
+            set { _categoryToFilter = value; OnPropertyChanged("CategoryToFilter"); }
+        }
+
         private string _oZhComplaintToFilter;
         public string OZhComplaintToFilter
         {
