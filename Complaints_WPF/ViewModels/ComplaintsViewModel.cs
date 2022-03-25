@@ -155,19 +155,19 @@ namespace Complaints_WPF.ViewModels
         #endregion
         #region AUTHORIZATION
         //public static string ProsecutorLogin { get; set; }
-        //public static string YearToFilter { get; set; }
+        public static string YearToFilter { get; set; }
         private string _prosecutorLogin;
         public string ProsecutorLogin 
         {
             get { return _prosecutorLogin; }
             set { _prosecutorLogin = value; OnPropertyChanged("ProsecutorLogin"); }
         }
-        private string _yearToFilter;
-        public string YearToFilter
-        {
-            get { return _yearToFilter; }
-            set { _yearToFilter = value; OnPropertyChanged("YearToFilter"); }
-        }
+        //private string _yearToFilter;
+        //public string YearToFilter
+        //{
+        //    get { return _yearToFilter; }
+        //    set { _yearToFilter = value; OnPropertyChanged("YearToFilter"); }
+        //}
 
         public RelayCommand EnterCommand { get; }
 

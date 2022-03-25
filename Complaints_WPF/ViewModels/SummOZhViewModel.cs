@@ -43,7 +43,7 @@ namespace Complaints_WPF.ViewModels
 
             ToCsvCommand = new RelayCommand(SaveToCsv, null);
 
-            //OZhClassificationList = new ObservableCollection<OZhClassification>(complaintService.LoadOZhWithSumm(ComplaintsViewModel.YearToFilter)); //LoadOZhClassif()); //
+            OZhClassificationList = new ObservableCollection<OZhClassification>(complaintService.LoadOZhWithSumm(ComplaintsViewModel.YearToFilter)); //LoadOZhClassif()); //
         }
 
 
