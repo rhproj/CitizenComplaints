@@ -1,11 +1,14 @@
-﻿using System;
+﻿using OfficeOpenXml.Attributes;
+using System;
 using System.ComponentModel;
 
 namespace Complaints_WPF.Models
 {
+    [EpplusTable]
     public class Complaint : INotifyPropertyChanged
     {
         private int _complaintID;
+        [EpplusIgnore]
         public int ComplaintID
         {
             get { return _complaintID; }
@@ -13,6 +16,7 @@ namespace Complaints_WPF.Models
         }
 
         private int _enumerator;
+        [EpplusTableColumn(Order = 0)]
         public int Enumerator  //needed to numerate complains in DataGrid
         {
             get { return _enumerator; }
@@ -20,6 +24,7 @@ namespace Complaints_WPF.Models
         }
 
         private DateTime _receiptDate;
+        [EpplusTableColumn(Order = 1)]
         public DateTime ReceiptDate
         {
             get { return _receiptDate; }
@@ -27,6 +32,7 @@ namespace Complaints_WPF.Models
         }
 
         private Citizen _citizen;
+        [EpplusNestedTableColumn(Order = 2)]
         public Citizen Citizen
         {
             get { return _citizen; }
@@ -34,6 +40,7 @@ namespace Complaints_WPF.Models
         }
 
         private OZhClassification _oZhComplaintText;
+        [EpplusTableColumn(Order = 3)]
         public OZhClassification OZhComplaintText
         {
             get { return _oZhComplaintText; }
@@ -41,6 +48,7 @@ namespace Complaints_WPF.Models
         }
 
         private string _pageNum;
+        [EpplusIgnore]
         public string PageNum
         {
             get { return _pageNum; }
@@ -48,6 +56,7 @@ namespace Complaints_WPF.Models
         }
 
         private string _appendNum;
+        [EpplusIgnore]
         public string AppendNum
         {
             get { return _appendNum; }
@@ -55,6 +64,7 @@ namespace Complaints_WPF.Models
         }
 
         private string _digitalStorage;
+        [EpplusIgnore]
         public string DigitalStorage
         {
             get { return _digitalStorage; }
@@ -62,6 +72,7 @@ namespace Complaints_WPF.Models
         }
 
         private string _comments;
+        [EpplusTableColumn(Order = 4)]
         public string Comments
         {
             get { return _comments; }
@@ -69,12 +80,14 @@ namespace Complaints_WPF.Models
         }
 
         private Prosecutor _prosecutor;
+        [EpplusTableColumn(Order = 5)]
         public Prosecutor Prosecutor
         {
             get { return _prosecutor; }
             set { _prosecutor = value; OnPropertyChanged("Prosecutor"); }
         }
         private Result _result;
+        [EpplusTableColumn(Order = 6)]
         public Result Result
         {
             get { return _result; }
@@ -82,6 +95,7 @@ namespace Complaints_WPF.Models
         }
 
         private Chief _chief;
+        [EpplusTableColumn(Order = 7)]
         public Chief Chief
         {
             get { return _chief; }

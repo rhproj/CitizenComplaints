@@ -1,10 +1,12 @@
-﻿using System.ComponentModel;
+﻿using OfficeOpenXml.Attributes;
+using System.ComponentModel;
 
 namespace Complaints_WPF.Models
 {
     public class Citizen : INotifyPropertyChanged
     {
         private int _citizenID;
+        [EpplusIgnore]
         public int CitizenID
         {
             get { return _citizenID; }
@@ -12,6 +14,7 @@ namespace Complaints_WPF.Models
         }
 
         private string _citizenName;
+        [EpplusTableColumn(Order = 1)]
         public string CitizenName
         {
             get { return _citizenName; }
@@ -23,6 +26,7 @@ namespace Complaints_WPF.Models
         }
 
         private string _birthDate;
+        [EpplusIgnore]
         public string BirthDate
         {
             get { return _birthDate; }
@@ -30,6 +34,7 @@ namespace Complaints_WPF.Models
         }
 
         private string _citizenAdress;
+        [EpplusIgnore]
         public string CitizenAdress
         {
             get { return _citizenAdress; }
@@ -37,6 +42,7 @@ namespace Complaints_WPF.Models
         }
 
         private string _category;
+        [EpplusTableColumn(Order = 2)]
         public string Category
         {
             get { return _category; }
@@ -44,6 +50,7 @@ namespace Complaints_WPF.Models
         }
 
         private string _occupation;
+        [EpplusIgnore]
         public string Occupation
         {
             get { return _occupation; }
@@ -51,6 +58,7 @@ namespace Complaints_WPF.Models
         }
 
         private string _phonNumber;
+        [EpplusIgnore]
         public string PhoneNumber
         {
             get { return _phonNumber; }
@@ -58,16 +66,17 @@ namespace Complaints_WPF.Models
         }
 
         private string _email;
+        [EpplusIgnore]
         public string Email
         {
             get { return _email; }
             set { _email = value; OnPropertyChanged("Email"); }
         }
 
-        public override string ToString()
-        {
-            return this.CitizenName;
-        }
+        //public override string ToString()
+        //{
+        //    return this.CitizenName;
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propName)
