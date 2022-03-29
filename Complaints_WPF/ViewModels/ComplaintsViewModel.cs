@@ -212,6 +212,8 @@ namespace Complaints_WPF.ViewModels
         public RelayCommand AddOzhCommand { get; }
         public RelayCommand AddChiefCommand { get; }
         public RelayCommand DeleteChiefCommand { get; }
+        public RelayCommand AddCategoryCommand { get; }
+        public RelayCommand DeleteCategoryCommand { get; }
         //public RelayCommand DeleteOzhCommand { get; }
         #endregion
 
@@ -243,6 +245,8 @@ namespace Complaints_WPF.ViewModels
             AddOzhCommand = new RelayCommand(AddToOzhCombobox, AddToCombobox_CanExecute); //ComboEditView
             AddChiefCommand = new RelayCommand(AddToChiefsCombobox, AddToCombobox_CanExecute);
             DeleteChiefCommand = new RelayCommand(DeleteChief, DeleteChief_CanExecute);
+            AddCategoryCommand = new RelayCommand(AddCategory, AddToCombobox_CanExecute);
+            DeleteCategoryCommand = new RelayCommand(DeleteCategory, DeleteCategory_CanExecute);
             //DeleteOzhCommand = new RelayCommand(DeleteOzh, DeleteOzh_CanExecute);
 
             OZhClassificationList = new ObservableCollection<string>(complaintService.LoadOZhClassification());
@@ -622,7 +626,7 @@ namespace Complaints_WPF.ViewModels
 
         private void ClearValueToAdd()
         {
-            AddValueToCombobox = CurrentComplaint.Chief.ChiefName = CurrentComplaint.OZhComplaintText.OZhComplaint = null;
+            AddValueToCombobox = CurrentComplaint.Chief.ChiefName = CurrentComplaint.OZhComplaintText.OZhComplaint = CurrentComplaint.Citizen.Category = null;
         }
         #endregion
 
@@ -671,5 +675,65 @@ namespace Complaints_WPF.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+
+
+        #region Category Methods
+        private void AddCategory()
+        {
+            try
+            {
+                bool isAdded = false;
+
+                isAdded = complaintService.AddToCategoryList(AddValueToCombobox);
+
+                if (isAdded)
+                    Message = "Категория добавлена, чтобы отобразить изменения перезапустите программу";
+                else
+                    Message = "Не удалось добавить категорию";
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+            }
+
+            ClearValueToAdd();
+        }
+
+        private void DeleteCategory()
+        {
+            try
+            {
+                bool isDeleted = complaintService.DeleteFromCategoryList(CurrentComplaint.Citizen.Category);
+
+                if (isDeleted)
+                {
+                    Message = "Категория удалена, чтобы отобразить изменения перезапустите программу";
+                }
+                else
+                {
+                    Message = "Не удалось удалить категорию";
+                }
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+            }
+
+            ClearValueToAdd();
+        }
+
+        private bool DeleteCategory_CanExecute()
+        {
+            if (string.IsNullOrEmpty(CurrentComplaint.Citizen.Category))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        } 
+        #endregion
     }
 }
+

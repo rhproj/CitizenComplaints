@@ -34,28 +34,6 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!--<Grid Background="White">
-            <TextBlock Text="Журнал регистрации жалоб:" FontSize="25" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Label x:Name="lblProsecutor" FontSize="18" FontWeight="DemiBold" FontStyle="Italic" Foreground="DarkBlue" HorizontalAlignment="Left" />
-            --><!--<Label FontSize="25" FontWeight="DemiBold" FontStyle="Italic"  Foreground="DarkBlue" HorizontalAlignment="Right" Content="dd.mm.yyyy hh:mm" />--><!--
-        </Grid>-->
-        <!--<Border Grid.Row="1" BorderThickness="2" BorderBrush="Black">
-        </Border>-->
-        
-        
-        
-        <!--<Grid Grid.Row="1" Background="Navy">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="45"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                --><!--<ColumnDefinition Width="450"/>--><!--
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-        </Grid>-->
-
         <Grid Grid.Row="2" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="450"/>
@@ -68,8 +46,6 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <!--<Border BorderThickness="1" BorderBrush="Black">
-                </Border>-->
                 <StackPanel Orientation="Vertical">
                     <Grid Background="Navy">
                         <Grid.RowDefinitions>
@@ -103,14 +79,6 @@
                         <Button Grid.Column="4" Command="{Binding Path=DeleteComplaintCommand}">
                             <Image Source="\Images\delete_c.png" Stretch="Fill"/>
                         </Button>
-                        <!--<Label Content="ИН Заявления:"/>
-                        <Label Grid.Column="1" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.ComplaintID}"/>-->
-                        
-                        <!--, Converter={StaticResource zeroLabelConverter}-->
-                        
-                        <!--<Label Grid.Column="2" Content="ИН Заявителя:"/>
-                        <Label x:Name="lblCitizenId" Grid.Column="3" HorizontalAlignment="Left" Content="{Binding CurrentComplaint.Citizen.CitizenID}"/>-->
-                        <!--, Converter={StaticResource zeroLabelConverter}-->
                     </Grid>
                     <Grid >
                         <Grid.ColumnDefinitions>
@@ -130,23 +98,13 @@
                             <ColumnDefinition Width="40"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Заявитель:"  />
-                        <!-- see if you can find how Enter button works here-->
+                        
                         <TextBox x:Name="tbCitizenName" Grid.Column="1" Text="{Binding CurrentComplaint.Citizen.CitizenName, Mode=TwoWay}"/>
                         <Button Grid.Column="2" Margin="1" Width="40" Height="40" BorderThickness="0" Background="Transparent" Command="{Binding Path=FindCitizenCommand}">
                             <Image Source="\Images\searchCitBtn.png"></Image>
                         </Button>
                     </Grid>
                     <Grid Margin="5,5,10,6">
-                        <!--<Grid.RowDefinitions>
-                            <RowDefinition Height="60" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="107"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Содержание
-                                   Обращения:" TextWrapping="Wrap" />
-                        <TextBox x:Name="tbComplaint" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding CurrentComplaint.ComplaintText, Mode=TwoWay}" />-->
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40" />
                             <RowDefinition Height="*" />
@@ -170,9 +128,6 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto" />
-                                <!--<ColumnDefinition Width="90"/>-->
-                                <!--<ColumnDefinition Width="auto"/>-->
-                                <!--<ColumnDefinition Width="auto"/>-->
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Листов:" Grid.Column="0" HorizontalAlignment="Left" Height="22" Margin="0,0,5,0"/>
                             <TextBox Margin="0,0,20,0" Grid.Column="0" Width="80" HorizontalAlignment="Right" Text="{Binding CurrentComplaint.PageNum, Mode=TwoWay}"/>
@@ -183,17 +138,6 @@
                             <TextBox Grid.Row="1" Grid.Column="1" Margin="3,5,0,0" Width="232" Height="32" HorizontalAlignment="Left"  Text="{Binding CurrentComplaint.DigitalStorage, Mode=TwoWay}"/>
                         </Grid>
                     </Border>
-
-
-                    <!--<Grid Margin="5,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Цифровые носители:" HorizontalAlignment="Left"  Height="22" />
-                        <TextBox Grid.Column="3" Width="247" Height="32" HorizontalAlignment="Center"  Text="{Binding CurrentComplaint.AppendNum, Mode=TwoWay}"    />
-                    </Grid>-->
-
                     <Grid Margin="5,5,10,7">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="95" />
@@ -217,10 +161,6 @@
                                       ItemsSource="{Binding Path=ResultsList, Mode=TwoWay}"
                                       Text="{Binding CurrentComplaint.Result.Rezolution, Mode=TwoWay}"
                                       />
-                        <!--<Button x:Name="btnEditResult" Grid.Column="2" Width="35"  Margin="5,0,5,0" HorizontalAlignment="Right" Content="+/-" IsEnabled="False" />-->
-
-                        <!-- ONE WAY ??-->
-                        <!--<TextBox x:Name="tbResult" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CurrentComplaint.ComplaintText, Mode=TwoWay}"  />-->
                     </Grid>
 
                     <Grid  Margin="5,0">
@@ -262,14 +202,9 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="140"/>
                             <ColumnDefinition Width="*"/>
-                            <!--<ColumnDefinition Width="98"/>
-                            <ColumnDefinition Width="*"/>-->
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Дата рождения:"/>
                         <TextBox x:Name="tbBirthDate" Grid.Column="1" Width="130"  Margin="5,0" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.Citizen.BirthDate, Mode=TwoWay}"/>
-                        <!--<TextBlock Text="Паспорт:" Grid.Column="2" Margin="19,0,0,0"/>
-                        <TextBox Grid.Column="3" Width="100" HorizontalAlignment="Left" Text="{Binding CurrentComplaint.BirthDate, Mode=TwoWay}" IsEnabled="False"/>-->
-
                     </Grid>
                     <Grid Margin="5,5">
                         <Grid.RowDefinitions>
@@ -436,9 +371,7 @@
                             <Setter Property="Height" Value="28"/>
                         </Style>
                     </DataGrid.RowStyle>
-                    <!--AlternationCount="{Binding Path=ComplaintsListEnumerator}"-->
-                    <!-- EnableRowVirtualization="False"   -this add above to prevent errors in the row sequencing -->
-                    <!-- EmpList is the prop that contains it all-->
+                    
                     <DataGrid.Columns>
                         <!--"{Binding Path=AlternationIndex, RelativeSource={RelativeSource AncestorType=DataGridRow}}"-->
                         <DataGridTextColumn Header="#" Width="45" TextBlock.TextAlignment="Center"  

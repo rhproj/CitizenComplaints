@@ -843,6 +843,56 @@ namespace Complaints_WPF.Models
 
             return isDeleted;
         }
+
+        public bool AddToCategoryList(string categoryTitle)
+        {
+            bool isAdded = false;
+
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
+                SqlCommand.CommandText = "sp_AddCategory";
+                SqlCommand.Parameters.AddWithValue("@categoryTitle", categoryTitle);
+
+                SqlConnect.Open();
+                isAdded = SqlCommand.ExecuteNonQuery() > 0;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+            return isAdded;
+        }
+        public bool DeleteFromCategoryList(string categoryTitle)
+        {
+            bool isDeleted = false;
+
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandType = CommandType.StoredProcedure;
+                SqlCommand.CommandText = "sp_DeleteCategory";
+                SqlCommand.Parameters.AddWithValue("@categoryTitle", categoryTitle);
+
+                SqlConnect.Open();
+                isDeleted = SqlCommand.ExecuteNonQuery() > 0;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                SqlConnect.Close();
+            }
+
+            return isDeleted;
+        }
         #endregion
 
         #endregion

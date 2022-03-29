@@ -10,9 +10,11 @@ namespace Complaints_WPF.Services
         bool AddToComplaintList(Complaint newComplaint, string prosName);
         bool AddToComplaintListUpd(Complaint newComplaint, string prosName);
         bool AddToOZhClassification(string ozhComplaint);
+        bool AddToCategoryList(string categoryTitle);
         bool DeleteComplaint(int id);
         bool DeleteFromChiefsList(string chiefName);
         bool DeleteFromOZhClassification(string ozhComplaint);
+        bool DeleteFromCategoryList(string categoryTitle);
         IList<Complaint> FilterComplaints(string storedProc, string sp_param, string param);
         IList<Complaint> FilterComplaintsFun(Func<string, string, string, string> filterComplaintDel, string sqlParam, string param, string year);
         IList<Complaint> GetAllComplaints();
