@@ -1,4 +1,4 @@
-﻿using Complaints_WPF.Services;
+﻿using Complaints_WPF.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,7 +12,6 @@ namespace Complaints_WPF.Models
         SqlConnection SqlConnect;
         SqlCommand SqlCommand;
 
-        #region CTOR
         public ComplaintServiceADO()
         {
             SqlConnect = new SqlConnection(ConfigurationManager.ConnectionStrings["cs_ComplaintsADO"].ConnectionString);
@@ -20,9 +19,8 @@ namespace Complaints_WPF.Models
             SqlCommand.Connection = SqlConnect;
             //SqlCommand.CommandType = CommandType.StoredProcedure;
         }
-        #endregion
 
-        #region METH
+
         public IList<Complaint> GetAllComplaints()
         {
             List<Complaint> listOfComplaints = new List<Complaint>();  //list that will be fed by StoredP
@@ -893,8 +891,6 @@ namespace Complaints_WPF.Models
 
             return isDeleted;
         }
-        #endregion
-
         #endregion
     }
 }

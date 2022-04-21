@@ -1,6 +1,7 @@
 ﻿using Complaints_WPF.Commands;
 using Complaints_WPF.Models;
 using Complaints_WPF.Services;
+using Complaints_WPF.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -220,7 +221,6 @@ namespace Complaints_WPF.ViewModels
         #endregion
         #endregion
 
-        #region CTOR
         public ComplaintsViewModel(IComplaintService dbService)
         {
             //TestServerAccess();
@@ -259,7 +259,6 @@ namespace Complaints_WPF.ViewModels
 
             SaveSpreadSheetsCommand = new RelayCommand(SaveSpreadSheets, null);
         }
-        #endregion
 
         #region METHODS
         private static void TestServerAccess()
