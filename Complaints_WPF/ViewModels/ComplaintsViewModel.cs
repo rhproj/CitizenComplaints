@@ -9,6 +9,7 @@ using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Windows.Data;
 
 namespace Complaints_WPF.ViewModels
 {/// <summary>
@@ -38,6 +39,20 @@ namespace Complaints_WPF.ViewModels
         {
             get { return _complaintsList; }
             set { _complaintsList = value; OnPropertyChanged("ComplaintsList"); }
+        }
+
+        private ICollectionView _complaintsListView;
+        public ICollectionView ComplaintsListView
+        {
+            get { return _complaintsListView; }
+            set { _complaintsListView = value; OnPropertyChanged(nameof(ComplaintsListView)); }
+        }
+
+        private string _searchWord;
+        public string SearchWord
+        {
+            get { return _searchWord; }
+            set { _searchWord = value; ComplaintsListView.Refresh(); }
         }
 
         private ObservableCollection<string> _oZhClassificationList;
@@ -89,73 +104,16 @@ namespace Complaints_WPF.ViewModels
             set{_message = value; OnPropertyChanged("Message");}
         }
 
-        #region Props to Filter
-        private string _numberToFilter;
-        public string NumberToFilter
-        {
-            get { return _numberToFilter; }
-            set { _numberToFilter = value; OnPropertyChanged("NumberToFilter"); }
-        }
 
-        private string _dateToFilter;
-        public string DateToFilter
-        {
-            get { return _dateToFilter; }
-            set { _dateToFilter = value; OnPropertyChanged("DateToFilter"); }
-        }
-
-        private string _nameToFilter;
-        public string NameToFilter
-        {
-            get { return _nameToFilter; }
-            set { _nameToFilter = value; OnPropertyChanged("NameToFilter"); }
-        }
-
-        private string _categoryToFilter;
-        public string CategoryToFilter
-        {
-            get { return _categoryToFilter; }
-            set { _categoryToFilter = value; OnPropertyChanged("CategoryToFilter"); }
-        }
-
-        private string _oZhComplaintToFilter;
-        public string OZhComplaintToFilter
-        {
-            get { return _oZhComplaintToFilter; }
-            set { _oZhComplaintToFilter = value; OnPropertyChanged("OZhComplaintToFilter"); }
-        }
-
-        private string _commentsToFilter;
-        public string CommentsToFilter
-        {
-            get { return _commentsToFilter; }
-            set { _commentsToFilter = value; OnPropertyChanged("CommentsToFilter"); }
-        }
-
-        private string _prosecutorToFilter;
-        public string ProsecutorToFilter
-        {
-            get { return _prosecutorToFilter; }
-            set { _prosecutorToFilter = value; OnPropertyChanged("ProsecutorToFilter"); }
-        }
-
-        private string _chiefToFilter;
-        public string ChiefToFilter
-        {
-            get { return _chiefToFilter; }
-            set { _chiefToFilter = value; OnPropertyChanged("ChiefToFilter"); }
-        }
-
-        private string _addValueToCombobox;  // K !
+        private string _addValueToCombobox;  // Combobox
         public string AddValueToCombobox
         {
             get { return _addValueToCombobox; }
             set { _addValueToCombobox = value; OnPropertyChanged("AddValueToCombobox"); }
         }
 
-        #endregion
+
         #region AUTHORIZATION
-        //public static string ProsecutorLogin { get; set; }
         public static string YearToFilter { get; set; }
         private string _prosecutorLogin;
         public string ProsecutorLogin 
@@ -163,13 +121,6 @@ namespace Complaints_WPF.ViewModels
             get { return _prosecutorLogin; }
             set { _prosecutorLogin = value; OnPropertyChanged("ProsecutorLogin"); }
         }
-        //private string _yearToFilter;
-        //public string YearToFilter
-        //{
-        //    get { return _yearToFilter; }
-        //    set { _yearToFilter = value; OnPropertyChanged("YearToFilter"); }
-        //}
-
         public RelayCommand EnterCommand { get; }
 
         private bool Enter_CanExecute()
@@ -184,7 +135,7 @@ namespace Complaints_WPF.ViewModels
 
         private void Enter()
         {
-            var window = new MainWindow(this); //owner?
+            var window = new MainWindow(this);
             window.lblProsecutor.Content = ProsecutorLogin;
             window.Show();
 
@@ -193,20 +144,12 @@ namespace Complaints_WPF.ViewModels
         #endregion
 
         #region COMMAND props
-
         public RelayCommand NewEntryCommand { get; }
-
         public RelayCommand RegisterCommand { get;  } 
-
         public RelayCommand FindCitizenCommand { get; }
-
         public RelayCommand EditCommand { get; }
-
         public RelayCommand DeleteComplaintCommand { get; }
-
         public RelayCommand SaveSpreadSheetsCommand { get; }  // SaveToCsvCommand
-
-        public RelayCommand FilterCommand { get; }
         public RelayCommand UnFilterCommand { get; }
 
         #region ComboConstruct
@@ -217,7 +160,6 @@ namespace Complaints_WPF.ViewModels
         public RelayCommand DeleteCategoryCommand { get; }
         //public RelayCommand DeleteOzhCommand { get; }
         #endregion
-
         #endregion
         #endregion
 
@@ -229,7 +171,7 @@ namespace Complaints_WPF.ViewModels
             complaintService = dbService;
             CurrentComplaint = new Complaint(); 
 
-            EnterCommand = new RelayCommand(Enter, Enter_CanExecute); //
+            EnterCommand = new RelayCommand(Enter, Enter_CanExecute);
 
             NewEntryCommand = new RelayCommand(NewEntry, null);
             RegisterCommand = new RelayCommand(RegisterComplaint, RegisterComplaint_CanExecute); 
@@ -239,8 +181,6 @@ namespace Complaints_WPF.ViewModels
             EditCommand = new RelayCommand(EditComplaint, null);
             DeleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
 
-            FilterCommand = new RelayCommand(FilterComplaints, null);   
-            UnFilterCommand = new RelayCommand(UnFilteromplaints, null);
 
             AddOzhCommand = new RelayCommand(AddToOzhCombobox, AddToCombobox_CanExecute); //ComboEditView
             AddChiefCommand = new RelayCommand(AddToChiefsCombobox, AddToCombobox_CanExecute);
@@ -250,7 +190,7 @@ namespace Complaints_WPF.ViewModels
             //DeleteOzhCommand = new RelayCommand(DeleteOzh, DeleteOzh_CanExecute);
 
             OZhClassificationList = new ObservableCollection<string>(complaintService.LoadOZhClassification());
-            ResultsList = new ObservableCollection<string>(complaintService.LoadResults());     //moved this 2 from Load() so they don't have to reload every entry         
+            ResultsList = new ObservableCollection<string>(complaintService.LoadResults());           
             ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors()); //for login window only
             ChiefsList = new ObservableCollection<string>(complaintService.LoadChiefs());
             CategoryList = new ObservableCollection<string>(complaintService.LoadCategories());
@@ -273,8 +213,32 @@ namespace Complaints_WPF.ViewModels
 
         private void LoadData(string year) 
         {
-            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(year)); //GetAllComplaints());
+            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(year));
             CurrentNum = ComplaintsList.Count;
+            ComplaintsListView = CollectionViewSource.GetDefaultView(ComplaintsList);
+            ComplaintsListView.Filter += Filter;
+        }
+
+        private bool Filter(object obj)
+        {
+            var complaint = obj as Complaint;
+            if (!string.IsNullOrEmpty(SearchWord))
+            {
+                return complaint.Enumerator.ToString().Contains(SearchWord) ||
+                    complaint.ReceiptDate.ToString().Contains(SearchWord) ||
+                    complaint.Citizen.CitizenName.ToLower().Contains(SearchWord.ToLower()) ||
+                    complaint.OZhComplaintText.OZhComplaint.ToLower().Contains(SearchWord.ToLower()) ||
+
+                    !string.IsNullOrEmpty(complaint.Comments) && complaint.Comments.ToLower().Contains(SearchWord.ToLower()) ||
+                    complaint.Prosecutor.ProsecutorName.ToLower().Contains(SearchWord.ToLower()) ||
+
+                    !string.IsNullOrEmpty(complaint.Result.Rezolution) && complaint.Result.Rezolution.ToLower().Contains(SearchWord.ToLower()) ||
+                    !string.IsNullOrEmpty(complaint.Chief.ChiefName) && complaint.Chief.ChiefName.ToLower().Contains(SearchWord.ToLower());
+            }
+            else
+            {
+                return true;
+            }
         }
 
         private void ClearEntryFields(bool withName, bool withChief, bool withMessage)
@@ -391,7 +355,7 @@ namespace Complaints_WPF.ViewModels
             try
             {
                 //Clear Fields is not required since we assigning every field anyway
-                CurrentComplaint = complaintService.SelectComplaint(YearToFilter, SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);  //SelectComplaintFun("2021", SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);    //
+                CurrentComplaint = complaintService.SelectComplaint(YearToFilter, SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);
             }
             catch (Exception ex)
             {
@@ -405,7 +369,7 @@ namespace Complaints_WPF.ViewModels
             {
                 if (CurrentComplaint.Enumerator == CurrentNum)
                 {
-                    bool isDeleted = complaintService.DeleteComplaint(CurrentComplaint.ComplaintID); //, CurrentComplaint.ReceiptDate);
+                    bool isDeleted = complaintService.DeleteComplaint(CurrentComplaint.ComplaintID);
                     if (isDeleted)
                     {
                         LoadData(YearToFilter);
@@ -434,69 +398,6 @@ namespace Complaints_WPF.ViewModels
                 return false;
             else
                 return true;
-        }
-
-
-        private void FilterComplaints()
-        {
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(NumberToFilter))
-                {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[N]", NumberToFilter, YearToFilter));
-                }
-                else if (!string.IsNullOrWhiteSpace(DateToFilter))
-                {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterByDate, "[ReceiptDate]", DateToFilter, YearToFilter));
-                    CurrentNum = ComplaintsList.Count;
-                }
-                else if (!string.IsNullOrWhiteSpace(NameToFilter))
-                {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterLike, "[FullName]", NameToFilter, YearToFilter));
-                    CurrentNum = ComplaintsList.Count;
-                }
-                else if (!string.IsNullOrWhiteSpace(OZhComplaintToFilter))
-                {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[Content]", OZhComplaintToFilter, YearToFilter));
-                    CurrentNum = ComplaintsList.Count;
-                }
-                else if (!string.IsNullOrWhiteSpace(CommentsToFilter))
-                {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterLike, "[Comments]", CommentsToFilter, YearToFilter));
-                    CurrentNum = ComplaintsList.Count;
-                }
-                else if (!string.IsNullOrWhiteSpace(ProsecutorToFilter))
-                {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ProsecutorName]", ProsecutorToFilter, YearToFilter));
-                    CurrentNum = ComplaintsList.Count;
-                }
-                else if (!string.IsNullOrWhiteSpace(ChiefToFilter))
-                {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[ChiefName]", ChiefToFilter, YearToFilter));  //FilterComplaints("sp_FilterComplaintsByChief", "@chiefName", ChiefToFilter));
-                    CurrentNum = ComplaintsList.Count;
-                }
-                else if (!string.IsNullOrWhiteSpace(CategoryToFilter))
-                {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.FilterComplaintsFun(complaintService.SqlCommandFilterEquals, "[Category]", CategoryToFilter, YearToFilter));  //FilterComplaints("sp_FilterComplaintsByChief", "@chiefName", ChiefToFilter));
-                    CurrentNum = ComplaintsList.Count;
-                }
-                else
-                {
-                    ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(YearToFilter));
-                    CurrentNum = ComplaintsList.Count;
-                }
-            }
-            catch (Exception ex)
-            {
-                Message = ex.Message;
-            }
-        }
-
-        private void UnFilteromplaints()
-        {
-            LoadData(YearToFilter);
-
-            NumberToFilter = DateToFilter = NameToFilter = OZhComplaintToFilter = CommentsToFilter = ProsecutorToFilter = ChiefToFilter = CategoryToFilter = null;
         }
 
         #region Editing
