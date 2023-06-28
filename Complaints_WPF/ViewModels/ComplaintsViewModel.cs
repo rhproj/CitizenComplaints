@@ -175,7 +175,11 @@ namespace Complaints_WPF.ViewModels
 
             SetUpСollections();
 
-            LoadData(YearToFilter);
+            //LoadData(YearToFilter);
+            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(YearToFilter));
+            CurrentNum = ComplaintsList.Count;
+            ComplaintsListView = CollectionViewSource.GetDefaultView(ComplaintsList);
+            ComplaintsListView.Filter += Filter;
         }
 
         private void SetUpСollections()
