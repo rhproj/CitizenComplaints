@@ -79,11 +79,11 @@
             </Button.Resources>
         </Button>
         <Image Grid.Row="0" Grid.RowSpan="3" Source="\Images\LogoFade.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <TextBlock Grid.Row="1" TextAlignment="Center" Foreground="Black" VerticalAlignment="Top">
-            Прокуратура Республики Татарстан
+        <TextBlock Grid.Row="1" TextAlignment="Center" Foreground="Navy" VerticalAlignment="Top">
+             Бесплатная юридическая помощь
         </TextBlock>
         <TextBlock Grid.Row="2" TextAlignment="Center" FontSize="35" VerticalAlignment="Top">
-            Книга регистрации<LineBreak/> приема посетителей
+            Книга регистрации<LineBreak/> обращений граждан
         </TextBlock>
         <!--<Label Grid.Row="2" Content="Книга регистрации приема посетителей" Foreground="Navy" FontSize="37" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
         <Border Grid.Row="3" CornerRadius="20" Margin="60,10,60,0" Background="Navy">

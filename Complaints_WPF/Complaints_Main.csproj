@@ -51,7 +51,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>713openbook_100531.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EPPlus, Version=5.8.8.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
@@ -110,6 +111,7 @@
     <Compile Include="Services\Interfaces\IReadProsecutorService.cs" />
     <Compile Include="Services\Interfaces\IReadResultService.cs" />
     <Compile Include="Services\ServerAccess.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ComplaintsViewModel.cs" />
     <Compile Include="ViewModels\SummOZhViewModel.cs" />
     <Compile Include="Views\ComboEditView.xaml.cs">

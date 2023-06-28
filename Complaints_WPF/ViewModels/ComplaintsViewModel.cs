@@ -15,7 +15,7 @@ namespace Complaints_WPF.ViewModels
 {/// <summary>
 /// Main view model
 /// </summary>
-    public class ComplaintsViewModel : INotifyPropertyChanged
+    public class ComplaintsViewModel : BaseViewModel
     {
         #region Prop
         IComplaintService complaintService;
@@ -121,7 +121,7 @@ namespace Complaints_WPF.ViewModels
             get { return _prosecutorLogin; }
             set { _prosecutorLogin = value; OnPropertyChanged("ProsecutorLogin"); }
         }
-        public RelayCommand EnterCommand { get; }
+        public RelayCommand EnterCommand { get; private set; }
 
         private bool Enter_CanExecute()
         {
@@ -144,20 +144,20 @@ namespace Complaints_WPF.ViewModels
         #endregion
 
         #region COMMAND props
-        public RelayCommand NewEntryCommand { get; }
-        public RelayCommand RegisterCommand { get;  } 
-        public RelayCommand FindCitizenCommand { get; }
-        public RelayCommand EditCommand { get; }
-        public RelayCommand DeleteComplaintCommand { get; }
-        public RelayCommand SaveSpreadSheetsCommand { get; }  // SaveToCsvCommand
-        public RelayCommand UnFilterCommand { get; }
+        public RelayCommand NewEntryCommand { get; private set; }
+        public RelayCommand RegisterCommand { get; private set; } 
+        public RelayCommand FindCitizenCommand { get; private set; }
+        public RelayCommand EditCommand { get; private set; }
+        public RelayCommand DeleteComplaintCommand { get; private set; }
+        public RelayCommand SaveSpreadSheetsCommand { get; private set; }  // SaveToCsvCommand
+        public RelayCommand UnFilterCommand { get; private set; }
 
         #region ComboConstruct
-        public RelayCommand AddOzhCommand { get; }
-        public RelayCommand AddChiefCommand { get; }
-        public RelayCommand DeleteChiefCommand { get; }
-        public RelayCommand AddCategoryCommand { get; }
-        public RelayCommand DeleteCategoryCommand { get; }
+        public RelayCommand AddOzhCommand { get; private set; }
+        public RelayCommand AddChiefCommand { get; private set; }
+        public RelayCommand DeleteChiefCommand { get; private set; }
+        public RelayCommand AddCategoryCommand { get; private set; }
+        public RelayCommand DeleteCategoryCommand { get; private set; }
         //public RelayCommand DeleteOzhCommand { get; }
         #endregion
         #endregion
@@ -169,18 +169,35 @@ namespace Complaints_WPF.ViewModels
             YearToFilter = DateTime.Now.Year.ToString();
 
             complaintService = dbService;
-            CurrentComplaint = new Complaint(); 
+            CurrentComplaint = new Complaint();
 
+            SetUpCommands();
+
+            SetUpСollections();
+
+            LoadData(YearToFilter);
+        }
+
+        private void SetUpСollections()
+        {
+            OZhClassificationList = new ObservableCollection<string>(complaintService.LoadOZhClassification());
+            ResultsList = new ObservableCollection<string>(complaintService.LoadResults());
+            ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors()); //for login window only
+            ChiefsList = new ObservableCollection<string>(complaintService.LoadChiefs());
+            CategoryList = new ObservableCollection<string>(complaintService.LoadCategories());
+        }
+
+        private void SetUpCommands()
+        {
             EnterCommand = new RelayCommand(Enter, Enter_CanExecute);
 
             NewEntryCommand = new RelayCommand(NewEntry, null);
-            RegisterCommand = new RelayCommand(RegisterComplaint, RegisterComplaint_CanExecute); 
+            RegisterCommand = new RelayCommand(RegisterComplaint, RegisterComplaint_CanExecute);
 
             FindCitizenCommand = new RelayCommand(FindCitizen, null);
 
             EditCommand = new RelayCommand(EditComplaint, null);
             DeleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
-
 
             AddOzhCommand = new RelayCommand(AddToOzhCombobox, AddToCombobox_CanExecute); //ComboEditView
             AddChiefCommand = new RelayCommand(AddToChiefsCombobox, AddToCombobox_CanExecute);
@@ -189,15 +206,15 @@ namespace Complaints_WPF.ViewModels
             DeleteCategoryCommand = new RelayCommand(DeleteCategory, DeleteCategory_CanExecute);
             //DeleteOzhCommand = new RelayCommand(DeleteOzh, DeleteOzh_CanExecute);
 
-            OZhClassificationList = new ObservableCollection<string>(complaintService.LoadOZhClassification());
-            ResultsList = new ObservableCollection<string>(complaintService.LoadResults());           
-            ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors()); //for login window only
-            ChiefsList = new ObservableCollection<string>(complaintService.LoadChiefs());
-            CategoryList = new ObservableCollection<string>(complaintService.LoadCategories());
-
-            LoadData(YearToFilter);
-
             SaveSpreadSheetsCommand = new RelayCommand(SaveSpreadSheets, null);
+        }
+
+        private void LoadData(string year)
+        {
+            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(year));
+            CurrentNum = ComplaintsList.Count;
+            ComplaintsListView = CollectionViewSource.GetDefaultView(ComplaintsList);
+            ComplaintsListView.Filter += Filter;
         }
 
         #region METHODS
@@ -211,13 +228,7 @@ namespace Complaints_WPF.ViewModels
             }
         }
 
-        private void LoadData(string year) 
-        {
-            ComplaintsList = new ObservableCollection<Complaint>(complaintService.GetAllComplaintsByYear(year));
-            CurrentNum = ComplaintsList.Count;
-            ComplaintsListView = CollectionViewSource.GetDefaultView(ComplaintsList);
-            ComplaintsListView.Filter += Filter;
-        }
+
 
         private bool Filter(object obj)
         {
@@ -570,11 +581,6 @@ namespace Complaints_WPF.ViewModels
 
         #endregion
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
 
 
         #region Category Methods

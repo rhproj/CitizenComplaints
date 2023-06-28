@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Complaints_WPF.ViewModels
 {
-    class SummOZhViewModel : INotifyPropertyChanged
+    class SummOZhViewModel : BaseViewModel
     {
         IComplaintService complaintService;
 
@@ -75,10 +75,6 @@ namespace Complaints_WPF.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
+
     }
 }
