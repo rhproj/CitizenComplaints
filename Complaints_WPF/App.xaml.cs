@@ -13,10 +13,17 @@ namespace Complaints_WPF
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var dbService = new ComplaintServiceADO();
-            var viewModel = new ComplaintsViewModel(dbService);
+            var viewModel = SetUpViewModel();
+
             Application.Current.MainWindow = new LoginWindow(viewModel);
             Application.Current.MainWindow.Show();
+        }
+
+        private ComplaintsViewModel SetUpViewModel()
+        {
+            var dbService = new ComplaintServiceADO();
+            var viewModel = new ComplaintsViewModel(dbService);
+            return viewModel;
         }
     }
 }

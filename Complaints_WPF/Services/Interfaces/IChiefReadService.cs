@@ -8,6 +8,6 @@ namespace Complaints_WPF.Services.Interfaces
 {
     public interface IChiefReadService
     {
-        IList<string> LoadChiefs();
+        IEnumerable<string> LoadChiefs();
     }
 }

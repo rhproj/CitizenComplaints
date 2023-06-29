@@ -4,6 +4,6 @@ namespace Complaints_WPF.Services.Interfaces
 {
     public interface IReadProsecutorService
     {
-        IList<string> LoadProsecutors();
+        IEnumerable<string> LoadProsecutors();
     }
 }

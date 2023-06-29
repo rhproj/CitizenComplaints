@@ -73,11 +73,6 @@ namespace Complaints_WPF.Models
             set { _email = value; OnPropertyChanged("Email"); }
         }
 
-        //public override string ToString()
-        //{
-        //    return this.CitizenName;
-        //}
-
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propName)
         {

@@ -4,6 +4,6 @@ namespace Complaints_WPF.Services.Interfaces
 {
     public interface ICategoryReadService
     {
-        IList<string> LoadCategories();
+        IEnumerable<string> LoadCategories();
     }
 }

@@ -5,7 +5,7 @@ namespace Complaints_WPF.Services.Interfaces
 {
     public interface IOZhReadService
     {
-        IList<string> LoadOZhClassification();
-        IList<OZhClassification> LoadOZhWithSumm(string year);
+        IEnumerable<string> LoadOZhClassification();
+        IEnumerable<OZhClassification> LoadOZhWithSumm(string year);
     }
 }

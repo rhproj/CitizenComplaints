@@ -9,17 +9,13 @@ namespace Complaints_WPF.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
-        ComplaintsViewModel complaintsVM;
-
         public LoginWindow(ComplaintsViewModel viewModel)
         {
             InitializeComponent();            
-            //tbYear.Text = DateTime.Now.Year.ToString();
-            complaintsVM = viewModel; 
-            DataContext = complaintsVM;
+            DataContext = viewModel;
 
-            if (complaintsVM.CloseAction == null)
-                complaintsVM.CloseAction = new Action(this.Close);
+            if (viewModel.CloseAction == null)
+                viewModel.CloseAction = new Action(this.Close);
 
             btnClose.Click += (s, e) => Close();
         }

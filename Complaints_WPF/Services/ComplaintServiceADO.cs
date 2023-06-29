@@ -9,78 +9,32 @@ namespace Complaints_WPF.Models
 {
     public class ComplaintServiceADO : IComplaintService
     {
-        SqlConnection SqlConnect;
-        SqlCommand SqlCommand;
+        private SqlConnection _sqlConnect;
+        private SqlCommand _sqlCommand;
 
         public ComplaintServiceADO()
         {
-            SqlConnect = new SqlConnection(ConfigurationManager.ConnectionStrings["cs_ComplaintsADO"].ConnectionString);
-            SqlCommand = new SqlCommand();
-            SqlCommand.Connection = SqlConnect;
+            _sqlConnect = new SqlConnection(ConfigurationManager.ConnectionStrings["cs_ComplaintsADO"].ConnectionString);
+            _sqlCommand = new SqlCommand();
+            _sqlCommand.Connection = _sqlConnect;
             //SqlCommand.CommandType = CommandType.StoredProcedure;
         }
 
-
-        public IList<Complaint> GetAllComplaints()
-        {
-            List<Complaint> listOfComplaints = new List<Complaint>();  //list that will be fed by StoredP
-            try
-            {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandText = "sp_SelectAllComplaints";
-
-                SqlConnect.Open();
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
-                {
-                    if (dataReader.HasRows)
-                    {
-                        int count = 0;
-
-                        while (dataReader.Read())
-                        {
-                            count++;
-                            Complaint complaint = new Complaint();
-
-                            complaint.Enumerator = count;
-                            complaint.ComplaintID = dataReader.GetInt32(0);
-                            complaint.ReceiptDate = dataReader.GetDateTime(1);
-                            complaint.Citizen.CitizenName = dataReader.GetString(2);
-                            complaint.OZhComplaintText.OZhComplaint = dataReader.GetString(3);
-                            if (!dataReader.IsDBNull(4)) { complaint.Result.Rezolution = dataReader.GetString(4); }
-
-                            if (!dataReader.IsDBNull(5)) { complaint.Prosecutor.ProsecutorName = dataReader.GetString(5); }
-
-                            if (!dataReader.IsDBNull(6)) { complaint.Chief.ChiefName = dataReader.GetString(6); }
-                            listOfComplaints.Add(complaint);
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                SqlConnect.Close();
-            }
-            return listOfComplaints;
-        }
         /// <summary>
         /// Initial Complaints load 
         /// </summary>
         /// <param name="year">current year by default</param>
-        public IList<Complaint> GetAllComplaintsByYear(string year)
+        public IEnumerable<Complaint> GetAllComplaintsByYear(string year)
         {
             List<Complaint> listOfComplaints = new List<Complaint>();
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.Text;
-                SqlCommand.CommandText = $"select * from f_GetComplaintsByYear ({year}) order by [N] desc";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.Text;
+                _sqlCommand.CommandText = $"select * from f_GetComplaintsByYear ({year}) order by [N] desc";
 
-                SqlConnect.Open();
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                _sqlConnect.Open();
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -110,23 +64,23 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return listOfComplaints;
         }
 
-        public IList<Complaint> FilterComplaints(string storedProc, string sp_param, string param)
+        public IEnumerable<Complaint> FilterComplaints(string storedProc, string sp_param, string param)
         {
             List<Complaint> listOfComplaints = new List<Complaint>();
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = storedProc;
-                SqlCommand.Parameters.AddWithValue(sp_param, param);
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = storedProc;
+                _sqlCommand.Parameters.AddWithValue(sp_param, param);
 
-                SqlConnect.Open();
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                _sqlConnect.Open();
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -158,7 +112,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return listOfComplaints;
         }   //depricated
@@ -179,18 +133,18 @@ namespace Complaints_WPF.Models
             return $"select * from f_GetComplaintsByYear({year}) where {sqlParam} like '%'+ '{param}' +'%' order by [N] desc";
         }
 
-        public IList<Complaint> FilterComplaintsFun(Func<string, string, string, string> filterComplaintDel, 
+        public IEnumerable<Complaint> FilterComplaintsFun(Func<string, string, string, string> filterComplaintDel, 
                                                         string sqlParam, string param, string year)
         {
             List<Complaint> listOfComplaints = new List<Complaint>();
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.Text;
-                SqlCommand.CommandText = filterComplaintDel(sqlParam, param, year);
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.Text;
+                _sqlCommand.CommandText = filterComplaintDel(sqlParam, param, year);
 
-                SqlConnect.Open();
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                _sqlConnect.Open();
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -221,25 +175,25 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return listOfComplaints;
         }
         #endregion
 
         #region Load/Populate Lists
-        public IList<OZhClassification> LoadOZhWithSumm(string year)
+        public IEnumerable<OZhClassification> LoadOZhWithSumm(string year)
         {
             List<OZhClassification> OZhClassificationList = new List<OZhClassification>();
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.Text;
-                SqlCommand.CommandText = $"select * from f_OZhComplaintSummByYear({year})";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.Text;
+                _sqlCommand.CommandText = $"select * from f_OZhComplaintSummByYear({year})";
 
-                SqlConnect.Open();
+                _sqlConnect.Open();
 
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -260,23 +214,23 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return OZhClassificationList;
         }
 
-        public IList<string> LoadOZhClassification() //first to run
+        public IEnumerable<string> LoadOZhClassification() //first to run
         {
             List<string> OZhClassificationList = new List<string>();
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_LoadOZhClassification";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_LoadOZhClassification";
 
-                SqlConnect.Open();
+                _sqlConnect.Open();
 
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -293,25 +247,25 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
 
             return OZhClassificationList;
         }
 
-        public IList<string> LoadProsecutors()
+        public IEnumerable<string> LoadProsecutors()
         {
             List<string> ProsecutorsList = new List<string>();
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_LoadProsecutors";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_LoadProsecutors";
 
-                SqlConnect.Open();
+                _sqlConnect.Open();
 
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -328,25 +282,25 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
 
             return ProsecutorsList;
         }
 
-        public IList<string> LoadChiefs()
+        public IEnumerable<string> LoadChiefs()
         {
             List<string> ChiefsList = new List<string>();
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_LoadChief";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_LoadChief";
 
-                SqlConnect.Open();
+                _sqlConnect.Open();
 
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -363,25 +317,25 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
 
             return ChiefsList;
         }
 
-        public IList<string> LoadResults()
+        public IEnumerable<string> LoadResults()
         {
             List<string> resultsList = new List<string>();
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_SelectAllResults";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_SelectAllResults";
 
-                SqlConnect.Open();
+                _sqlConnect.Open();
 
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -401,25 +355,25 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
 
             return resultsList;
         }
 
-        public IList<string> LoadCategories()
+        public IEnumerable<string> LoadCategories()
         {
             List<string> CategoryList = new List<string>();
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_LoadCategories";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_LoadCategories";
 
-                SqlConnect.Open();
+                _sqlConnect.Open();
 
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -436,7 +390,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
 
             return CategoryList;
@@ -452,28 +406,28 @@ namespace Complaints_WPF.Models
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_InsertComplaint";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_InsertComplaint";
 
-                SqlCommand.Parameters.AddWithValue("@fullName", newComplaint.Citizen.CitizenName);
-                SqlCommand.Parameters.AddWithValue("@birthDate", newComplaint.Citizen.BirthDate);
-                SqlCommand.Parameters.AddWithValue("@addressLine", newComplaint.Citizen.CitizenAdress);
-                SqlCommand.Parameters.AddWithValue("@occupation", newComplaint.Citizen.Occupation);
-                SqlCommand.Parameters.AddWithValue("@phoneNumber", newComplaint.Citizen.PhoneNumber);
-                SqlCommand.Parameters.AddWithValue("@email", newComplaint.Citizen.Email);
-                SqlCommand.Parameters.AddWithValue("@content", newComplaint.OZhComplaintText.OZhComplaint);
-                SqlCommand.Parameters.AddWithValue("@pageNum", newComplaint.PageNum);
-                SqlCommand.Parameters.AddWithValue("@appendNum", newComplaint.AppendNum);
-                SqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
-                SqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
-                SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName);
-                SqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName);
-                SqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage);
-                SqlCommand.Parameters.AddWithValue("@category", newComplaint.Citizen.Category);
+                _sqlCommand.Parameters.AddWithValue("@fullName", newComplaint.Citizen.CitizenName);
+                _sqlCommand.Parameters.AddWithValue("@birthDate", newComplaint.Citizen.BirthDate);
+                _sqlCommand.Parameters.AddWithValue("@addressLine", newComplaint.Citizen.CitizenAdress);
+                _sqlCommand.Parameters.AddWithValue("@occupation", newComplaint.Citizen.Occupation);
+                _sqlCommand.Parameters.AddWithValue("@phoneNumber", newComplaint.Citizen.PhoneNumber);
+                _sqlCommand.Parameters.AddWithValue("@email", newComplaint.Citizen.Email);
+                _sqlCommand.Parameters.AddWithValue("@content", newComplaint.OZhComplaintText.OZhComplaint);
+                _sqlCommand.Parameters.AddWithValue("@pageNum", newComplaint.PageNum);
+                _sqlCommand.Parameters.AddWithValue("@appendNum", newComplaint.AppendNum);
+                _sqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
+                _sqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
+                _sqlCommand.Parameters.AddWithValue("@prosecutorName", prosName);
+                _sqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName);
+                _sqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage);
+                _sqlCommand.Parameters.AddWithValue("@category", newComplaint.Citizen.Category);
 
-                SqlConnect.Open();
-                isAdded = SqlCommand.ExecuteNonQuery() > 0;
+                _sqlConnect.Open();
+                isAdded = _sqlCommand.ExecuteNonQuery() > 0;
             }
             catch (SqlException ex)
             {
@@ -481,7 +435,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
 
             return isAdded;
@@ -495,29 +449,29 @@ namespace Complaints_WPF.Models
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_InsertComplaintUpd";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_InsertComplaintUpd";
 
-                SqlCommand.Parameters.AddWithValue("@personId", newComplaint.Citizen.CitizenID);
-                SqlCommand.Parameters.AddWithValue("@birthDate", newComplaint.Citizen.BirthDate);
-                SqlCommand.Parameters.AddWithValue("@addressLine", newComplaint.Citizen.CitizenAdress);
-                SqlCommand.Parameters.AddWithValue("@occupation", newComplaint.Citizen.Occupation);
-                SqlCommand.Parameters.AddWithValue("@phoneNumber", newComplaint.Citizen.PhoneNumber);
-                SqlCommand.Parameters.AddWithValue("@email", newComplaint.Citizen.Email);
+                _sqlCommand.Parameters.AddWithValue("@personId", newComplaint.Citizen.CitizenID);
+                _sqlCommand.Parameters.AddWithValue("@birthDate", newComplaint.Citizen.BirthDate);
+                _sqlCommand.Parameters.AddWithValue("@addressLine", newComplaint.Citizen.CitizenAdress);
+                _sqlCommand.Parameters.AddWithValue("@occupation", newComplaint.Citizen.Occupation);
+                _sqlCommand.Parameters.AddWithValue("@phoneNumber", newComplaint.Citizen.PhoneNumber);
+                _sqlCommand.Parameters.AddWithValue("@email", newComplaint.Citizen.Email);
                 
-                SqlCommand.Parameters.AddWithValue("@content", newComplaint.OZhComplaintText.OZhComplaint);
-                SqlCommand.Parameters.AddWithValue("@pageNum", newComplaint.PageNum);
-                SqlCommand.Parameters.AddWithValue("@appendNum", newComplaint.AppendNum);
-                SqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
-                SqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
-                SqlCommand.Parameters.AddWithValue("@prosecutorName", prosName);
-                SqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName);
-                SqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage);
-                SqlCommand.Parameters.AddWithValue("@category", newComplaint.Citizen.Category);
+                _sqlCommand.Parameters.AddWithValue("@content", newComplaint.OZhComplaintText.OZhComplaint);
+                _sqlCommand.Parameters.AddWithValue("@pageNum", newComplaint.PageNum);
+                _sqlCommand.Parameters.AddWithValue("@appendNum", newComplaint.AppendNum);
+                _sqlCommand.Parameters.AddWithValue("@comments", newComplaint.Comments);
+                _sqlCommand.Parameters.AddWithValue("@result", newComplaint.Result.Rezolution);
+                _sqlCommand.Parameters.AddWithValue("@prosecutorName", prosName);
+                _sqlCommand.Parameters.AddWithValue("@chiefName", newComplaint.Chief.ChiefName);
+                _sqlCommand.Parameters.AddWithValue("@digitalStorage", newComplaint.DigitalStorage);
+                _sqlCommand.Parameters.AddWithValue("@category", newComplaint.Citizen.Category);
 
-                SqlConnect.Open();
-                isAdded = SqlCommand.ExecuteNonQuery() > 0;
+                _sqlConnect.Open();
+                isAdded = _sqlCommand.ExecuteNonQuery() > 0;
             }
             catch (SqlException ex)
             {
@@ -525,7 +479,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
 
             return isAdded;
@@ -536,30 +490,30 @@ namespace Complaints_WPF.Models
             bool isUpdated = false;
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_UpdateComplaint";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_UpdateComplaint";
 
-                SqlCommand.Parameters.AddWithValue("@personId", complToUpdate.Citizen.CitizenID);
-                SqlCommand.Parameters.AddWithValue("@fullName", complToUpdate.Citizen.CitizenName);
-                SqlCommand.Parameters.AddWithValue("@birthDate", complToUpdate.Citizen.BirthDate);
-                SqlCommand.Parameters.AddWithValue("@addressLine", complToUpdate.Citizen.CitizenAdress);
-                SqlCommand.Parameters.AddWithValue("@occupation", complToUpdate.Citizen.Occupation);
-                SqlCommand.Parameters.AddWithValue("@phoneNumber", complToUpdate.Citizen.PhoneNumber);
-                SqlCommand.Parameters.AddWithValue("@email", complToUpdate.Citizen.Email);
+                _sqlCommand.Parameters.AddWithValue("@personId", complToUpdate.Citizen.CitizenID);
+                _sqlCommand.Parameters.AddWithValue("@fullName", complToUpdate.Citizen.CitizenName);
+                _sqlCommand.Parameters.AddWithValue("@birthDate", complToUpdate.Citizen.BirthDate);
+                _sqlCommand.Parameters.AddWithValue("@addressLine", complToUpdate.Citizen.CitizenAdress);
+                _sqlCommand.Parameters.AddWithValue("@occupation", complToUpdate.Citizen.Occupation);
+                _sqlCommand.Parameters.AddWithValue("@phoneNumber", complToUpdate.Citizen.PhoneNumber);
+                _sqlCommand.Parameters.AddWithValue("@email", complToUpdate.Citizen.Email);
 
-                SqlCommand.Parameters.AddWithValue("@dateTime", complToUpdate.ReceiptDate);
-                SqlCommand.Parameters.AddWithValue("@content", complToUpdate.OZhComplaintText.OZhComplaint);
-                SqlCommand.Parameters.AddWithValue("@pageNum", complToUpdate.PageNum);
-                SqlCommand.Parameters.AddWithValue("@appendNum", complToUpdate.AppendNum);
-                SqlCommand.Parameters.AddWithValue("@comments", complToUpdate.Comments);
-                SqlCommand.Parameters.AddWithValue("@result", complToUpdate.Result.Rezolution);
-                SqlCommand.Parameters.AddWithValue("@chiefName", complToUpdate.Chief.ChiefName);
-                SqlCommand.Parameters.AddWithValue("@digitalStorage", complToUpdate.DigitalStorage);
-                SqlCommand.Parameters.AddWithValue("@category", complToUpdate.Citizen.Category);
+                _sqlCommand.Parameters.AddWithValue("@dateTime", complToUpdate.ReceiptDate);
+                _sqlCommand.Parameters.AddWithValue("@content", complToUpdate.OZhComplaintText.OZhComplaint);
+                _sqlCommand.Parameters.AddWithValue("@pageNum", complToUpdate.PageNum);
+                _sqlCommand.Parameters.AddWithValue("@appendNum", complToUpdate.AppendNum);
+                _sqlCommand.Parameters.AddWithValue("@comments", complToUpdate.Comments);
+                _sqlCommand.Parameters.AddWithValue("@result", complToUpdate.Result.Rezolution);
+                _sqlCommand.Parameters.AddWithValue("@chiefName", complToUpdate.Chief.ChiefName);
+                _sqlCommand.Parameters.AddWithValue("@digitalStorage", complToUpdate.DigitalStorage);
+                _sqlCommand.Parameters.AddWithValue("@category", complToUpdate.Citizen.Category);
 
-                SqlConnect.Open();
-                isUpdated = SqlCommand.ExecuteNonQuery() > 0;
+                _sqlConnect.Open();
+                isUpdated = _sqlCommand.ExecuteNonQuery() > 0;
             }
             catch (SqlException ex)
             {
@@ -567,7 +521,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return isUpdated; //if ... above > 0 - true
         }
@@ -578,15 +532,15 @@ namespace Complaints_WPF.Models
             Complaint selectedComplaint = null;
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_EditComplaintFromFunction";
-                SqlCommand.Parameters.AddWithValue("@year", year);
-                SqlCommand.Parameters.AddWithValue("@fullName", citizenName);
-                SqlCommand.Parameters.AddWithValue("@dateTime", dateTime);
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_EditComplaintFromFunction";
+                _sqlCommand.Parameters.AddWithValue("@year", year);
+                _sqlCommand.Parameters.AddWithValue("@fullName", citizenName);
+                _sqlCommand.Parameters.AddWithValue("@dateTime", dateTime);
 
-                SqlConnect.Open();
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                _sqlConnect.Open();
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -622,7 +576,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return selectedComplaint;
         }
@@ -632,11 +586,11 @@ namespace Complaints_WPF.Models
             Complaint selectedComplaint = null;
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandText = $"select * from f_PickAComplaint({year}) where [FullName] = '{citizenName}' and [ReceiptDate] = '{dateTime}'";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandText = $"select * from f_PickAComplaint({year}) where [FullName] = '{citizenName}' and [ReceiptDate] = '{dateTime}'";
 
-                SqlConnect.Open();
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                _sqlConnect.Open();
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -668,7 +622,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return selectedComplaint;
         }
@@ -678,14 +632,14 @@ namespace Complaints_WPF.Models
             Complaint citizen = null;
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_SelectPersonByNameLike";   //"sp_SelectPersonByName";
-                SqlCommand.Parameters.AddWithValue("@fullName", citizenName);
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_SelectPersonByNameLike";   //"sp_SelectPersonByName";
+                _sqlCommand.Parameters.AddWithValue("@fullName", citizenName);
 
-                SqlConnect.Open();
+                _sqlConnect.Open();
 
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -709,7 +663,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return citizen;
         }
@@ -720,14 +674,14 @@ namespace Complaints_WPF.Models
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_DeleteComplaintByID";
-                SqlCommand.Parameters.AddWithValue("@complaintID", id);
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_DeleteComplaintByID";
+                _sqlCommand.Parameters.AddWithValue("@complaintID", id);
 
-                SqlConnect.Open();
+                _sqlConnect.Open();
                 //int rowAffected = SqlCommand.ExecuteNonQuery();
-                isDeleted = SqlCommand.ExecuteNonQuery() > 0; //if nothing was deleted = 0
+                isDeleted = _sqlCommand.ExecuteNonQuery() > 0; //if nothing was deleted = 0
             }
             catch (SqlException ex)
             {
@@ -735,7 +689,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return isDeleted;
         }
@@ -747,13 +701,13 @@ namespace Complaints_WPF.Models
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_AddOZhClasiff";
-                SqlCommand.Parameters.AddWithValue("@oZhComplaint", ozhComplaint);
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_AddOZhClasiff";
+                _sqlCommand.Parameters.AddWithValue("@oZhComplaint", ozhComplaint);
 
-                SqlConnect.Open();
-                isAddel = SqlCommand.ExecuteNonQuery() > 0;
+                _sqlConnect.Open();
+                isAddel = _sqlCommand.ExecuteNonQuery() > 0;
             }
             catch (SqlException ex)
             {
@@ -761,7 +715,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return isAddel;
         }
@@ -772,13 +726,13 @@ namespace Complaints_WPF.Models
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_DeleteOZhClasiff";
-                SqlCommand.Parameters.AddWithValue("@oZhComplaint", ozhComplaint);
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_DeleteOZhClasiff";
+                _sqlCommand.Parameters.AddWithValue("@oZhComplaint", ozhComplaint);
 
-                SqlConnect.Open();
-                isDeleted = SqlCommand.ExecuteNonQuery() > 0;
+                _sqlConnect.Open();
+                isDeleted = _sqlCommand.ExecuteNonQuery() > 0;
             }
             catch (SqlException ex)
             {
@@ -786,7 +740,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return isDeleted;
         }
@@ -797,13 +751,13 @@ namespace Complaints_WPF.Models
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_AddChief";
-                SqlCommand.Parameters.AddWithValue("@chiefName", chiefName);
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_AddChief";
+                _sqlCommand.Parameters.AddWithValue("@chiefName", chiefName);
 
-                SqlConnect.Open();
-                isAdded = SqlCommand.ExecuteNonQuery() > 0;
+                _sqlConnect.Open();
+                isAdded = _sqlCommand.ExecuteNonQuery() > 0;
             }
             catch (SqlException ex)
             {
@@ -811,7 +765,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return isAdded;
         }
@@ -822,13 +776,13 @@ namespace Complaints_WPF.Models
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_DeleteChief";
-                SqlCommand.Parameters.AddWithValue("@chiefName", chiefName);
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_DeleteChief";
+                _sqlCommand.Parameters.AddWithValue("@chiefName", chiefName);
 
-                SqlConnect.Open();
-                isDeleted = SqlCommand.ExecuteNonQuery() > 0;
+                _sqlConnect.Open();
+                isDeleted = _sqlCommand.ExecuteNonQuery() > 0;
             }
             catch (SqlException ex)
             {
@@ -836,7 +790,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
 
             return isDeleted;
@@ -848,13 +802,13 @@ namespace Complaints_WPF.Models
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_AddCategory";
-                SqlCommand.Parameters.AddWithValue("@categoryTitle", categoryTitle);
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_AddCategory";
+                _sqlCommand.Parameters.AddWithValue("@categoryTitle", categoryTitle);
 
-                SqlConnect.Open();
-                isAdded = SqlCommand.ExecuteNonQuery() > 0;
+                _sqlConnect.Open();
+                isAdded = _sqlCommand.ExecuteNonQuery() > 0;
             }
             catch (SqlException ex)
             {
@@ -862,7 +816,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
             return isAdded;
         }
@@ -872,13 +826,13 @@ namespace Complaints_WPF.Models
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_DeleteCategory";
-                SqlCommand.Parameters.AddWithValue("@categoryTitle", categoryTitle);
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_DeleteCategory";
+                _sqlCommand.Parameters.AddWithValue("@categoryTitle", categoryTitle);
 
-                SqlConnect.Open();
-                isDeleted = SqlCommand.ExecuteNonQuery() > 0;
+                _sqlConnect.Open();
+                isDeleted = _sqlCommand.ExecuteNonQuery() > 0;
             }
             catch (SqlException ex)
             {
@@ -886,7 +840,7 @@ namespace Complaints_WPF.Models
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
 
             return isDeleted;

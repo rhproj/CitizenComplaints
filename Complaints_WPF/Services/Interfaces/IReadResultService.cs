@@ -4,6 +4,6 @@ namespace Complaints_WPF.Services.Interfaces
 {
     public interface IReadResultService
     {
-        IList<string> LoadResults();
+        IEnumerable<string> LoadResults();
     }
 }
