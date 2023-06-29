@@ -17,7 +17,6 @@ namespace Complaints_WPF.Models
             _sqlConnect = new SqlConnection(ConfigurationManager.ConnectionStrings["cs_ComplaintsADO"].ConnectionString);
             _sqlCommand = new SqlCommand();
             _sqlCommand.Connection = _sqlConnect;
-            //SqlCommand.CommandType = CommandType.StoredProcedure;
         }
 
         /// <summary>
@@ -26,7 +25,7 @@ namespace Complaints_WPF.Models
         /// <param name="year">current year by default</param>
         public IEnumerable<Complaint> GetAllComplaintsByYear(string year)
         {
-            List<Complaint> listOfComplaints = new List<Complaint>();
+            var listOfComplaints = new List<Complaint>();
             try
             {
                 _sqlCommand.Parameters.Clear();
@@ -71,7 +70,7 @@ namespace Complaints_WPF.Models
 
         public IEnumerable<Complaint> FilterComplaints(string storedProc, string sp_param, string param)
         {
-            List<Complaint> listOfComplaints = new List<Complaint>();
+            var listOfComplaints = new List<Complaint>();
             try
             {
                 _sqlCommand.Parameters.Clear();
@@ -115,7 +114,7 @@ namespace Complaints_WPF.Models
                 _sqlConnect.Close();
             }
             return listOfComplaints;
-        }   //depricated
+        } 
 
         #region Filtering
         public string SqlCommandFilterEquals(string sqlParam, string param, string year)
@@ -136,7 +135,7 @@ namespace Complaints_WPF.Models
         public IEnumerable<Complaint> FilterComplaintsFun(Func<string, string, string, string> filterComplaintDel, 
                                                         string sqlParam, string param, string year)
         {
-            List<Complaint> listOfComplaints = new List<Complaint>();
+            var listOfComplaints = new List<Complaint>();
             try
             {
                 _sqlCommand.Parameters.Clear();
@@ -184,7 +183,7 @@ namespace Complaints_WPF.Models
         #region Load/Populate Lists
         public IEnumerable<OZhClassification> LoadOZhWithSumm(string year)
         {
-            List<OZhClassification> OZhClassificationList = new List<OZhClassification>();
+            var OZhClassificationList = new List<OZhClassification>();
             try
             {
                 _sqlCommand.Parameters.Clear();
@@ -221,7 +220,7 @@ namespace Complaints_WPF.Models
 
         public IEnumerable<string> LoadOZhClassification() //first to run
         {
-            List<string> OZhClassificationList = new List<string>();
+            var OZhClassificationList = new List<string>();
             try
             {
                 _sqlCommand.Parameters.Clear();
@@ -255,7 +254,7 @@ namespace Complaints_WPF.Models
 
         public IEnumerable<string> LoadProsecutors()
         {
-            List<string> ProsecutorsList = new List<string>();
+            var prosecutorsList = new List<string>();
 
             try
             {
@@ -271,7 +270,7 @@ namespace Complaints_WPF.Models
                     {
                         while (dataReader.Read())
                         {
-                            ProsecutorsList.Add(dataReader.GetString(2));
+                            prosecutorsList.Add(dataReader.GetString(2));
                         }
                     }
                 }
@@ -285,12 +284,12 @@ namespace Complaints_WPF.Models
                 _sqlConnect.Close();
             }
 
-            return ProsecutorsList;
+            return prosecutorsList;
         }
 
         public IEnumerable<string> LoadChiefs()
         {
-            List<string> ChiefsList = new List<string>();
+            var chiefsList = new List<string>();
 
             try
             {
@@ -306,7 +305,7 @@ namespace Complaints_WPF.Models
                     {
                         while (dataReader.Read())
                         {
-                            ChiefsList.Add(dataReader.GetString(1));
+                            chiefsList.Add(dataReader.GetString(1));
                         }
                     }
                 }
@@ -320,12 +319,12 @@ namespace Complaints_WPF.Models
                 _sqlConnect.Close();
             }
 
-            return ChiefsList;
+            return chiefsList;
         }
 
         public IEnumerable<string> LoadResults()
         {
-            List<string> resultsList = new List<string>();
+            var resultsList = new List<string>();
 
             try
             {
@@ -363,7 +362,7 @@ namespace Complaints_WPF.Models
 
         public IEnumerable<string> LoadCategories()
         {
-            List<string> CategoryList = new List<string>();
+            var categoryList = new List<string>();
 
             try
             {
@@ -379,7 +378,7 @@ namespace Complaints_WPF.Models
                     {
                         while (dataReader.Read())
                         {
-                            CategoryList.Add(dataReader.GetString(1));
+                            categoryList.Add(dataReader.GetString(1));
                         }
                     }
                 }
@@ -393,7 +392,7 @@ namespace Complaints_WPF.Models
                 _sqlConnect.Close();
             }
 
-            return CategoryList;
+            return categoryList;
         }
         #endregion
 
