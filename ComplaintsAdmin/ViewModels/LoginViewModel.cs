@@ -14,7 +14,7 @@ namespace ComplaintsAdmin.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        AccessService accessService;
+        private AccessService _accessService;
         
         private AdminUser _adminUser;
         public AdminUser AdminUser 
@@ -36,7 +36,7 @@ namespace ComplaintsAdmin.ViewModels
 
         private void OnLoginCommandExecuted(object p)
         {
-            if (!accessService.Authenticate(AdminUser.Login, AdminUser.Password))
+            if (!_accessService.Authenticate(AdminUser.Login, AdminUser.Password))
             {
                 MessageBox.Show("Неверное имя пользователя\n или пароль!");
                 return;
@@ -54,7 +54,7 @@ namespace ComplaintsAdmin.ViewModels
         {
             //TestServerAccess();
 
-            accessService = App.DbService;
+            _accessService = App._dbService;
             AdminUser = new AdminUser();
 
             LoginCommand = new RelayCommand(OnLoginCommandExecuted, CanLoginCommandExecute);

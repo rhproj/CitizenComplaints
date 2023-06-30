@@ -9,14 +9,15 @@ namespace ComplaintsAdmin.Services
 {
     public class AccessServiceADO : AccessService
     {
-        SqlConnection SqlConnect;
-        SqlCommand SqlCommand;
+        private SqlConnection _sqlConnect;
+        private SqlCommand _sqlCommand;
+        private const string connectionName = "cs_ComplaintsADO";
 
         public AccessServiceADO()
         {
-            SqlConnect = new SqlConnection(ConfigurationManager.ConnectionStrings["cs_ComplaintsADO"].ConnectionString);
-            SqlCommand = new SqlCommand();
-            SqlCommand.Connection = SqlConnect;
+            _sqlConnect = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionName].ConnectionString);
+            _sqlCommand = new SqlCommand();
+            _sqlCommand.Connection = _sqlConnect;
         }
 
         internal override bool Authenticate(string userName, string password)
@@ -25,13 +26,13 @@ namespace ComplaintsAdmin.Services
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.Text;
-                SqlCommand.CommandText = $"select * from [dbo].[Admin] where [UserName] = '{userName}' and [Password] = '{password}'";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.Text;
+                _sqlCommand.CommandText = $"select * from [dbo].[Admin] where [UserName] = '{userName}' and [Password] = '{password}'";
 
-                SqlConnect.Open();
+                _sqlConnect.Open();
 
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.Read())
                     {
@@ -45,23 +46,23 @@ namespace ComplaintsAdmin.Services
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
 
             return isSucceeded;
         }
 
-        internal override IList<AdminUser> GetAdmins()
+        internal override IEnumerable<AdminUser> GetAdmins()
         {
             List<AdminUser> usersList = new List<AdminUser>();
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandText = "sp_LoadAdmin";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandText = "sp_LoadAdmin";
 
-                SqlConnect.Open();
+                _sqlConnect.Open();
 
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -83,25 +84,25 @@ namespace ComplaintsAdmin.Services
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
 
             return usersList;
         }
 
-        internal override IList<Prosecutor> LoadProsecutorsInfo()
+        internal override IEnumerable<Prosecutor> LoadProsecutorsInfo()
         {
             List<Prosecutor> ProsecutorsList = new List<Prosecutor>();
 
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_LoadProsecutors";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_LoadProsecutors";
 
-                SqlConnect.Open();
+                _sqlConnect.Open();
 
-                using (SqlDataReader dataReader = SqlCommand.ExecuteReader())
+                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
                 {
                     if (dataReader.HasRows)
                     {
@@ -124,7 +125,7 @@ namespace ComplaintsAdmin.Services
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
 
             return ProsecutorsList;
@@ -134,14 +135,14 @@ namespace ComplaintsAdmin.Services
         {
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_DeleteProsecutor";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_DeleteProsecutor";
 
-                SqlCommand.Parameters.AddWithValue("@prosecutorId", prosecutorToDelete.ProsecutorID);
+                _sqlCommand.Parameters.AddWithValue("@prosecutorId", prosecutorToDelete.ProsecutorID);
 
-                SqlConnect.Open();
-                SqlCommand.ExecuteNonQuery();
+                _sqlConnect.Open();
+                _sqlCommand.ExecuteNonQuery();
             }
             catch (SqlException ex)
             {
@@ -149,27 +150,24 @@ namespace ComplaintsAdmin.Services
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
         }
 
         internal override void AddToUsersList(Prosecutor prosecutorToAdd)
         {
-            //bool isAdded = false;
-
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandType = CommandType.StoredProcedure;
-                SqlCommand.CommandText = "sp_AddProsecutor";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.CommandType = CommandType.StoredProcedure;
+                _sqlCommand.CommandText = "sp_AddProsecutor";
 
-                SqlCommand.Parameters.AddWithValue("@login", prosecutorToAdd.Login);
-                SqlCommand.Parameters.AddWithValue("@fio", prosecutorToAdd.ProsecutorName);
+                _sqlCommand.Parameters.AddWithValue("@login", prosecutorToAdd.Login);
+                _sqlCommand.Parameters.AddWithValue("@fio", prosecutorToAdd.ProsecutorName);
 
+                _sqlConnect.Open();
 
-                SqlConnect.Open();
-                //isAdded = SqlCommand.ExecuteNonQuery() > 0;
-                SqlCommand.ExecuteNonQuery();
+                _sqlCommand.ExecuteNonQuery();
             }
             catch (SqlException ex)
             {
@@ -177,9 +175,8 @@ namespace ComplaintsAdmin.Services
             }
             finally
             {
-                SqlConnect.Close();
+                _sqlConnect.Close();
             }
-            //return isAdded;
         }
     }
 }

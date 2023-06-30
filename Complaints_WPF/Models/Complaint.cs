@@ -17,7 +17,7 @@ namespace Complaints_WPF.Models
 
         private int _enumerator;
         [EpplusTableColumn(Order = 0)]
-        public int Enumerator  //to numerate complains in DataGrid
+        public int Enumerator
         {
             get { return _enumerator; }
             set { _enumerator = value; OnPropertyChanged("Enumerator"); }

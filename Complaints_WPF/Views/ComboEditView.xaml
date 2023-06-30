@@ -31,7 +31,7 @@
         <Style TargetType="TextBox" BasedOn="{StaticResource tBoxStyle}"/>
         <Style TargetType="DataGrid" BasedOn="{StaticResource dataGridStyle}" />
         <Style TargetType="Label" BasedOn="{StaticResource LblStyle}" />
-        <!--<Style TargetType="Button" BasedOn="{StaticResource BtnStyle}" />-->
+
         <Style TargetType="ComboBox" BasedOn="{StaticResource ComBoxStyle}" >
         </Style>
     </Window.Resources>
@@ -105,7 +105,6 @@
             <Button Grid.Column="2" Grid.Row="9" Margin="5"  BorderThickness="0" Background="DarkBlue" Foreground="LightYellow" Command="{Binding Path=AddCategoryCommand}" Content="+" />
             <Button Grid.Column="3" Grid.Row="9" Margin="5"  BorderThickness="0" Background="PaleVioletRed" Foreground="LightYellow" Command="{Binding Path=DeleteCategoryCommand}" Content="-" />
 
-            <!--<Label Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Content="{Binding Message}" Foreground="Black"/>-->
             <TextBlock  Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3" TextWrapping="Wrap" FontSize="14" FontWeight="Normal" FontStyle="Italic" Text="{Binding Message}" />
         </Grid>
     </Border>

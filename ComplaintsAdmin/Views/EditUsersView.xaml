@@ -22,22 +22,17 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="0"/>
         </Style>
-        <!--<Style TargetType="TextBlock" BasedOn="{StaticResource tBlockStyle}">
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="FontSize" Value="22"/>
-        </Style>-->
+
         <Style TargetType="TextBox">
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Margin" Value="0,0,10,0"/>
             <Setter Property="FontSize" Value="25"/>
         </Style>
-        <!--<Style TargetType="DataGrid" BasedOn="{StaticResource dataGridStyle}" />-->
+
         <Style TargetType="Label" >
             <Setter Property="FontSize" Value="26"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
-        <!--<Style TargetType="Button" BasedOn="{StaticResource BtnStyle}" />-->
-        <!--<Style TargetType="ComboBox" BasedOn="{StaticResource ComBoxStyle}" />-->
     </Window.Resources>
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="35" />
@@ -74,11 +69,8 @@
                 </Button.Resources>
             </Button>
             
-            <!--<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="85" VerticalAlignment="Bottom" Text="{Binding Path=AddValueToCombobox, UpdateSourceTrigger=PropertyChanged}"/>-->
-
             <Label Grid.Row="2" Grid.Column="1" Content="Логин:" VerticalAlignment="Center"/>
             <TextBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NewUser.Login, UpdateSourceTrigger=PropertyChanged}"/>
-            <!--<TextBlock Grid.Row="2" Grid.Column="1" Text="Имя пользователя:" HorizontalAlignment="Left" />-->
             <Label Grid.Row="3" Grid.Column="1" Content="Фамилия И.О.:" VerticalAlignment="Center"/>
             <TextBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding NewUser.ProsecutorName, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Grid.Row="4" Grid.Column="1" Content="Пароль:" VerticalAlignment="Center"/>
@@ -103,10 +95,6 @@
                 </DataGrid.Columns>
             </DataGrid>
             
-            <!--<Button Grid.Column="3" Grid.Row="7" Margin="5"  BorderThickness="0" Background="PaleVioletRed" Foreground="LightYellow" Command="{Binding Path=DeleteChiefCommand}" Content="-" />-->
-
-            <!--<Label Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Content="{Binding Message}" Foreground="Black"/>-->
-            <!--<TextBlock  Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" TextWrapping="Wrap" FontSize="14" FontWeight="Normal" FontStyle="Italic" Text="{Binding Message}" />-->
         </Grid>
     </Border>
 

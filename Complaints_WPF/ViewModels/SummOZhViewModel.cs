@@ -54,18 +54,12 @@ namespace Complaints_WPF.ViewModels
             {
                 using (StreamWriter sw = new StreamWriter($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\ЖРЖ Статистика ({DateTime.Now.ToString("yyyy.MM.dd")}).csv", false, Encoding.Unicode))
                 {
-                    //sw.WriteLine($"Регистрация жалоб, статистика на {ComplaintsViewModel.YearToFilter} год");
                     sw.WriteLine("Категория обращения;Кол-во");
 
                     foreach (var ozh in OZhClassificationList)
                     {
                         sw.WriteLine($"{ozh.OZhComplaint};{ozh.SummOzh}");
                     }
-
-                    //for (int i = ComplaintsList.Count - 1; i >= 0; i--)
-                    //{
-                    //    sw.WriteLine($"{ComplaintsList[i].Enumerator};{ComplaintsList[i].ReceiptDate};{ComplaintsList[i].Citizen.CitizenName};{ComplaintsList[i].OZhComplaintText.OZhComplaint};{ComplaintsList[i].Comments};{ComplaintsList[i].Result.Rezolution};{ComplaintsList[i].Prosecutor.ProsecutorName};{ComplaintsList[i].Chief.ChiefName}"); //,");
-                    //}
                 }
                 Message = "ЖРЖ Отчет сохранен на Рабочем столе";
             }
@@ -74,7 +68,5 @@ namespace Complaints_WPF.ViewModels
                 Message = ex.Message;
             }
         }
-
-
     }
 }

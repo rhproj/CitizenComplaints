@@ -113,7 +113,7 @@ namespace Complaints_WPF.ViewModels
         }
 
 
-        #region AUTHORIZATION
+        #region ProsecutorLogin
         public static string YearToFilter { get; set; }
         private string _prosecutorLogin;
         public string ProsecutorLogin 
@@ -179,7 +179,6 @@ namespace Complaints_WPF.ViewModels
 
         private void SetUpFilterView()
         {
-            //LoadData(YearToFilter);
             YearToFilter = DateTime.Now.Year.ToString();
 
             ComplaintsList = new ObservableCollection<Complaint>(_complaintService.GetAllComplaintsByYear(YearToFilter));
@@ -192,7 +191,7 @@ namespace Complaints_WPF.ViewModels
         {
             OZhClassificationList = new ObservableCollection<string>(_complaintService.LoadOZhClassification());
             ResultsList = new ObservableCollection<string>(_complaintService.LoadResults());
-            ProsecutorsList = new ObservableCollection<string>(_complaintService.LoadProsecutors()); //for login window only
+            ProsecutorsList = new ObservableCollection<string>(_complaintService.LoadProsecutors());
             ChiefsList = new ObservableCollection<string>(_complaintService.LoadChiefs());
             CategoryList = new ObservableCollection<string>(_complaintService.LoadCategories());
         }
@@ -209,12 +208,11 @@ namespace Complaints_WPF.ViewModels
             EditCommand = new RelayCommand(EditComplaint, null);
             DeleteComplaintCommand = new RelayCommand(DeleteComplaint, DeleteComplaint_CanExecute);
 
-            AddOzhCommand = new RelayCommand(AddToOzhCombobox, AddToCombobox_CanExecute); //ComboEditView
+            AddOzhCommand = new RelayCommand(AddToOzhCombobox, AddToCombobox_CanExecute);
             AddChiefCommand = new RelayCommand(AddToChiefsCombobox, AddToCombobox_CanExecute);
             DeleteChiefCommand = new RelayCommand(DeleteChief, DeleteChief_CanExecute);
             AddCategoryCommand = new RelayCommand(AddCategory, AddToCombobox_CanExecute);
             DeleteCategoryCommand = new RelayCommand(DeleteCategory, DeleteCategory_CanExecute);
-            //DeleteOzhCommand = new RelayCommand(DeleteOzh, DeleteOzh_CanExecute);
 
             SaveSpreadSheetsCommand = new RelayCommand(SaveSpreadSheets, null);
         }
@@ -370,7 +368,7 @@ namespace Complaints_WPF.ViewModels
         {
             try
             {
-                //Clear Fields is not required since we assigning every field anyway
+                //ClearFields is not required since we assigning every field anyway
                 CurrentComplaint = _complaintService.SelectComplaint(YearToFilter, SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);
             }
             catch (Exception ex)
@@ -408,6 +406,7 @@ namespace Complaints_WPF.ViewModels
             }
             ClearEntryFields(true, false, false);
         }
+
         private bool DeleteComplaint_CanExecute()
         {
             if (CurrentComplaint.ComplaintID == 0)
@@ -434,13 +433,9 @@ namespace Complaints_WPF.ViewModels
                 isAdded = _complaintService.AddToOZhClassification(AddValueToCombobox);
 
                 if (isAdded)
-                {
                     Message = "Запись добавлена, чтобы отобразить изменения перезапустите программу";
-                }
                 else
-                {
                     Message = "Не удалось добавить запись";
-                }
             }
             catch (Exception ex)
             {
@@ -456,13 +451,9 @@ namespace Complaints_WPF.ViewModels
                 bool isDeleted = _complaintService.DeleteFromOZhClassification(CurrentComplaint.OZhComplaintText.OZhComplaint);
 
                 if (isDeleted)
-                {
                     Message = "Запись удалена, чтобы отобразить изменения перезапустите программу";
-                }
                 else
-                {
                     Message = "Не удалось удалить запись";
-                }
             }
             catch (Exception ex)
             {
@@ -475,13 +466,9 @@ namespace Complaints_WPF.ViewModels
         private bool DeleteOzh_CanExecute()
         {
             if (string.IsNullOrEmpty(CurrentComplaint.OZhComplaintText.OZhComplaint))
-            {
                 return false;
-            }
             else
-            {
                 return true;
-            }
         }
 
         private void AddToChiefsCombobox()
@@ -512,13 +499,9 @@ namespace Complaints_WPF.ViewModels
                 bool isDeleted = _complaintService.DeleteFromChiefsList(CurrentComplaint.Chief.ChiefName);
 
                 if (isDeleted)
-                {                   
                     Message = "Руководитель удален, чтобы отобразить изменения перезапустите программу";
-                }
                 else
-                {
                     Message = "Не удалось удалить руководителя";
-                }
             }
             catch (Exception ex)
             {
@@ -531,44 +514,19 @@ namespace Complaints_WPF.ViewModels
         private bool DeleteChief_CanExecute()
         {
             if (string.IsNullOrEmpty(CurrentComplaint.Chief.ChiefName))
-            {
                 return false;
-            }
             else
-            {
                 return true;
-            }
         }
 
         private void ClearValueToAdd()
         {
-            AddValueToCombobox = CurrentComplaint.Chief.ChiefName = CurrentComplaint.OZhComplaintText.OZhComplaint = CurrentComplaint.Citizen.Category = null;
+            AddValueToCombobox = 
+            CurrentComplaint.Chief.ChiefName = 
+            CurrentComplaint.OZhComplaintText.OZhComplaint = 
+            CurrentComplaint.Citizen.Category = null;
         }
         #endregion
-
-
-        private void SaveToCsv() //deprecated,been changed to EPPlus method
-        {
-            try
-            {
-                using (StreamWriter sw = new StreamWriter($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\ЖРЖ ({DateTime.Now.ToString("yyyy.MM.dd")}).csv", false, Encoding.Unicode))
-                {
-                    sw.WriteLine($"Журнал регистрации жалоб по состаянию на {YearToFilter} год");
-                    sw.WriteLine("№;Дата/время;Имя заявителя;Жалоба;Примечание;Результат;Принял(а);Принимающий руководитель");
-
-                    for (int i = ComplaintsList.Count-1; i >= 0; i--)
-                    {
-                        sw.WriteLine($"{ComplaintsList[i].Enumerator};{ComplaintsList[i].ReceiptDate};{ComplaintsList[i].Citizen.CitizenName};{ComplaintsList[i].OZhComplaintText.OZhComplaint};{ComplaintsList[i].Comments};{ComplaintsList[i].Result.Rezolution};{ComplaintsList[i].Prosecutor.ProsecutorName};{ComplaintsList[i].Chief.ChiefName}");
-                    }
-                }
-
-                Message = "Таблица сохранена на Рабочем столе";
-            }
-            catch (Exception ex)
-            {
-                Message = ex.Message;
-            }
-        }
 
         private void SaveSpreadSheets()
         {
@@ -585,7 +543,6 @@ namespace Complaints_WPF.ViewModels
         }
 
         #endregion
-
 
 
         #region Category Methods
@@ -617,13 +574,9 @@ namespace Complaints_WPF.ViewModels
                 bool isDeleted = _complaintService.DeleteFromCategoryList(CurrentComplaint.Citizen.Category);
 
                 if (isDeleted)
-                {
                     Message = "Категория удалена, чтобы отобразить изменения перезапустите программу";
-                }
                 else
-                {
-                    Message = "Не удалось удалить категорию";
-                }
+                     Message = "Не удалось удалить категорию";
             }
             catch (Exception ex)
             {
@@ -636,13 +589,9 @@ namespace Complaints_WPF.ViewModels
         private bool DeleteCategory_CanExecute()
         {
             if (string.IsNullOrEmpty(CurrentComplaint.Citizen.Category))
-            {
                 return false;
-            }
             else
-            {
                 return true;
-            }
         } 
         #endregion
     }

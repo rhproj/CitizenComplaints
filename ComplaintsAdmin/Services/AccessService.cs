@@ -9,7 +9,7 @@ namespace ComplaintsAdmin.Services
         internal abstract void AddToUsersList(Prosecutor prosecutorToAdd);
         internal abstract bool Authenticate(string userName, string password);
         internal abstract void DeleteFromUsersList(Prosecutor prosecutorToDelete);
-        internal abstract IList<AdminUser> GetAdmins();
-        internal abstract IList<Prosecutor> LoadProsecutorsInfo();
+        internal abstract IEnumerable<AdminUser> GetAdmins();
+        internal abstract IEnumerable<Prosecutor> LoadProsecutorsInfo();
     }
 }

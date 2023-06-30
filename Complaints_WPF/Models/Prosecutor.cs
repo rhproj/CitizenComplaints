@@ -27,8 +27,6 @@ namespace Complaints_WPF.Models
 
         public bool LimitedStatus{ get; set; }
 
-        public string Password { get; set; }
-
         public override string ToString()
         {
             return this.ProsecutorName;

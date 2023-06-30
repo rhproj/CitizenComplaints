@@ -3,12 +3,6 @@ using Complaints_WPF.Models;
 using Complaints_WPF.Services.Interfaces;
 using Complaints_WPF.ViewModels;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Complaints_Tests.ViewModelsTests
 {
@@ -19,7 +13,6 @@ namespace Complaints_Tests.ViewModelsTests
         {
             var testYear = "2020";
             var expectedComplainsList = GetComplainsTestList(5);
-            //var oZhTestClassification = GetRandom.StringCollection(3, 10).ToList(); //GetOZhClassification();
 
             var complaintServiceMock = new Mock<IComplaintService>();
             complaintServiceMock.Setup(s => s.GetAllComplaintsByYear(testYear)).Returns(expectedComplainsList);
@@ -29,21 +22,13 @@ namespace Complaints_Tests.ViewModelsTests
             complaintServiceMock.Setup(s => s.LoadChiefs()).Returns(GetRandom.StringCollection(3, 10).ToList());
             complaintServiceMock.Setup(s => s.LoadCategories()).Returns(GetRandom.StringCollection(3, 10).ToList());
 
-            //ResultsList = new ObservableCollection<string>(complaintService.LoadResults());
-            //ProsecutorsList = new ObservableCollection<string>(complaintService.LoadProsecutors()); //for login window only
-            //ChiefsList = new ObservableCollection<string>(complaintService.LoadChiefs());
-            //CategoryList = new ObservableCollection<string>(complaintService.LoadCategories());
-
             var viewModel = new ComplaintsViewModel(complaintServiceMock.Object);
-
-            //viewModel.LoadData(testYear);
 
             Assert.Equal(5, viewModel.ComplaintsList.Count());
         }
 
 
-
-        private IList<Complaint> GetComplainsTestList(int capacity)
+        private IEnumerable<Complaint> GetComplainsTestList(int capacity)
         {
             var complaintsList = new Complaint[capacity];
 
@@ -109,9 +94,5 @@ namespace Complaints_Tests.ViewModelsTests
             };
         }
 
-
-
-        //Result = new Result();
-        //Chief = new Chief();
     }
 }

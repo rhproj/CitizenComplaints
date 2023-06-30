@@ -9,7 +9,7 @@ namespace ComplaintsAdmin.ViewModels
 {
     class EditUsersViewModel : INotifyPropertyChanged
     {
-        AccessService accessService;
+        private AccessService _accessService;
 
         private Prosecutor _newUser;
         public Prosecutor NewUser 
@@ -33,12 +33,12 @@ namespace ComplaintsAdmin.ViewModels
 
         private void LoadData()
         {
-            ProsecutorsList = new ObservableCollection<Prosecutor>(accessService.LoadProsecutorsInfo());
+            ProsecutorsList = new ObservableCollection<Prosecutor>(_accessService.LoadProsecutorsInfo());
         }
 
         public EditUsersViewModel()
         {
-            accessService = App.DbService; //new AccessServiceADO();
+            _accessService = App._dbService;
             NewUser = new Prosecutor();
 
             LoadData();
@@ -56,7 +56,7 @@ namespace ComplaintsAdmin.ViewModels
         }
         private void DeleteUser()
         {
-            accessService.DeleteFromUsersList(SelectedUser);
+            _accessService.DeleteFromUsersList(SelectedUser);
             LoadData();
         }
 
@@ -69,7 +69,7 @@ namespace ComplaintsAdmin.ViewModels
         }
         private void AddUser()
         {
-            accessService.AddToUsersList(NewUser);
+            _accessService.AddToUsersList(NewUser);
             LoadData();
             NewUser = new Prosecutor();
         }

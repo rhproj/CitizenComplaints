@@ -9,12 +9,12 @@ namespace ComplaintsAdmin
     /// </summary>
     public partial class App : Application
     {
-        internal static AccessService DbService;
+        internal static AccessService _dbService;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            DbService = new AccessServiceADO();
+            _dbService = new AccessServiceADO();
             Application.Current.MainWindow = new LoginWindow();
             Application.Current.MainWindow.Show();
         }

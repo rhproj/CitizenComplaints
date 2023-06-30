@@ -98,6 +98,7 @@
     <Compile Include="Models\OZhClassification.cs" />
     <Compile Include="Services\ComplaintServiceADO.cs" />
     <Compile Include="Services\EPPlusService.cs" />
+    <Compile Include="Services\CategoryReadService.cs" />
     <Compile Include="Services\Interfaces\IComplaintService.cs" />
     <Compile Include="Services\Interfaces\ICategoryReadService.cs" />
     <Compile Include="Services\Interfaces\ICategoryWriteService.cs" />

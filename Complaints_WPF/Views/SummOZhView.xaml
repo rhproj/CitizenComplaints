@@ -27,7 +27,6 @@
         <Style TargetType="TextBox" BasedOn="{StaticResource tBoxStyle}"/>
         <Style TargetType="DataGrid" BasedOn="{StaticResource dataGridStyle}" />
         <Style TargetType="Label" BasedOn="{StaticResource LblStyle}" />
-        <!--<Style TargetType="Button" BasedOn="{StaticResource BtnStyle}" />-->
         <Style TargetType="ComboBox" BasedOn="{StaticResource ComBoxStyle}" >
         </Style>
     </Window.Resources>
@@ -60,8 +59,6 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <!--<ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=OZhClassificationList, Mode=TwoWay}"/>-->
-        <!--<ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=OZhClassificationList}" DisplayMemberPath="OZhComplaint"  />-->
 
         <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" CanUserAddRows="False"
                           SelectedItem="{Binding Path=SelectedComplaint}"
@@ -90,7 +87,7 @@
             
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Обращения" Width="*" Binding="{Binding Path=OZhComplaint}"/>
-                <!--Path=OZhComplaint-->
+
                 <DataGridTextColumn Header="Сумма" Width="80" Binding="{Binding Path=SummOzh}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">

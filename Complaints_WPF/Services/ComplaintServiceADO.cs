@@ -11,10 +11,11 @@ namespace Complaints_WPF.Models
     {
         private SqlConnection _sqlConnect;
         private SqlCommand _sqlCommand;
+        private const string connectionName = "cs_ComplaintsADO";
 
         public ComplaintServiceADO()
         {
-            _sqlConnect = new SqlConnection(ConfigurationManager.ConnectionStrings["cs_ComplaintsADO"].ConnectionString);
+            _sqlConnect = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionName].ConnectionString);
             _sqlCommand = new SqlCommand();
             _sqlCommand.Connection = _sqlConnect;
         }
@@ -360,7 +361,7 @@ namespace Complaints_WPF.Models
             return resultsList;
         }
 
-        public IEnumerable<string> LoadCategories()
+        public IEnumerable<string> LoadCategories() //
         {
             var categoryList = new List<string>();
 
