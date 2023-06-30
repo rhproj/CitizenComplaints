@@ -14,7 +14,8 @@ namespace ComplaintsAdmin.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        private AccessService _accessService;
+        private IAccessService _accessService;
+        private ILoginService _loginService;
         
         private AdminUser _adminUser;
         public AdminUser AdminUser 
@@ -36,25 +37,26 @@ namespace ComplaintsAdmin.ViewModels
 
         private void OnLoginCommandExecuted(object p)
         {
-            if (!_accessService.Authenticate(AdminUser.Login, AdminUser.Password))
+            if (!_loginService.Authenticate(AdminUser.Login, AdminUser.Password))
             {
                 MessageBox.Show("Неверное имя пользователя\n или пароль!");
                 return;
             }
             else
             {
-                var window = new EditUsersView();
+                var window = new EditUsersView(_accessService);
                 window.Show();
 
                 (p as System.Windows.Window).Close();
             }
         }
 
-        public LoginViewModel()
+        public LoginViewModel(IAccessService accessService, ILoginService loginService)
         {
             //TestServerAccess();
+            _accessService = accessService;
+            _loginService = loginService;
 
-            _accessService = App._dbService;
             AdminUser = new AdminUser();
 
             LoginCommand = new RelayCommand(OnLoginCommandExecuted, CanLoginCommandExecute);

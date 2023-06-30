@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using ComplaintsAdmin.Services;
+using ComplaintsAdmin.ViewModels;
+using System.Windows;
 
 namespace ComplaintsAdmin.Views
 {
@@ -7,9 +9,11 @@ namespace ComplaintsAdmin.Views
     /// </summary>
     public partial class EditUsersView : Window
     {
-        public EditUsersView()
+        public EditUsersView(IAccessService accessService)
         {
             InitializeComponent();
+            DataContext = new EditUsersViewModel(accessService);//viewModel;
+
             btnClose.Click += (s, e) => Close();
         }
     }

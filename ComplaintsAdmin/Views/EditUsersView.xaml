@@ -7,9 +7,9 @@
         xmlns:vm="clr-namespace:ComplaintsAdmin.ViewModels"
         mc:Ignorable="d"
         Title="EditUsersView" Height="550" Width="500" WindowStartupLocation="CenterScreen">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <vm:EditUsersViewModel />
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Window.Resources>
         <SolidColorBrush x:Key="WindowBackground" 
                         Color="White"

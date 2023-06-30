@@ -7,9 +7,9 @@ using System.Runtime.CompilerServices;
 
 namespace ComplaintsAdmin.ViewModels
 {
-    class EditUsersViewModel : INotifyPropertyChanged
+    public class EditUsersViewModel : INotifyPropertyChanged
     {
-        private AccessService _accessService;
+        private IAccessService _accessService;
 
         private Prosecutor _newUser;
         public Prosecutor NewUser 
@@ -36,9 +36,9 @@ namespace ComplaintsAdmin.ViewModels
             ProsecutorsList = new ObservableCollection<Prosecutor>(_accessService.LoadProsecutorsInfo());
         }
 
-        public EditUsersViewModel()
+        public EditUsersViewModel(IAccessService accessService)
         {
-            _accessService = App._dbService;
+            _accessService = accessService; //App._dbService;
             NewUser = new Prosecutor();
 
             LoadData();

@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace ComplaintsAdmin.Services
 {
-    public class AccessServiceADO : AccessService
+    public class AccessServiceADO : IAccessService
     {
         private SqlConnection _sqlConnect;
         private SqlCommand _sqlCommand;
@@ -20,39 +20,7 @@ namespace ComplaintsAdmin.Services
             _sqlCommand.Connection = _sqlConnect;
         }
 
-        internal override bool Authenticate(string userName, string password)
-        {
-            bool isSucceeded = false;
-
-            try
-            {
-                _sqlCommand.Parameters.Clear();
-                _sqlCommand.CommandType = CommandType.Text;
-                _sqlCommand.CommandText = $"select * from [dbo].[Admin] where [UserName] = '{userName}' and [Password] = '{password}'";
-
-                _sqlConnect.Open();
-
-                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
-                {
-                    if (dataReader.Read())
-                    {
-                        isSucceeded = true;
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                _sqlConnect.Close();
-            }
-
-            return isSucceeded;
-        }
-
-        internal override IEnumerable<AdminUser> GetAdmins()
+        public IEnumerable<AdminUser> GetAdmins()
         {
             List<AdminUser> usersList = new List<AdminUser>();
             try
@@ -90,7 +58,7 @@ namespace ComplaintsAdmin.Services
             return usersList;
         }
 
-        internal override IEnumerable<Prosecutor> LoadProsecutorsInfo()
+        public IEnumerable<Prosecutor> LoadProsecutorsInfo()
         {
             List<Prosecutor> ProsecutorsList = new List<Prosecutor>();
 
@@ -131,7 +99,7 @@ namespace ComplaintsAdmin.Services
             return ProsecutorsList;
         }
 
-        internal override void DeleteFromUsersList(Prosecutor prosecutorToDelete)
+        public void DeleteFromUsersList(Prosecutor prosecutorToDelete)
         {
             try
             {
@@ -154,7 +122,7 @@ namespace ComplaintsAdmin.Services
             }
         }
 
-        internal override void AddToUsersList(Prosecutor prosecutorToAdd)
+        public void AddToUsersList(Prosecutor prosecutorToAdd)
         {
             try
             {
@@ -178,5 +146,6 @@ namespace ComplaintsAdmin.Services
                 _sqlConnect.Close();
             }
         }
+
     }
 }
