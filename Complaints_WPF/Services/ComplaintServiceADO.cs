@@ -1,11 +1,12 @@
-﻿using Complaints_WPF.Services.Interfaces;
+﻿using Complaints_WPF.Models;
+using Complaints_WPF.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Complaints_WPF.Models
+namespace Complaints_WPF.Services
 {
     public class ComplaintServiceADO : IComplaintService
     {
@@ -361,40 +362,40 @@ namespace Complaints_WPF.Models
             return resultsList;
         }
 
-        public IEnumerable<string> LoadCategories() //
-        {
-            var categoryList = new List<string>();
+        //public IEnumerable<string> LoadCategories() //
+        //{
+        //    var categoryList = new List<string>();
 
-            try
-            {
-                _sqlCommand.Parameters.Clear();
-                _sqlCommand.CommandType = CommandType.StoredProcedure;
-                _sqlCommand.CommandText = "sp_LoadCategories";
+        //    try
+        //    {
+        //        _sqlCommand.Parameters.Clear();
+        //        _sqlCommand.CommandType = CommandType.StoredProcedure;
+        //        _sqlCommand.CommandText = "sp_LoadCategories";
 
-                _sqlConnect.Open();
+        //        _sqlConnect.Open();
 
-                using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
-                {
-                    if (dataReader.HasRows)
-                    {
-                        while (dataReader.Read())
-                        {
-                            categoryList.Add(dataReader.GetString(1));
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                _sqlConnect.Close();
-            }
+        //        using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
+        //        {
+        //            if (dataReader.HasRows)
+        //            {
+        //                while (dataReader.Read())
+        //                {
+        //                    categoryList.Add(dataReader.GetString(1));
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (SqlException ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        _sqlConnect.Close();
+        //    }
 
-            return categoryList;
-        }
+        //    return categoryList;
+        //}
         #endregion
 
         #region New Complaint:

@@ -1,6 +1,4 @@
-﻿using Complaints_WPF.ViewModels;
-using ComplaintsAdmin.ViewModels;
-using System;
+﻿using ComplaintsAdmin.ViewModels;
 using System.Windows;
 
 namespace ComplaintsAdmin.Views
@@ -19,15 +17,3 @@ namespace ComplaintsAdmin.Views
         }
     }
 }
-
-
-    //public LoginWindow(ComplaintsViewModel viewModel)
-    //{
-    //    InitializeComponent();
-    //    DataContext = viewModel;
-    
-    //    if (viewModel.CloseAction == null)
-    //        viewModel.CloseAction = new Action(this.Close);
-    
-    //    btnClose.Click += (s, e) => Close();
-    //}

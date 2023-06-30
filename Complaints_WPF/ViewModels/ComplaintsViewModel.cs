@@ -17,8 +17,10 @@ namespace Complaints_WPF.ViewModels
 /// </summary>
     public class ComplaintsViewModel : BaseViewModel
     {
-        #region Prop
         private IComplaintService _complaintService;
+        private ICategoryReadService _categoryReadService;
+
+        #region Prop
 
         private Complaint _currentComplaint;
         public Complaint CurrentComplaint
@@ -163,10 +165,12 @@ namespace Complaints_WPF.ViewModels
         #endregion
         #endregion
 
-        public ComplaintsViewModel(IComplaintService complaintService)
+        public ComplaintsViewModel(IComplaintService complaintService, ICategoryReadService categoryReadService)
         {
             //TestServerAccess();         
             CurrentComplaint = new Complaint();
+
+            _categoryReadService = categoryReadService;
 
             _complaintService = complaintService;
 
@@ -193,7 +197,7 @@ namespace Complaints_WPF.ViewModels
             ResultsList = new ObservableCollection<string>(_complaintService.LoadResults());
             ProsecutorsList = new ObservableCollection<string>(_complaintService.LoadProsecutors());
             ChiefsList = new ObservableCollection<string>(_complaintService.LoadChiefs());
-            CategoryList = new ObservableCollection<string>(_complaintService.LoadCategories());
+            CategoryList = new ObservableCollection<string>(_categoryReadService.LoadCategories());   //_complaintService.LoadCategories());
         }
 
         private void SetUpCommands()

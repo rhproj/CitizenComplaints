@@ -1,22 +1,10 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 
 namespace ComplaintsAdmin.Services
 {
-    public class LoginService : ILoginService
+    public class LoginService : ADOServiceBase, ILoginService
     {
-        private SqlConnection _sqlConnect;
-        private SqlCommand _sqlCommand;
-        private const string connectionName = "cs_ComplaintsADO";
-
-        public LoginService()
-        {
-            _sqlConnect = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionName].ConnectionString);
-            _sqlCommand = new SqlCommand();
-            _sqlCommand.Connection = _sqlConnect;
-        }
-
         public bool Authenticate(string userName, string password)
         {
             bool isSucceeded = false;

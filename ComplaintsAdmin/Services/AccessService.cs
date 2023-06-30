@@ -1,25 +1,13 @@
 ﻿using Complaints_WPF.Models;
 using ComplaintsAdmin.Model;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace ComplaintsAdmin.Services
 {
-    public class AccessServiceADO : IAccessService
+    public class AccessService : ADOServiceBase, IAccessService
     {
-        private SqlConnection _sqlConnect;
-        private SqlCommand _sqlCommand;
-        private const string connectionName = "cs_ComplaintsADO";
-
-        public AccessServiceADO()
-        {
-            _sqlConnect = new SqlConnection(ConfigurationManager.ConnectionStrings[connectionName].ConnectionString);
-            _sqlCommand = new SqlCommand();
-            _sqlCommand.Connection = _sqlConnect;
-        }
-
         public IEnumerable<AdminUser> GetAdmins()
         {
             List<AdminUser> usersList = new List<AdminUser>();

@@ -1,4 +1,5 @@
-﻿using Complaints_WPF.Models;
+﻿using Complaints_WPF.Services;
+using Complaints_WPF.Services.Interfaces;
 using Complaints_WPF.ViewModels;
 using Complaints_WPF.Views;
 using System.Windows;
@@ -22,7 +23,9 @@ namespace Complaints_WPF
         private ComplaintsViewModel SetUpViewModel()
         {
             var dbService = new ComplaintServiceADO();
-            var viewModel = new ComplaintsViewModel(dbService);
+            var categoryReadService = new CategoryReadService();
+
+            var viewModel = new ComplaintsViewModel(dbService, categoryReadService);
             return viewModel;
         }
     }
