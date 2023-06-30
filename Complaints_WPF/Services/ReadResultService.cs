@@ -1,26 +1,22 @@
 ﻿using Complaints_WPF.Services.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
+using System.Data.SqlClient;
 
 namespace Complaints_WPF.Services
 {
-    public class CategoryReadService : ADOServiceBase, ICategoryReadService
+    public class ReadResultService : ADOServiceBase, IReadResultService
     {
-        public IEnumerable<string> LoadCategories() 
+        public IEnumerable<string> LoadResults()
         {
-            var categoryList = new List<string>();
+            var resultsList = new List<string>();
 
             try
             {
                 _sqlCommand.Parameters.Clear();
                 _sqlCommand.CommandType = CommandType.StoredProcedure;
-                _sqlCommand.CommandText = "sp_LoadCategories";
+                _sqlCommand.CommandText = "sp_SelectAllResults";
+
                 _sqlConnect.Open();
 
                 using (SqlDataReader dataReader = _sqlCommand.ExecuteReader())
@@ -29,7 +25,7 @@ namespace Complaints_WPF.Services
                     {
                         while (dataReader.Read())
                         {
-                            categoryList.Add(dataReader.GetString(1));
+                            resultsList.Add(dataReader.GetString(1));
                         }
                     }
                 }
@@ -43,7 +39,7 @@ namespace Complaints_WPF.Services
                 _sqlConnect.Close();
             }
 
-            return categoryList;
+            return resultsList;
         }
     }
 }

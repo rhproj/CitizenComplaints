@@ -12,7 +12,7 @@ namespace ComplaintsAdmin.Views
         public EditUsersView(IAccessService accessService)
         {
             InitializeComponent();
-            DataContext = new EditUsersViewModel(accessService);//viewModel;
+            DataContext = new EditUsersViewModel(accessService);
 
             btnClose.Click += (s, e) => Close();
         }

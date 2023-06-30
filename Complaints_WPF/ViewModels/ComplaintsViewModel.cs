@@ -17,10 +17,23 @@ namespace Complaints_WPF.ViewModels
 /// </summary>
     public class ComplaintsViewModel : BaseViewModel
     {
-        private IComplaintService _complaintService;
+        //private IComplaintService _complaintService;
+        #region Services
         private ICategoryReadService _categoryReadService;
+        private ICategoryWriteService _categoryWriteService;
+        private IChiefReadService _chiefReadService;
+        private IChiefWriteService _chiefWriteService;
+        private IComplaintReadService _complaintReadService;
+        private IComplaintWriteService _complaintWriteService;
+        private IFilterComplaintService _filterComplaintService;
+        private IOZhReadService _oZhReadService;
+        private IOZhWriteService _oZhWriteService;
+        private IReadCitizenService _readCitizenService;
+        private IReadProsecutorService _readProsecutorService;
+        private IReadResultService _readResultService; 
+        #endregion
 
-        #region Prop
+        #region Props
 
         private Complaint _currentComplaint;
         public Complaint CurrentComplaint
@@ -165,14 +178,36 @@ namespace Complaints_WPF.ViewModels
         #endregion
         #endregion
 
-        public ComplaintsViewModel(IComplaintService complaintService, ICategoryReadService categoryReadService)
+        public ComplaintsViewModel(
+            //IComplaintService complaintService, 
+            ICategoryReadService categoryReadService,
+            ICategoryWriteService categoryWriteService,
+            IChiefReadService chiefReadService,
+            IChiefWriteService chiefWriteService,
+            IComplaintReadService complaintReadService,
+            IComplaintWriteService complaintWriteService,
+            IFilterComplaintService filterComplaintService,
+            IOZhReadService oZhReadService,
+            IOZhWriteService oZhWriteService,
+            IReadCitizenService readCitizenService,
+            IReadProsecutorService readProsecutorService,
+            IReadResultService readResultService)
         {
             //TestServerAccess();         
             CurrentComplaint = new Complaint();
 
             _categoryReadService = categoryReadService;
-
-            _complaintService = complaintService;
+            _categoryWriteService = categoryWriteService;
+            _chiefReadService = chiefReadService;
+            _chiefWriteService = chiefWriteService;
+            _complaintReadService = complaintReadService;
+            _complaintWriteService = complaintWriteService;
+            _filterComplaintService = filterComplaintService;
+            _oZhReadService = oZhReadService;
+            _oZhWriteService = oZhWriteService;
+            _readCitizenService = readCitizenService;
+            _readProsecutorService = readProsecutorService;
+            _readResultService = readResultService;
 
             SetUpCommands();
 
@@ -185,7 +220,7 @@ namespace Complaints_WPF.ViewModels
         {
             YearToFilter = DateTime.Now.Year.ToString();
 
-            ComplaintsList = new ObservableCollection<Complaint>(_complaintService.GetAllComplaintsByYear(YearToFilter));
+            ComplaintsList = new ObservableCollection<Complaint>(_complaintReadService.GetAllComplaintsByYear(YearToFilter));
             CurrentNum = ComplaintsList.Count;
             ComplaintsListView = CollectionViewSource.GetDefaultView(ComplaintsList);
             ComplaintsListView.Filter += Filter;
@@ -193,10 +228,10 @@ namespace Complaints_WPF.ViewModels
 
         private void SetUpСollections()
         {
-            OZhClassificationList = new ObservableCollection<string>(_complaintService.LoadOZhClassification());
-            ResultsList = new ObservableCollection<string>(_complaintService.LoadResults());
-            ProsecutorsList = new ObservableCollection<string>(_complaintService.LoadProsecutors());
-            ChiefsList = new ObservableCollection<string>(_complaintService.LoadChiefs());
+            OZhClassificationList = new ObservableCollection<string>(_oZhReadService.LoadOZhClassification());
+            ResultsList = new ObservableCollection<string>(_readResultService.LoadResults());
+            ProsecutorsList = new ObservableCollection<string>(_readProsecutorService.LoadProsecutors());
+            ChiefsList = new ObservableCollection<string>(_chiefReadService.LoadChiefs());
             CategoryList = new ObservableCollection<string>(_categoryReadService.LoadCategories());   //_complaintService.LoadCategories());
         }
 
@@ -223,13 +258,13 @@ namespace Complaints_WPF.ViewModels
 
         private void LoadData(string year)
         {
-            ComplaintsList = new ObservableCollection<Complaint>(_complaintService.GetAllComplaintsByYear(year));
+            ComplaintsList = new ObservableCollection<Complaint>(_complaintReadService.GetAllComplaintsByYear(year));
             CurrentNum = ComplaintsList.Count;
             ComplaintsListView = CollectionViewSource.GetDefaultView(ComplaintsList);
             ComplaintsListView.Filter += Filter;
         }
 
-        #region METHODS
+        #region Entry Methods
         private static void TestServerAccess()
         {
             string adress = ConfigurationManager.AppSettings["address"];
@@ -307,15 +342,15 @@ namespace Complaints_WPF.ViewModels
 
                 if (CurrentComplaint.Citizen.CitizenID == 0)
                 {
-                    isSaved = _complaintService.AddToComplaintList(CurrentComplaint, ProsecutorLogin);
+                    isSaved = _complaintWriteService.AddToComplaintList(CurrentComplaint, ProsecutorLogin);
                 }
                 else if (CurrentComplaint.ComplaintID == 0) //existing citizen makes anover complaint
                 {
-                    isSaved = _complaintService.AddToComplaintListUpd(CurrentComplaint, ProsecutorLogin);
+                    isSaved = _complaintWriteService.AddToComplaintListUpd(CurrentComplaint, ProsecutorLogin);
                 }
                 else
                 {
-                    isSaved = _complaintService.UpdateComplaint(CurrentComplaint);
+                    isSaved = _complaintWriteService.UpdateComplaint(CurrentComplaint);
                 }
 
                 if (isSaved)
@@ -345,7 +380,7 @@ namespace Complaints_WPF.ViewModels
             ClearEntryFields(false, false, true);
             try
             {
-                Complaint citizen = _complaintService.SearchCitizen(CurrentComplaint.Citizen.CitizenName);
+                Complaint citizen = _readCitizenService.SearchCitizen(CurrentComplaint.Citizen.CitizenName);
                 if (citizen != null)
                 {
                     CurrentComplaint.Citizen.CitizenID = citizen.Citizen.CitizenID;
@@ -373,7 +408,7 @@ namespace Complaints_WPF.ViewModels
             try
             {
                 //ClearFields is not required since we assigning every field anyway
-                CurrentComplaint = _complaintService.SelectComplaint(YearToFilter, SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);
+                CurrentComplaint = _complaintReadService.SelectComplaint(YearToFilter, SelectedComplaint.Citizen.CitizenName, SelectedComplaint.ReceiptDate);
             }
             catch (Exception ex)
             {
@@ -387,7 +422,7 @@ namespace Complaints_WPF.ViewModels
             {
                 if (CurrentComplaint.Enumerator == CurrentNum)
                 {
-                    bool isDeleted = _complaintService.DeleteComplaint(CurrentComplaint.ComplaintID);
+                    bool isDeleted = _complaintWriteService.DeleteComplaint(CurrentComplaint.ComplaintID);
                     if (isDeleted)
                     {
                         LoadData(YearToFilter);
@@ -434,7 +469,7 @@ namespace Complaints_WPF.ViewModels
             {
                 bool isAdded = false;
 
-                isAdded = _complaintService.AddToOZhClassification(AddValueToCombobox);
+                isAdded = _oZhWriteService.AddToOZhClassification(AddValueToCombobox);
 
                 if (isAdded)
                     Message = "Запись добавлена, чтобы отобразить изменения перезапустите программу";
@@ -452,7 +487,7 @@ namespace Complaints_WPF.ViewModels
         {
             try
             {
-                bool isDeleted = _complaintService.DeleteFromOZhClassification(CurrentComplaint.OZhComplaintText.OZhComplaint);
+                bool isDeleted = _oZhWriteService.DeleteFromOZhClassification(CurrentComplaint.OZhComplaintText.OZhComplaint);
 
                 if (isDeleted)
                     Message = "Запись удалена, чтобы отобразить изменения перезапустите программу";
@@ -481,7 +516,7 @@ namespace Complaints_WPF.ViewModels
             {
                 bool isAdded = false;
 
-                isAdded = _complaintService.AddToChiefsList(AddValueToCombobox);
+                isAdded = _chiefWriteService.AddToChiefsList(AddValueToCombobox);
 
                 if (isAdded)
                     Message = "Руководитель добавлен, чтобы отобразить изменения перезапустите программу";
@@ -500,7 +535,7 @@ namespace Complaints_WPF.ViewModels
         {
             try
             {
-                bool isDeleted = _complaintService.DeleteFromChiefsList(CurrentComplaint.Chief.ChiefName);
+                bool isDeleted = _chiefWriteService.DeleteFromChiefsList(CurrentComplaint.Chief.ChiefName);
 
                 if (isDeleted)
                     Message = "Руководитель удален, чтобы отобразить изменения перезапустите программу";
@@ -556,7 +591,7 @@ namespace Complaints_WPF.ViewModels
             {
                 bool isAdded = false;
 
-                isAdded = _complaintService.AddToCategoryList(AddValueToCombobox);
+                isAdded = _categoryWriteService.AddToCategoryList(AddValueToCombobox);
 
                 if (isAdded)
                     Message = "Категория добавлена, чтобы отобразить изменения перезапустите программу";
@@ -575,7 +610,7 @@ namespace Complaints_WPF.ViewModels
         {
             try
             {
-                bool isDeleted = _complaintService.DeleteFromCategoryList(CurrentComplaint.Citizen.Category);
+                bool isDeleted = _categoryWriteService.DeleteFromCategoryList(CurrentComplaint.Citizen.Category);
 
                 if (isDeleted)
                     Message = "Категория удалена, чтобы отобразить изменения перезапустите программу";

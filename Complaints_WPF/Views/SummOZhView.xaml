@@ -8,9 +8,7 @@
         mc:Ignorable="d"
         Height="840" Width="800"
         WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
-    <Window.DataContext>
-        <vm:SummOZhViewModel/>
-    </Window.DataContext>
+
     <Window.Resources>
         <SolidColorBrush x:Key="WindowBackground" 
                         Color="White"

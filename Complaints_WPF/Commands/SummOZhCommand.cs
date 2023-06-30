@@ -1,4 +1,6 @@
-﻿using Complaints_WPF.Views;
+﻿using Complaints_WPF.Services;
+using Complaints_WPF.Services.Interfaces;
+using Complaints_WPF.Views;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -16,7 +18,7 @@ namespace Complaints_WPF.Commands
 
         public void Execute(object parameter)
         {
-            var window = new SummOZhView();
+            var window = new SummOZhView(new OZhReadService());
 
             _summOZhView = window;
 

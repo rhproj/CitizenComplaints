@@ -12,7 +12,8 @@ namespace Complaints_WPF.ViewModels
 {
     class SummOZhViewModel : BaseViewModel
     {
-        IComplaintService complaintService;
+        //IComplaintService complaintService;
+        IOZhReadService _oZhReadService;
 
         private OZhClassification _oZhClassif;
         public OZhClassification OZhClassif
@@ -37,14 +38,15 @@ namespace Complaints_WPF.ViewModels
             set { _message = value; OnPropertyChanged("Message"); }
         }
 
-        public SummOZhViewModel()
+        public SummOZhViewModel(IOZhReadService oZhReadService)
         {
             OZhClassif = new OZhClassification();
-            complaintService = new ComplaintServiceADO();
+            _oZhReadService = oZhReadService;
+            //complaintService = new ComplaintServiceADO();
 
             ToCsvCommand = new RelayCommand(SaveToCsv, null);
 
-            OZhClassificationList = new ObservableCollection<OZhClassification>(complaintService.LoadOZhWithSumm(ComplaintsViewModel.YearToFilter)); //LoadOZhClassif()); //
+            OZhClassificationList = new ObservableCollection<OZhClassification>(_oZhReadService.LoadOZhWithSumm(ComplaintsViewModel.YearToFilter)); //LoadOZhClassif()); //
         }
 
 

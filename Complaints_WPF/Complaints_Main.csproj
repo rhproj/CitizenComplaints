@@ -96,9 +96,16 @@
     <Compile Include="Converter\ZeroConverter.cs" />
     <Compile Include="Models\Chief.cs" />
     <Compile Include="Models\OZhClassification.cs" />
+    <Compile Include="Services\ADOServiceBase.cs" />
+    <Compile Include="Services\CategoryWriteService.cs" />
+    <Compile Include="Services\ChiefWriteService.cs" />
+    <Compile Include="Services\ComplaintReadService.cs" />
     <Compile Include="Services\ComplaintServiceADO.cs" />
+    <Compile Include="Services\ComplaintWriteService.cs" />
     <Compile Include="Services\EPPlusService.cs" />
     <Compile Include="Services\CategoryReadService.cs" />
+    <Compile Include="Services\ChiefReadService.cs" />
+    <Compile Include="Services\FilterComplaintService.cs" />
     <Compile Include="Services\Interfaces\IComplaintService.cs" />
     <Compile Include="Services\Interfaces\ICategoryReadService.cs" />
     <Compile Include="Services\Interfaces\ICategoryWriteService.cs" />
@@ -112,10 +119,16 @@
     <Compile Include="Services\Interfaces\IReadCitizenService.cs" />
     <Compile Include="Services\Interfaces\IReadProsecutorService.cs" />
     <Compile Include="Services\Interfaces\IReadResultService.cs" />
+    <Compile Include="Services\OZhReadService.cs" />
+    <Compile Include="Services\OZhWriteService.cs" />
+    <Compile Include="Services\ReadCitizenService.cs" />
+    <Compile Include="Services\ReadProsecutorService.cs" />
+    <Compile Include="Services\ReadResultService.cs" />
     <Compile Include="Services\ServerAccess.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ComplaintsViewModel.cs" />
     <Compile Include="ViewModels\SummOZhViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelServiceSetter.cs" />
     <Compile Include="Views\ComboEditView.xaml.cs">
       <DependentUpon>ComboEditView.xaml</DependentUpon>
     </Compile>

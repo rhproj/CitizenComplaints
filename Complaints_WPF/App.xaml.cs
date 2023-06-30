@@ -14,19 +14,19 @@ namespace Complaints_WPF
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var viewModel = SetUpViewModel();
+            var viewModel = ViewModelServiceSetter.SetUpViewModel();
 
             Application.Current.MainWindow = new LoginWindow(viewModel);
             Application.Current.MainWindow.Show();
         }
 
-        private ComplaintsViewModel SetUpViewModel()
-        {
-            var dbService = new ComplaintServiceADO();
-            var categoryReadService = new CategoryReadService();
+        //private ComplaintsViewModel SetUpViewModel()
+        //{
+        //   // var dbService = new ComplaintServiceADO();
+        //    var categoryReadService = new CategoryReadService();
 
-            var viewModel = new ComplaintsViewModel(dbService, categoryReadService);
-            return viewModel;
-        }
+        //    var viewModel = new ComplaintsViewModel(dbService, categoryReadService);
+        //    return viewModel;
+        //}
     }
 }
