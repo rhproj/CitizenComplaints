@@ -268,7 +268,7 @@
     <Resource Include="Images\LogoFade.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="713openbook_100531.ico" />
+    <Resource Include="Images\openbook.ico" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
