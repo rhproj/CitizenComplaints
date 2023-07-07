@@ -5,8 +5,8 @@ namespace Complaints_WPF.Commands
 {
     public class RelayCommand : ICommand
     {
-        private Action methodToExecute;
-        private Func<bool> canExecuteEvaluator;
+        private readonly Action methodToExecute;
+        private readonly Func<bool> canExecuteEvaluator;
 
         public RelayCommand(Action method, Func<bool> evaluator)
         {

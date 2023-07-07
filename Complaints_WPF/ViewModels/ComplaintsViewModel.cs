@@ -5,10 +5,6 @@ using Complaints_WPF.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Configuration;
-using System.IO;
-using System.Text;
-using System.Windows;
 using System.Windows.Data;
 
 namespace Complaints_WPF.ViewModels
@@ -17,7 +13,6 @@ namespace Complaints_WPF.ViewModels
 /// </summary>
     public class ComplaintsViewModel : BaseViewModel
     {
-        //private IComplaintService _complaintService;
         #region Services
         private ICategoryReadService _categoryReadService;
         private ICategoryWriteService _categoryWriteService;
@@ -179,7 +174,6 @@ namespace Complaints_WPF.ViewModels
         #endregion
 
         public ComplaintsViewModel(
-            //IComplaintService complaintService, 
             ICategoryReadService categoryReadService,
             ICategoryWriteService categoryWriteService,
             IChiefReadService chiefReadService,
@@ -192,8 +186,7 @@ namespace Complaints_WPF.ViewModels
             IReadCitizenService readCitizenService,
             IReadProsecutorService readProsecutorService,
             IReadResultService readResultService)
-        {
-            //TestServerAccess();         
+        {     
             CurrentComplaint = new Complaint();
 
             _categoryReadService = categoryReadService;
@@ -265,16 +258,6 @@ namespace Complaints_WPF.ViewModels
         }
 
         #region Entry Methods
-        private static void TestServerAccess()
-        {
-            string adress = ConfigurationManager.AppSettings["address"];
-            if (ServerAccess.TestConnection(adress) == false)
-            {
-                MessageBox.Show($"Отсутствует связь с {adress}");
-                Environment.Exit(0);
-            }
-        }
-
         private bool Filter(object obj)
         {
             var complaint = obj as Complaint;

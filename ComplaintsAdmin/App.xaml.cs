@@ -1,4 +1,5 @@
-﻿using ComplaintsAdmin.ViewModels;
+﻿using Autofac;
+using ComplaintsAdmin.Startup;
 using ComplaintsAdmin.Views;
 using System.Windows;
 
@@ -13,9 +14,10 @@ namespace ComplaintsAdmin
         {
             base.OnStartup(e);
 
-            var viewModel = ViewModelServiceSetter.SetUpViewModel();
+            var bootStrapper = new BootStrapper();
+            var container = bootStrapper.BootStrap();
 
-            Application.Current.MainWindow = new LoginWindow(viewModel);
+            Application.Current.MainWindow = container.Resolve<LoginWindow>();
             Application.Current.MainWindow.Show();
         }
     }

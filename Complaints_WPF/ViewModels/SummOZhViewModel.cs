@@ -1,10 +1,8 @@
 ﻿using Complaints_WPF.Commands;
 using Complaints_WPF.Models;
-using Complaints_WPF.Services;
 using Complaints_WPF.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Text;
 
@@ -12,7 +10,6 @@ namespace Complaints_WPF.ViewModels
 {
     class SummOZhViewModel : BaseViewModel
     {
-        //IComplaintService complaintService;
         IOZhReadService _oZhReadService;
 
         private OZhClassification _oZhClassif;
@@ -42,11 +39,10 @@ namespace Complaints_WPF.ViewModels
         {
             OZhClassif = new OZhClassification();
             _oZhReadService = oZhReadService;
-            //complaintService = new ComplaintServiceADO();
 
             ToCsvCommand = new RelayCommand(SaveToCsv, null);
 
-            OZhClassificationList = new ObservableCollection<OZhClassification>(_oZhReadService.LoadOZhWithSumm(ComplaintsViewModel.YearToFilter)); //LoadOZhClassif()); //
+            OZhClassificationList = new ObservableCollection<OZhClassification>(_oZhReadService.LoadOZhWithSumm(ComplaintsViewModel.YearToFilter));
         }
 
 

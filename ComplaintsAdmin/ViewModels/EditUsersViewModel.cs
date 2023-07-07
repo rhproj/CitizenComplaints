@@ -38,7 +38,7 @@ namespace ComplaintsAdmin.ViewModels
 
         public EditUsersViewModel(IAccessService accessService)
         {
-            _accessService = accessService; //App._dbService;
+            _accessService = accessService;
             NewUser = new Prosecutor();
 
             LoadData();

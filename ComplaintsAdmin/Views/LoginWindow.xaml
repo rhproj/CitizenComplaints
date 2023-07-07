@@ -10,9 +10,7 @@
         xmlns:components="clr-namespace:ComplaintsAdmin.Components"
         Height="580" Width="450"
         WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
-    <!--<Window.DataContext>
-        <vm:LoginViewModel/>
-    </Window.DataContext>-->
+
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="35" />
     </WindowChrome.WindowChrome>

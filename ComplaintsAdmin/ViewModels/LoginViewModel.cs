@@ -1,11 +1,9 @@
-﻿using Complaints_WPF.Services;
-using ComplaintsAdmin.Commands;
+﻿using ComplaintsAdmin.Commands;
 using ComplaintsAdmin.Model;
 using ComplaintsAdmin.Services;
+using ComplaintsAdmin.Startup;
 using ComplaintsAdmin.Views;
-using System;
 using System.ComponentModel;
-using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -53,23 +51,14 @@ namespace ComplaintsAdmin.ViewModels
 
         public LoginViewModel(IAccessService accessService, ILoginService loginService)
         {
-            //TestServerAccess();
+            ServerAccess.TestServerAccess();
+
             _accessService = accessService;
             _loginService = loginService;
 
             AdminUser = new AdminUser();
 
             LoginCommand = new RelayCommand(OnLoginCommandExecuted, CanLoginCommandExecute);
-        }
-
-        private static void TestServerAccess()
-        {
-            string adress = ConfigurationManager.AppSettings["address"];
-            if (ServerAccess.TestConnection(adress) == false)
-            {
-                MessageBox.Show($"Отсутствует связь с {adress}");
-                Environment.Exit(0);
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

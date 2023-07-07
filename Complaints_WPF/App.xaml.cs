@@ -1,6 +1,5 @@
-﻿using Complaints_WPF.Services;
-using Complaints_WPF.Services.Interfaces;
-using Complaints_WPF.ViewModels;
+﻿using Autofac;
+using Complaints_WPF.Startup;
 using Complaints_WPF.Views;
 using System.Windows;
 
@@ -14,19 +13,12 @@ namespace Complaints_WPF
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var viewModel = ViewModelServiceSetter.SetUpViewModel();
 
-            Application.Current.MainWindow = new LoginWindow(viewModel);
+            var bootStrapper = new BootStrapper();
+            var container = bootStrapper.BootStrap();
+
+            Application.Current.MainWindow = container.Resolve<LoginWindow>();
             Application.Current.MainWindow.Show();
         }
-
-        //private ComplaintsViewModel SetUpViewModel()
-        //{
-        //   // var dbService = new ComplaintServiceADO();
-        //    var categoryReadService = new CategoryReadService();
-
-        //    var viewModel = new ComplaintsViewModel(dbService, categoryReadService);
-        //    return viewModel;
-        //}
     }
 }
